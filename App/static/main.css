@@ -66,6 +66,7 @@ div#contimg div.img-item{
 
 footer{
 	background-color:#90D0C7 ;
+	position: absolute;
 }
 footer div#reseaux nav.social ul li.btn2 a{
 	text-decoration: none;
@@ -116,13 +117,11 @@ p#copyRight{
 	text-align: right;
 }
 footer{
-	position: relative;
-	bottom: 0px;
+	position: absolute;
 	width: 100%;
 }
 footer.achat{
-	position: absolute;
-	bottom: 0px;
+	clear: both;
 	width: 100%;
 }
 div#box_achat{
@@ -182,7 +181,7 @@ div#box_achat div.img-item img{
 	width: 400px;
 }
 footer.article{
-	position: absolute;
+	position: relative;
 	bottom: 0;
 	
 }
@@ -191,6 +190,6 @@ header{
 }
 
 footer.news{
-	position: relative;
+	position: absolute;
 	bottom: 0;
 }

@@ -11,7 +11,9 @@ file_handler = FileHandler('errorlog.txt')
 file_handler.setLevel(WARNING)
 app.logger.addHandler(file_handler)
 
+
 @app.route("/")
+@app.route("/home")
 def home():
     return render_template("accueil.html")
 
@@ -24,6 +26,7 @@ def news():
     return render_template("news.html")
 
 @app.route("/sale")
+@login_required
 def sale_page():
     return render_template("page_achat.html")
 
@@ -85,7 +88,7 @@ def login_post():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
-    return redirect(url_for('private'))
+    return redirect(url_for('home'))
 
 
 @app.route('/private')
