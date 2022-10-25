@@ -1,10 +1,13 @@
+from asyncio.log import logger
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+import logging
 
 app = Flask(__name__)
 app.config.from_object('config')
+
 
 # Create database connection object
 db = SQLAlchemy(app)
@@ -13,6 +16,14 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
+
+logger = logging.getLogger("monlog")
+logger.setLevel(logging.DEBUG)
+fh = logging.FileHandler('logs.log')
+fh.setLevel(logging.DEBUG)
+formatter =logging.Formatter("%(levelname)-8s %(asctime)s %(message)s")
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 from App import views, models
 
