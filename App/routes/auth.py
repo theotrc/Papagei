@@ -28,7 +28,7 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), is_admin=False)
 
     # add the new user to the database
     db.session.add(new_user)
@@ -39,7 +39,7 @@ def signup_post():
 
 @auth_blue.route('/login')
 def login():
-    return render_template('login2.html')
+    return render_template('login.html')
 
 
 @auth_blue.route('/login', methods=['POST'])
@@ -54,6 +54,7 @@ def login_post():
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
     if not user or not check_password_hash(user.password, password):
+        return 'login failed'
         return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
     # if the above check passes, then we know the user has the right credentials

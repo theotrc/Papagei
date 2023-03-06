@@ -7,11 +7,11 @@ from ..models import User
 from flask_login import login_user, login_required, current_user, logout_user
 
 
-account_blue = Blueprint("account", __name__, static_folder="../static", template_folder="../templates")
+admin = Blueprint("admin", __name__, static_folder="../static", template_folder="../templates")
 
-@account_blue.route("/account")
+@admin.route("/admin_page")
 @login_required
-def account():
-
-    return render_template("account.html",data={"user":current_user})
-
+def add_item():
+    if current_user.is_admin:
+        return render_template("admin.html",data={"user":current_user})
+    else: return url_for("home.home")

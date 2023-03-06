@@ -11,5 +11,4 @@ home_blueprint= Blueprint("home", __name__, static_folder='../static', template_
 @home_blueprint.route("/")
 @home_blueprint.route("/home")
 def home():
-    # return "nidoaeziodz"
     return render_template("accueil.html")
