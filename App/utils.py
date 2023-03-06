@@ -1,3 +1,4 @@
+# from App import db 
 def row2dict(row, column_list=None):
     d = {}
     if column_list == None:
@@ -12,3 +13,10 @@ def row2dict(row, column_list=None):
 def unitaire(n):
     n+=1
     return n 
+
+
+# def add_user(new_user):
+
+#     db.session.add(new_user)
+#     db.session.commit()   
+    

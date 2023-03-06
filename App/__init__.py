@@ -5,27 +5,49 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import logging
 
-app = Flask(__name__)
-app.config.from_object('config')
+db = SQLAlchemy()
+def create_app():
+    app=Flask(__name__)
+    app.config.from_object('config')
 
+    db.init_app(app)
+
+    from .routes.home import home_blueprint
+    from .routes.news import news_blue
+    from .routes.account import account_blue
+    from .routes.contact import contact_blue
+    from .routes.auth import auth_blue
+
+    app.register_blueprint(home_blueprint)
+    app.register_blueprint(news_blue)
+    app.register_blueprint(account_blue)
+    app.register_blueprint(contact_blue)
+    app.register_blueprint(auth_blue)
+
+    return app
+
+# app = Flask(__name__)
+# app.config.from_object('config')
+
+app = create_app()
 
 # Create database connection object
-db = SQLAlchemy(app)
+
 #db.init_app(app)
 
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
-logger = logging.getLogger("monlog")
-logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler('logs.log')
-fh.setLevel(logging.DEBUG)
-formatter =logging.Formatter("%(levelname)-8s %(asctime)s %(message)s")
-fh.setFormatter(formatter)
-logger.addHandler(fh)
+# logger = logging.getLogger("monlog")
+# logger.setLevel(logging.DEBUG)
+# fh = logging.FileHandler('logs.log')
+# fh.setLevel(logging.DEBUG)
+# formatter =logging.Formatter("%(levelname)-8s %(asctime)s %(message)s")
+# fh.setFormatter(formatter)
+# logger.addHandler(fh)
 
-from App import views, models
+from App import models
 
 
 @login_manager.user_loader

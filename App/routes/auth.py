@@ -1,51 +1,21 @@
-# from flask import Flask, render_template, request, redirect, url_for
-# from werkzeug.utils import redirect
-# from .utils import row2dict
-# from werkzeug.security import generate_password_hash, check_password_hash
-# from flask_login import login_user, login_required, current_user, logout_user
-# from App import db, app, logger
-# from .models import User
-# from logging import FileHandler, WARNING
-
-# file_handler = FileHandler('errorlog.txt')
-# file_handler.setLevel(WARNING)
-# app.logger.addHandler(file_handler)
-
-# @app.route("/")
-# @app.route("/home")
-# def home():
-#     logger.info('home consulting')
-#     return render_template("accueil.html")
-
-# @app.route("/contact")
-# def contact():
-#     return render_template("contact.html")
-
-# @app.route("/news")
-# def news():
-#     return render_template("news.html")
-
-# @app.route("/sale")
-# @login_required
-# def sale_page():
-#     return render_template("page_achat.html")
+from flask import Flask, render_template, request, redirect, url_for, Blueprint
+from werkzeug.utils import redirect
+from werkzeug.security import generate_password_hash, check_password_hash
+from App import db
+from ..models import User
+from logging import FileHandler, WARNING
+from flask_login import login_user, login_required, current_user, logout_user
 
 
-
-
-
-
-
-
-
+auth_blue= Blueprint("auth", __name__, static_folder="../static", template_folder="../templates")
 
 #routes for login
-@app.route('/signup')
+@auth_blue.route('/signup')
 def signup():
     return render_template('signup.html')
 
 
-@app.route('/signup', methods=['POST'])
+@auth_blue.route('/signup', methods=['POST'])
 def signup_post():
     # code to validate and add user to database goes here
     email = request.form.get('email')
@@ -55,7 +25,7 @@ def signup_post():
     user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
 
     if user: # if a user is found, we want to redirect back to signup page so user can try again
-        return redirect(url_for('signup'))
+        return redirect(url_for('auth.signup'))
 
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
@@ -64,15 +34,15 @@ def signup_post():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect(url_for("login"))
+    return redirect(url_for("auth.login"))
 
 
-@app.route('/login')
+@auth_blue.route('/login')
 def login():
-    return render_template('login.html')
+    return render_template('login2.html')
 
 
-@app.route('/login', methods=['POST'])
+@auth_blue.route('/login', methods=['POST'])
 def login_post():
     # login code goes here
     email = request.form.get('email')
@@ -84,22 +54,22 @@ def login_post():
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
     if not user or not check_password_hash(user.password, password):
-        return redirect(url_for('login')) # if the user doesn't exist or password is wrong, reload the page
+        return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
-    return redirect(url_for('home'))
+    return redirect(url_for('home.home'))
 
 
-@app.route('/private')
+@auth_blue.route('/private')
 @login_required
 def private():
     return f"Bonjour {current_user.name}"
 
 
 
-@app.route('/logout')
+@auth_blue.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('home.home'))
