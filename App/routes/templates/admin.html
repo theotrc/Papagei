@@ -1,12 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    add item
-</body>
-</html>
+
+{%extends "base.html" %}
+
+{% block content %}
+<h3 class="title">Nouvel acrticle</h3>
+
+<form method="POST" enctype="multipart/form-data" action="/admin_page">
+
+    <p><input class="input is-large" type="text" name="titre" placeholder="titre"> </p>
+
+    <p><input class="input is-large" type="text" name="category" placeholder="category"> </p>
+
+    <p> <input class="input is-large" type="file" name="image"> </p>
+
+    <p><input class="input is-large" type="text" name="description" placeholder="description"> </p>
+
+    <p><input class="input is-large" type="text" name="prix" placeholder="prix"> </p>
+
+    <p> <input type = "submit" value="admin_page"/> </p>
+</form>
+    <!-- {% with messages = get_flashed_messages(with_categories=true,
+         category_filter=["error","info"]) %}
+
+        {%if messages %}
+            {% for category, message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+
+        {%endif %}
+
+    {% endwith %}
+
+{%endblock content %} -->

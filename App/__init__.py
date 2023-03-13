@@ -9,11 +9,13 @@ db = SQLAlchemy()
 def create_app():
     app=Flask(__name__)
     app.config.from_object('config')
+    app.config['UPLOAD_FOLDER'] = 'static/files'
     
     # Create database connection object
-
     
     db.init_app(app)
+    with app.app_context():
+        db.create_all()
 
 
     from .routes.home import home_blueprint
@@ -36,8 +38,11 @@ def create_app():
 app = create_app()
 
 
+
+
+
 login_manager = LoginManager()
-login_manager.login_view = 'login'
+login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 
 # logger = logging.getLogger("monlog")
@@ -49,8 +54,6 @@ login_manager.init_app(app)
 # logger.addHandler(fh)
 
 from App import models
-with app.app_context():
-    db.create_all()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -61,5 +64,4 @@ def load_user(user_id):
 @app.cli.command("init_db")
 def init_db():
     models.init_db()
-    print('initi')
 
