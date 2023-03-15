@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<head>
+	
+  </head>
 	<body>
-		<div id="contimg">
+		<div class="grille">
 
-			<!-- <div class="img-item"><a href="sale"><img src="static/img/laine1.jpg" style="width:500px;height:500px;" alt="image de bob"/></a></div>
-			
-			<div class="img-item"><a href="sale"><img src="static/img/laine.jpg"style="width:500px;height:500px;" alt="image de bob"/></a></div> -->
 			{% for image in item %}
-			<div class="img-item"><a href="sale"><img src="data:image/png;base64,{{image.image.decode()}}" style="width:500px;height:500px;" alt="image de bob"/></a></div>
-			<!-- <div class="img-item"><a href="sale"><img src="static/img/bobc.jpg" style="width:500px;height:500px;" alt="image de bob"/></a></div>
-			<div class="img-item"><a href="sale"><img src="static/img/bobc.jpg" style="width:500px;height:500px;" alt="image de bob"/></a></div>
-			<div class="img-item"><a href="sale"><img src="static/img/bobc.jpg" style="width:500px;height:500px;" alt="image de bob"/></a></div> -->
+			
+			<a href="#"><div class="grid-item"><img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/></div></a>
+
 			{% endfor %}
 		</div>
 	</body>

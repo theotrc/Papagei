@@ -1,195 +1,31 @@
-h1.col-sm-4 {
-	font-style:oblique ;
-	font-size: 30pt;
-}
-
-
-
-.container{
-	background: #90D0C7;
-}
-.img-item{
-	border: 5px solid #FFF;
-	margin:  20px;
-}
-.img{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-}
-nav.left ul li.btn{
-	list-style-type: none;
-	display: inline-block;
-	padding: 20px;
-	font-size: 20pt;
-
-
-}
-
-
-nav.left ul li.btn a{
-	text-decoration: none;
-	color: black;
-}
-
-nav.left ul li.btn:hover a{
-	color: #FFF;
-
-
-}
-div.row{
-	display: inline-block;
-}
-
-div#box div{
-	display: inline-block;
-}
-div.boxright {
-	margin-left: 600px;
-}
-div.boxright nav.right li.btn1:hover a{
-	color: #FFF;
-}
-footer div#reseaux nav.social ul li.btn2 a{
-	text-decoration: none;
-}
-footer div#reseaux nav.social ul li.btn2{
-	list-style-type: none;
-}
-div#contimg div.img-item{
-	display: inline-block;
-	margin-left: 50px;
-	padding: 10px;
-
-
-}
-
-footer{
-	background-color:#90D0C7 ;
-	position: absolute;
-}
-footer div#reseaux nav.social ul li.btn2 a{
-	text-decoration: none;
-	color: white;
-}
-footer div#reseaux nav.social ul li.btn2{
-
-}
-
-div#box_achat div.img-item{
-	margin-left: 500px;
-	margin-top: 30px;
-	margin-bottom: 30px;
-	padding-right: 2px ;
-
-
-	
-}
-div#box_achat div{
-	display: inline-block;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: auto;
-	margin-bottom: auto;
-
-}
-div#box_achat div.size{
-	vertical-align: top;
-	margin-top: 100px;
-}
-div#box_achat div.btn button.addbag {
-	background-color: white;
-	margin-right: 30px;
-}
-div#box_achat div.btn{
-}
-div#contimg{
-	
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-*{
+::before, ::after{
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 }
-p#copyRight{
-	text-align: right;
-}
-footer{
-	position: absolute;
-	width: 100%;
-}
-footer.achat{
-	clear: both;
-	width: 100%;
-}
-div#box_achat{
-	position: absolute;
-	bottom: 25%;
-	left: 10%;
-	top: 25%;
-	margin-top: auto;
-	margin-bottom: auto	;
-}
-div.infos{
-	position: relative;
-	display: block;
-	margin-left:  auto;
-	margin-right: auto;
-	margin-top: 10%;
-	margin-bottom: 10%;
-	padding: 40px;
-	width: 30em;
+h1{
 	text-align: center;
-	font-size: 25px;
-	
+	font-size: 40px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 50px 0;
 }
-div#info{
-
-	padding: 40px;
-
-	
-}
-div.infos h3{
-	padding: 20px;
-}
-
-
-div.contact nav ul li.btn2{
-	
-	display: inline-block;
-	text-align: center;
-	margin-left: 0;
-	margin-right: auto;
-	margin-top: 10%;
-	
+.grille {
+	max-width: 1300px;
+	width: 80%;
+	height: auto;
+	margin: 30px auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 300px);
+	justify-content: center;
+	grid-gap: 10px;
 
 }
-div.contact{
-	margin-left: 30%;
-}
-div.contact nav ul li.btn2 a img{
-	width: 200px;
+.grid-item{
+	width: 300px;
 	height: 200px;
-	padding: 40px;
-
-
-}
-div#box_achat div.img-item img{
-	height: 400px;
-	width: 400px;
-}
-footer.article{
-	position: relative;
-	bottom: 0;
-	
-}
-header{
-	margin-bottom: 40px;
 }
 
-footer.news{
-	position: absolute;
-	bottom: 0;
+img{
+	width: 300px;
+	height: 200px;
 }

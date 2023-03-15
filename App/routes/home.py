@@ -16,4 +16,5 @@ def home():
 
     item = Item.query.all()  
     
+    # return render_template("test.html")
     return render_template("accueil.html", item = item)
