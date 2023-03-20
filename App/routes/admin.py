@@ -50,5 +50,12 @@ def add_item_post():
             flash(message, "info")
         return redirect(url_for("admin.add_item"))
     else: return redirect(url_for("home.home"))
+@admin.route("/admin_page/remove")
+@login_required
+def remove_item():
+    if current_user.is_admin:
+        return "ok"
+    else:
+        return "no"
 
 

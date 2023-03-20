@@ -4,7 +4,7 @@
 {% block content %}
 	<body>
 		<div id="box_achat">
-			<div class="img-item"><img src="static/img/bobc.jpg" alt="image de bob"/></div>
+			<a href="{{url_for('sale.sale_page', id= item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{item.image.decode()}}" alt="{{item.title}}"/></div></a>
 			<div class="size">
 				<form>
 					<label for="size">taille</label>
