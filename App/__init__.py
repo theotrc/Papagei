@@ -25,6 +25,7 @@ def create_app():
     from .routes.auth import auth_blue
     from .routes.admin import admin
     from .routes.sale import sale_blue
+    from .routes.basket import basket_blue
 
     app.register_blueprint(home_blueprint)
     app.register_blueprint(news_blue)
@@ -33,6 +34,7 @@ def create_app():
     app.register_blueprint(auth_blue)
     app.register_blueprint(admin)
     app.register_blueprint(sale_blue)
+    app.register_blueprint(basket_blue)
 
     return app
 
