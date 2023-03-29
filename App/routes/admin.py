@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint,flash
 from App import db
 from logging import FileHandler, WARNING
-from ..models import User, Item, Purchased_item
+from ..models import User, Item, Cart, Cart_item
 from flask_login import login_user, login_required, current_user, logout_user
 from wtforms import FileField, SubmitField
 from flask_wtf import FlaskForm

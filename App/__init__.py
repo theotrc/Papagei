@@ -13,9 +13,7 @@ def create_app():
     
     # Create database connection object
     
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
+
 
 
     from .routes.home import home_blueprint
@@ -41,6 +39,9 @@ def create_app():
 
 app = create_app()
 
+with app.app_context():
+    db.init_app(app)
+    db.create_all()
 
 
 

@@ -6,24 +6,22 @@
 		<div id="box_achat">
 			<a href="{{url_for('sale.sale_page', id= item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{item.image.decode()}}" alt="{{item.title}}"/></div></a>
 			<div class="size">
-				<form>
+				<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket', id = item.id)}}">
 					<label for="size">taille</label>
 					<select name="size" id="size">
 						<option value="Skinny">S</option>
 						<option value="Medium">M</option>
 						<option value="Large">L</option>
 					</select>
-				</form>
-			</div>
-			
-			<div class="btn">
-				<form>
-					<button class="addbag">ajouter au panier</button>
+					<label for="quatity">taille</label>
+					<select name="quatity" id="quantity">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+					<p> <input type = "submit" value="Valider"/> </p>
 				</form>
 				
 			</div>
 			
-			
-		</div>
-	</body>
 	{% endblock %}
