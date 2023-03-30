@@ -6,11 +6,12 @@
   </head>
 	<body>
 		<div class="grille">
-
-			{% for image in items %}
+			{% for carts_items in carts %}
+			{% for cart_item in carts_items.cart_items %}
 			
-			<div class="grid-item">{{image}}</div>
+			<a href="{{url_for('sale.sale_page', id= cart_item.item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.item.title}}"/></div></a>
 
+			{% endfor %}
 			{% endfor %}
 		</div>
 	</body>

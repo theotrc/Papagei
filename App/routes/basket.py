@@ -21,18 +21,20 @@ def basket_post(id):
         db.session.commit()
         cart = Cart.query.filter_by(user_id = current_user.id).first()
 
-    new_item = Cart_item(item_quantity=quantity, order_status="default", cart_item_id=cart.id, item_id=1)
+    new_item = Cart_item(item_quantity=quantity, order_status="default", cart_item_id=cart.id, item_id=id)
     db.session.add(new_item)
     db.session.commit()
 
-    items = Cart_item.query.all()
 
-    return render_template("basket.html", items = items)
+    ## get user carts
+    
+    carts = Cart.query.filter_by(id=current_user.id).all()
+    return render_template("basket.html", carts = carts)
 
 @basket_blue.route("/basket")
 @login_required
 def basket():
-    items = Cart_item.query.all()
+    carts = Cart.query.filter_by(id=current_user.id).all()
 
 
-    return render_template("basket.html", items = items)
+    return render_template("basket.html", carts = carts)

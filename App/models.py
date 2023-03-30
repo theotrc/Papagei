@@ -27,7 +27,7 @@ class Item(db.Model):
     description = db.Column(db.String(1000))
     price = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
     image = db.Column(db.LargeBinary)
-    Orders = db.relationship('Cart_item', backref='item', lazy=True)
+    Orders = db.relationship('Cart_item', backref='item', lazy="joined")
 
 # class Purchased_item(db.Model):
 #     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy

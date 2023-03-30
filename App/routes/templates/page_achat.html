@@ -6,7 +6,7 @@
 		<div id="box_achat">
 			<a href="{{url_for('sale.sale_page', id= item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{item.image.decode()}}" alt="{{item.title}}"/></div></a>
 			<div class="size">
-				<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket', id = item.id)}}">
+				<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket_post', id = item.id)}}">
 					<label for="size">taille</label>
 					<select name="size" id="size">
 						<option value="Skinny">S</option>
