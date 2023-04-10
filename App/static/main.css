@@ -3,6 +3,8 @@
 	margin: 0;
 	padding: 0;
 }
+
+/* nav bar css */
 .all-nav-bar{
 	color: red;
 	background-color: red;
@@ -13,6 +15,8 @@
 	margin: 0;
 	padding: 0;
 }
+/* end nav bar css */
+
 
 h1{
 	text-align: center;
