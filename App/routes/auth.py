@@ -73,3 +73,10 @@ def logout():
     logout_user()
     return redirect(url_for('home.home'))
 
+
+
+@auth_blue.route('/resetpwd')
+def resetpwd():
+    return render_template('Password.html')
+
+

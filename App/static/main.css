@@ -29,3 +29,16 @@ img{
 	width: 300px;
 	height: 200px;
 }
+
+.grille-auth {
+    max-width: 1300px;
+    width: 80%;
+    height: auto;
+    margin: auto 50px;
+    display: grid;
+    justify-content: center;
+
+}
+.button-auth{
+	justify-content: center;
+}

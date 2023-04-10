@@ -4,6 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import logging
+from flask_mail import  Mail
 
 db = SQLAlchemy()
 def create_app():
@@ -38,6 +39,7 @@ def create_app():
 
 
 app = create_app()
+mail = Mail(app)
 
 with app.app_context():
     db.init_app(app)
