@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, Blueprint,
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from App import db
+from App.utils import generate_code
 from ..models import User
 from logging import FileHandler, WARNING
 from flask_login import login_user, login_required, current_user, logout_user
@@ -88,11 +89,17 @@ def logout():
 
 @auth_blue.route('/resetpwd')
 def resetpwd():
-    subject = "réinitialisation de mot de passe"
-    body = """
-    rest password
-    """
 
+
+    return render_template('Password.html')
+
+@auth_blue.route("/resetpwd", methods=['POST'])
+def resetpwd_post():
+
+    code = generate_code()
+    subject = "réinitialisation de mot de passe"
+    body = f"rest password \ncode: {code}"
+    email_receiver = request.form.get('email')
     em = EmailMessage()
     em['From'] = email_sender
     em['To'] = email_receiver
@@ -105,6 +112,6 @@ def resetpwd():
         smtp.login(email_sender, pwd)
         smtp.sendmail(email_sender,email_receiver,em.as_string())
 
-    return "un mail vous a été envoyé"
+    return render_template('ValidateMail.html')
 
 

@@ -1,4 +1,5 @@
 # from App import db 
+import random
 def row2dict(row, column_list=None):
     d = {}
     if column_list == None:
@@ -19,4 +20,10 @@ def unitaire(n):
 
 #     db.session.add(new_user)
 #     db.session.commit()   
+
+
+
+def generate_code():
+    code = int(str(random.randint(0,9)) +str(random.randint(0,9)) +str(random.randint(0,9)) +str(random.randint(0,9)) +str(random.randint(0,9)) +str(random.randint(0,9)) +str(random.randint(0,9)) +str(random.randint(0,9)))
+    return code
     
