@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 from App import app,db 
 
 if __name__ == "__main__":
