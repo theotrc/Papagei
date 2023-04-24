@@ -6,6 +6,8 @@ from App.utils import generate_code
 from ..models import User
 from logging import FileHandler, WARNING
 from flask_login import login_user, login_required, current_user, logout_user
+from datetime import date, datetime, timedelta
+from hashlib import sha256
 
 import smtplib
 from email.message import EmailMessage
@@ -95,16 +97,25 @@ def resetpwd():
 
 @auth_blue.route("/resetpwd", methods=['POST'])
 def resetpwd_post():
+    email_receiver = request.form.get('email')
 
-    code = generate_code()
+    expiry = datetime.now() + timedelta(days=1)
+    id = User.query.filter_by(email=email_receiver).first().id
+    code = sha256(str(generate_code()).encode()).hexdigest()
+    User.query.filter_by(id=id).update(values={"reset_token":code,"reset_token_expiry":expiry})
+    db.session.commit()
+
+
     subject = "réinitialisation de mot de passe"
     body = f"rest password \ncode: {code}"
-    email_receiver = request.form.get('email')
+
     em = EmailMessage()
     em['From'] = email_sender
     em['To'] = email_receiver
     em['Subject'] =  subject
     em.set_content(body)
+
+
 
     context = ssl.create_default_context()
 
@@ -112,6 +123,8 @@ def resetpwd_post():
         smtp.login(email_sender, pwd)
         smtp.sendmail(email_sender,email_receiver,em.as_string())
 
-    return render_template('ValidateMail.html')
+    return redirect(url_for('auth.mailvalidation',id= id,code=code))
 
-
+@auth_blue.route("/mailvalidation/<id>/<code>")
+def mailvalidation(id,code):
+    return render_template('ValidateMail.html', id=id, code=code)

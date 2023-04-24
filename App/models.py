@@ -15,6 +15,11 @@ class User(UserMixin,db.Model):
     firstname = db.Column(db.String(1000))
     address = db.Column(db.String(1000))
     country = db.Column(db.String(1000))
+
+    ## reset token for reset password
+    reset_token = db.Column(db.String(100))
+    reset_token_expiry = db.Column(db.Date)
+
     is_admin = db.Column(db.Boolean, default=False, nullable=False)
 
     Carts = db.relationship('Cart', backref='user', lazy=True)
