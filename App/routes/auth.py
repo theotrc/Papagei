@@ -43,6 +43,9 @@ def signup_post():
 
     if user: # if a user is found, we want to redirect back to signup page so user can try again
         return redirect(url_for('auth.signup'))
+    if not password or len(password)<8:
+        flash("le mot de passe doit faire 8 caractères minimum", "info")
+        return render_template('signup.html')
 
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'),firstname = firstname, address=adress,country=country, is_admin=False)
@@ -147,7 +150,6 @@ def mailvalidation(id,code):
     
     user = User.query.filter_by(id=id).filter_by(reset_token=code).first()
     if user:
-        print(user.reset_token_expiry, "ifnzoeiiiiiioiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
         if user.reset_token_expiry > datetime.now():
             return render_template('ValidateMail.html', id=id,code=code)
         else:
