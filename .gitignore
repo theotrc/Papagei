@@ -1,4 +1,6 @@
 /__pycache__
+/App/__pycache__
+/App/routes/__pycache__
 /env
 /tuto.py
 .env
