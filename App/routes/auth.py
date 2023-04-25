@@ -97,34 +97,84 @@ def resetpwd():
 
 @auth_blue.route("/resetpwd", methods=['POST'])
 def resetpwd_post():
+
     email_receiver = request.form.get('email')
 
-    expiry = datetime.now() + timedelta(days=1)
-    id = User.query.filter_by(email=email_receiver).first().id
-    code = sha256(str(generate_code()).encode()).hexdigest()
-    User.query.filter_by(id=id).update(values={"reset_token":code,"reset_token_expiry":expiry})
-    db.session.commit()
+    
+    user = User.query.filter_by(email=email_receiver).first()
+
+    ## if user exist
+    if user:
+        id = user.id
+
+        code = sha256(str(generate_code()).encode()).hexdigest()
+        expiry = datetime.now() + timedelta(days=1)
 
 
-    subject = "réinitialisation de mot de passe"
-    body = f"rest password \ncode: {code}"
-
-    em = EmailMessage()
-    em['From'] = email_sender
-    em['To'] = email_receiver
-    em['Subject'] =  subject
-    em.set_content(body)
+        User.query.filter_by(id=id).update(values={"reset_token":code,"reset_token_expiry":expiry})
+        db.session.commit()
 
 
+        subject = "réinitialisation de mot de passe"
+        body = f"lien de réinitialisation: http://10.25.1.37:8000/mailvalidation/{id}/{code}"
 
-    context = ssl.create_default_context()
+        em = EmailMessage()
+        em['From'] = email_sender
+        em['To'] = email_receiver
+        em['Subject'] =  subject
+        em.set_content(body)
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-        smtp.login(email_sender, pwd)
-        smtp.sendmail(email_sender,email_receiver,em.as_string())
 
-    return redirect(url_for('auth.mailvalidation',id= id,code=code))
+
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_sender, pwd)
+            smtp.sendmail(email_sender,email_receiver,em.as_string())
+
+        message = f"un email vous a été envoyé"
+        flash(message, "info")
+
+    elif not user:
+
+        message = f"L'adresse mail que vous avez rentré n'est associé à aucun compte"
+        flash(message, "info")
+
+    return render_template("Password.html")
 
 @auth_blue.route("/mailvalidation/<id>/<code>")
 def mailvalidation(id,code):
-    return render_template('ValidateMail.html', id=id, code=code)
+    
+    user = User.query.filter_by(id=id).filter_by(reset_token=code).first()
+    if user:
+        print(user.reset_token_expiry, "ifnzoeiiiiiioiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+        if user.reset_token_expiry > datetime.now():
+            return render_template('ValidateMail.html', id=id,code=code)
+        else:
+            return "False"
+    else:
+        return "False"
+
+
+
+@auth_blue.route('/mailvalidation/<id>/<code>', methods=['POST'])
+def change_pwd(id, code):
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+
+    if password == confirm_password:    
+        try:
+
+
+
+            User.query.filter_by(id=id).filter_by(reset_token=code).update(values={"reset_token":None,
+                                                                                "reset_token_expiry":None,
+                                                                                "password":generate_password_hash(password, method='sha256')})
+            db.session.commit()
+        except Exception as e:
+            return "error"
+    else:
+        flash("les deux mots de passe ne sont pas indentiques", "info")
+        return render_template('ValidateMail.html', id=id,code=code)
+    
+    return redirect(url_for('auth.login'))

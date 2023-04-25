@@ -18,7 +18,7 @@ class User(UserMixin,db.Model):
 
     ## reset token for reset password
     reset_token = db.Column(db.String(100))
-    reset_token_expiry = db.Column(db.Date)
+    reset_token_expiry = db.Column(db.DateTime)
 
     is_admin = db.Column(db.Boolean, default=False, nullable=False)
 
