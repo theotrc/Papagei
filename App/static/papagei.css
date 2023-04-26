@@ -9,9 +9,9 @@ html,body{
 	padding: 0;
 }
 
-* {
+/* * {
 	border:1px solid #333;
-}
+} */
 
 .grille {
 	/* max-width: 1300px; */
@@ -29,9 +29,16 @@ html,body{
 }
 .grid-item{
 	width: 50vw;
-	height: 100vw;
+	height: 100vh;
 	background: rgb(5, 210, 246);
 
+}
+
+.first{
+	background: rgb(255, 253, 113);
+}
+.second{
+	background: rgb(144, 255, 246);
 }
 
 .papagei{
