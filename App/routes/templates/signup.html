@@ -17,4 +17,16 @@
 
         <p> <button class="button is-block is-info is-large is-fullwidth">Sign Up</button> </p>
     </form>
+    {% with messages = get_flashed_messages(with_categories=true,
+        category_filter=["error","info"]) %}
+
+       {%if messages %}
+           {% for category, message in messages %}
+               <p>{{message}}</p>
+               
+           {% endfor %}
+
+       {%endif %}
+
+   {% endwith %}
 </div>

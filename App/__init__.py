@@ -4,7 +4,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import logging
-from flask_mail import  Mail
 
 db = SQLAlchemy()
 def create_app():
@@ -25,7 +24,9 @@ def create_app():
     from .routes.admin import admin
     from .routes.sale import sale_blue
     from .routes.basket import basket_blue
+    from .routes.papagei import papagei_blue
 
+    app.register_blueprint(papagei_blue)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(news_blue)
     app.register_blueprint(account_blue)
@@ -39,7 +40,6 @@ def create_app():
 
 
 app = create_app()
-mail = Mail(app)
 
 with app.app_context():
     db.init_app(app)
