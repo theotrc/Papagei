@@ -52,7 +52,7 @@ html,body{
 	font-family: 'Cherry Bomb';
 	font-style: normal;
 	font-weight: 400;
-	font-size: 128px;
+	font-size: clamp(4rem, 10vw, 8rem);
 	line-height: 128px; 
 
 	z-index: 999;
