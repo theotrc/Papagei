@@ -20,7 +20,7 @@ html,body{
 	margin: 0;
 	padding: 0;
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(2, 1fr);
 
 	justify-content: center;
 	grid-gap: 0px;
@@ -57,4 +57,36 @@ html,body{
 
 	z-index: 999;
 	color: #ff51ff;
+}
+
+
+@media screen and (max-width: 480px){
+
+	.grille {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+
+	justify-content: center;
+	grid-gap: 0px;
+	/* z-index: 1;  */
+	
+	}
+	.grille > :nth-child(n+3){
+		display: none;
+	}
+	.grid-item{
+		width: 100%;
+		height: 100vh;
+		background: rgb(5, 210, 246);
+	}
+	.first{
+		background: rgb(255, 253, 113);
+	}
+	.second{
+		background: rgb(144, 255, 246);
+	}
 }
