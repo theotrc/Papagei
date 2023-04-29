@@ -20,7 +20,7 @@ html,body{
 	margin: 0;
 	padding: 0;
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(2, 1fr);
 
 	justify-content: center;
 	grid-gap: 0px;
@@ -36,9 +36,9 @@ html,body{
 
 }
 
-.asos{
+/* .asos{
 	width: 50%;
-}
+} */
 
 .first{
 	background: rgb(255, 253, 113);
@@ -89,9 +89,9 @@ html,body{
 		background: rgb(5, 210, 246);
 	}
 	.first{
-		background: rgb(255, 253, 113);
+		background: rgb(230, 158, 252);
 	}
 	.second{
-		background: rgb(144, 255, 246);
+		background: rgb(249, 218, 162);
 	}
 }
