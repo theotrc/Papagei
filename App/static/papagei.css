@@ -3,7 +3,10 @@
 	margin: 0;
 	padding: 0;
 }
-
+@font-face {
+	font-family: 'APL';
+	src: url(fonts/APL386.ttf);
+  }
 html,body{
 	margin:0;
 	padding: 0;
@@ -41,10 +44,10 @@ html,body{
 } */
 
 .first{
-	background: rgb(255, 253, 113);
+	background: #afe2ff;
 }
 .second{
-	background: rgb(144, 255, 246);
+	background: #ffcceb;
 }
 
 .papagei{
@@ -54,14 +57,14 @@ html,body{
 	left: 50%;
 	transform: translate(-50%, -50%);
 
-	font-family: 'Cherry Bomb';
+	font-family: 'APL';
 	font-style: normal;
 	font-weight: 400;
 	font-size: clamp(4rem, 10vw, 8rem);
 	line-height: 128px; 
 
 	z-index: 999;
-	color: #ff51ff;
+	color: #fcff51;
 }
 
 
