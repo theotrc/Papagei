@@ -5,45 +5,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="static/nav.css" rel="stylesheet">
 
-    <title>Document</title>
+    <title>papagei</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{url_for('papagei.papagei')}}">PAPAGEI</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <nav class="nav-bar">
+        <div class="nav-left">
+          <a class="navbar-brand" href="{{url_for('papagei.papagei')}}">papagei</a>
+          <a class="nav-link" href="{{url_for('home.home')}}">nouvelle collection <span class="sr-only"></span></a>
 
-          <ul class="navbar-nav mr-auto">
-
-            <li class="nav-item active">
-              <a class="nav-link" href="{{url_for('home.home')}}">Home <span class="sr-only"></span></a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="{{url_for('contact.contact')}}">contact</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('news.news')}}">news</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('account.account')}}">account</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url_for('basket.basket')}}">panier</a>
-            </li>
-
-
-          </ul>
         </div>
-      </nav>
+    
+        <div class="nav-right">
+
+              <a class="nav-link" href="{{url_for('account.account')}}">compte</a>
+
+              <a class="nav-link" href="{{url_for('basket.basket')}}">panier</a>
+
+        </div>
+
+
+    </div>
+    
+    </nav>
 
     
     <main>

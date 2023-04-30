@@ -148,7 +148,7 @@ def resetpwd_post():
 @auth_blue.route("/mailvalidation/<id>/<code>")
 def mailvalidation(id,code):
     
-    user = User.query.filter_by(id=id).filter_by(reset_token=code).first()
+    user = User.query.filter_by(id=int(id)).filter_by(reset_token=code).first()
     if user:
         if user.reset_token_expiry > datetime.now():
             return render_template('ValidateMail.html', id=id,code=code)
@@ -169,7 +169,7 @@ def change_pwd(id, code):
 
 
 
-            User.query.filter_by(id=id).filter_by(reset_token=code).update(values={"reset_token":None,
+            User.query.filter_by(id=int(id)).filter_by(reset_token=code).update(values={"reset_token":None,
                                                                                 "reset_token_expiry":None,
                                                                                 "password":generate_password_hash(password, method='sha256')})
             db.session.commit()
