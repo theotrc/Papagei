@@ -13,32 +13,54 @@
 <body>
     <nav class="nav-bar">
         <div class="nav-left">
-          <a class="navbar-brand" href="{{url_for('papagei.papagei')}}">papagei</a>
-          <a class="nav-link" href="{{url_for('home.home')}}">nouvelle collection <span class="sr-only"></span></a>
+
+            <a class="navbar-brand" href="{{url_for('papagei.papagei')}}">papagei</a>
+
+            <a class="nav-link" href="{{url_for('home.home')}}">nouvelle collection <span class="sr-only"></span></a>
 
         </div>
     
         <div class="nav-right">
 
-              <a class="nav-link" href="{{url_for('account.account')}}">compte</a>
+            <a class="nav-link" href="{{url_for('account.account')}}">compte</a>
 
-              <a class="nav-link" href="{{url_for('basket.basket')}}">panier</a>
+            <a class="nav-link" href="{{url_for('basket.basket')}}">panier</a>
 
         </div>
+        <div class="nav-burger">
+            <a class="nav-link-burger" href="{{url_for('home.home')}}">icon 1<span class="sr-only"></span></a>
+                
+            <a class="nav-link-burger" href="{{url_for('account.account')}}">icon 2</a>
 
+            <a class="nav-link-burger" href="{{url_for('basket.basket')}}">icon 3</a>
+            <div class="burger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
 
-    </div>
-    
     </nav>
 
     
     <main>
-        
+
         {% block content %}
 
         {% endblock content %}
 
-        
+
     </main>
+    <script>
+        function myFunction() {
+            
+          var x = document.getElementsByClassName("nav-link");
+          if (x.style.display === "block") {
+            x.style.display = "none";
+          } else {
+            x.style.display = "block";
+          }
+        }
+    </script>
 </body>
 </html>
