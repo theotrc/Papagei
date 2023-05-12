@@ -52,7 +52,7 @@ a {
   padding: 5px;
 }
 
-.nav-burger{
+.nav-mobile{
   display: none;
 }
 
@@ -64,24 +64,10 @@ a {
   .nav-right  a{
     display: none;
   }
-  .nav-burger{
+  .nav-mobile{
     display: flex;
-    flex-direction: column;
-  }
-  .burger-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-  }
-  .bar {
-    width: 25px;
-    height: 3px;
-    background-color: black;
-    margin: 3px 0;
+    flex-direction: row;
   }
 }
+
 

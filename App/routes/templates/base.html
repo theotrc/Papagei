@@ -27,17 +27,13 @@
             <a class="nav-link" href="{{url_for('basket.basket')}}">panier</a>
 
         </div>
-        <div class="nav-burger">
-            <a class="nav-link-burger" href="{{url_for('home.home')}}">icon 1<span class="sr-only"></span></a>
+        <div class="nav-mobile">
+            <a class="nav-link-mobile" href="{{url_for('home.home')}}"><img src="static/home.svg" alt=""><span class="sr-only"></span></a>
                 
-            <a class="nav-link-burger" href="{{url_for('account.account')}}">icon 2</a>
+            <a class="nav-link-mobile" href="{{url_for('account.account')}}"><object data="static/home.svg" width="300" height="300"> </object></a>
+ 
+            <a class="nav-link-mobile" href="{{url_for('basket.basket')}}">icon 3</a>
 
-            <a class="nav-link-burger" href="{{url_for('basket.basket')}}">icon 3</a>
-            <div class="burger-menu">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
         </div>
 
     </nav>
@@ -51,16 +47,5 @@
 
 
     </main>
-    <script>
-        function myFunction() {
-            
-          var x = document.getElementsByClassName("nav-link");
-          if (x.style.display === "block") {
-            x.style.display = "none";
-          } else {
-            x.style.display = "block";
-          }
-        }
-    </script>
 </body>
 </html>

@@ -12,12 +12,8 @@ html,body{
 	padding: 0;
 }
 
-/* * {
-	border:1px solid #333;
-} */
 
 .grille {
-	/* max-width: 1300px; */
 	width: 100%;
 	height: 100%;
 	margin: 0;
@@ -27,7 +23,6 @@ html,body{
 
 	justify-content: center;
 	grid-gap: 0px;
-	/* z-index: 1;  */
 	
 
 }
@@ -39,9 +34,6 @@ html,body{
 
 }
 
-/* .asos{
-	width: 50%;
-} */
 
 .first{
 	background: #afe2ff;
@@ -70,12 +62,10 @@ html,body{
 @media screen and (max-width: 480px){
 
 	.grille {
-	width: 100%;
-	height: 100%;
 	margin: 0;
 	padding: 0;
 	display: grid;
-	grid-template-columns: repeat(1, 1fr);
+	grid-template-columns: 1fr;
 
 	justify-content: center;
 	grid-gap: 0px;
@@ -87,7 +77,6 @@ html,body{
 	}
 	.grid-item{
 		width: 100%;
-		height: 100vh;
 		background: rgb(5, 210, 246);
 	}
 	.first{
