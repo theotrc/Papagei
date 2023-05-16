@@ -13,15 +13,25 @@ import base64
 
 admin = Blueprint("admin", __name__, static_folder="../static", template_folder="../templates")
 
+
+
+
+
+@admin.route("/adminitems")
+@login_required
+def adminitems():
+    if current_user.is_admin:
+        item = Item.query.all()  
+        return render_template("admin_items.html",data={"user":current_user}, items=item)
+    else: return redirect(url_for("home.home"))
+
+
+    
 @admin.route("/admin_page")
 @login_required
 def add_item():
     if current_user.is_admin:
-        # form = UploadFileForm()
-        # if form.validate_on_submit():
-        #     print('hiuorehziofjhiozejfiofjjjjjjjjjjjjjjjjjjjjjjjjjj')
-        #     file = form.file.data
-        #     file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),'static/files',secure_filename(file.file_name)))
+
         return render_template("admin.html",data={"user":current_user})
     else: return redirect(url_for("home.home"))
 
