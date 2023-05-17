@@ -22,11 +22,12 @@ admin = Blueprint("admin", __name__, static_folder="../static", template_folder=
 def adminitems():
     if current_user.is_admin:
         item = Item.query.all()  
+        print(item)
         return render_template("admin_items.html",data={"user":current_user}, items=item)
     else: return redirect(url_for("home.home"))
 
 
-    
+
 @admin.route("/admin_page")
 @login_required
 def add_item():
