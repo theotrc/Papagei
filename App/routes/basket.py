@@ -29,12 +29,23 @@ def basket_post(id):
     ## get user carts
     
     carts = Cart.query.filter_by(id=current_user.id).all()
+    cart_items = Cart_item.query.all()
     return render_template("basket.html", carts = carts)
 
 @basket_blue.route("/basket")
 @login_required
 def basket():
-    carts = Cart.query.filter_by(id=current_user.id).all()
-
+    carts = Cart.query.filter_by(user_id=current_user.id)
 
     return render_template("basket.html", carts = carts)
+
+
+@basket_blue.route("/test")
+@login_required
+def test():
+    x = [[1,10,100],[2,20,200],[3,33],[444444,444444444444444444,4,44,4]]
+
+
+    return render_template("test.html", x = x)
+
+

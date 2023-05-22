@@ -58,3 +58,24 @@ img{
 .button-auth{
 	justify-content: center;
 }
+
+.grille-basket {
+	max-width: 1300px;
+	width: 100%;
+	height: auto;
+	margin: auto auto;
+	display: grid;
+	grid-template-columns: 1(1fr, 300px);
+	justify-content: center;
+	grid-gap: 10px;
+
+}
+.grid-basket-item{
+	width: 300px;
+	height: 200px;
+	
+}
+.basket-item{
+	display:flex;
+
+}

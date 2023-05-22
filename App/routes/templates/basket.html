@@ -8,15 +8,30 @@
 	
   </head>
 	<body>
-		<div class="grille">
-			{% for carts_items in carts %}
-			{% for cart_item in carts_items.cart_items %}
-			
-			<a href="{{url_for('sale.sale_page', id= cart_item.item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.item.title}}"/></div></a>
+		<div class="grille-basket">
+			<!-- for cart in carts -->
+			<!--  -->
+			<!-- for item in cart_items -->
 
+			{% for cart in carts %}
+				{% for cart_item in cart.cart_items %}
+				<div class="basket-item">
+					<a href="{{url_for('sale.sale_page', id= cart_item.item.id)}}">
+						<div class="grid-basket-item">
+							<img src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.item.title}}"/>
+						
+						</div>
+					</a> 
+					<div class="item-info">
+						<h1>{{cart_item.item.title}}</h1>
+						<p>taille: {{cart_item.size}}</p>
+						<p>{{cart_item.item.price}} euros</p>
+					</div>
+				</div>
+				{% endfor %}
 			{% endfor %}
-			{% endfor %}
-		</div>
+
+	</div>
 	</body>
 {% endblock content%}
 
