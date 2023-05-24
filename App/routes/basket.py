@@ -21,16 +21,15 @@ def basket_post(id):
         db.session.commit()
         cart = Cart.query.filter_by(user_id = current_user.id).first()
 
-    new_item = Cart_item(item_quantity=quantity, order_status="default", cart_item_id=cart.id, item_id=id)
+    new_item = Cart_item(item_quantity=quantity, order_status="default", cart_item_id=cart.id, item_id=id, size=size)
     db.session.add(new_item)
     db.session.commit()
 
 
     ## get user carts
     
-    carts = Cart.query.filter_by(id=current_user.id).all()
-    cart_items = Cart_item.query.all()
-    return render_template("basket.html", carts = carts)
+
+    return redirect(url_for("basket.basket"))
 
 @basket_blue.route("/basket")
 @login_required
@@ -40,12 +39,16 @@ def basket():
     return render_template("basket.html", carts = carts)
 
 
-@basket_blue.route("/test")
+@basket_blue.route("/removeitem<id>")
 @login_required
-def test():
-    x = [[1,10,100],[2,20,200],[3,33],[444444,444444444444444444,4,44,4]]
+def deleteitem_basket(id):
+
+    item = Cart_item.query.filter_by(id=int(id)).first()
+
+    db.session.delete(item)
+    db.session.commit()
 
 
-    return render_template("test.html", x = x)
+    return redirect(url_for("basket.basket"))
 
 
