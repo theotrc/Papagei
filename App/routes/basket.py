@@ -20,7 +20,10 @@ def basket_post(id):
         db.session.add(new_cart)
         db.session.commit()
         cart = Cart.query.filter_by(user_id = current_user.id).first()
-
+    
+    basket_cost = Cart.query.filter_by(user_id=current_user.id).first().total_price
+    basket_cost += float(Item.query.filter_by(id=int(id)).first().price)
+    Cart.query.filter_by(user_id=current_user.id).update(values={"total_price":basket_cost})
     new_item = Cart_item(item_quantity=quantity, order_status="default", cart_item_id=cart.id, item_id=id, size=size)
     db.session.add(new_item)
     db.session.commit()
@@ -45,6 +48,11 @@ def deleteitem_basket(id):
 
     item = Cart_item.query.filter_by(id=int(id)).first()
 
+    basket_cost = Cart.query.filter_by(user_id=current_user.id).first().total_price
+    basket_cost += - float(Item.query.filter_by(id=item.item_id).first().price)
+
+    Cart.query.filter_by(user_id=current_user.id).update(values={"total_price":basket_cost})
+    
     db.session.delete(item)
     db.session.commit()
 

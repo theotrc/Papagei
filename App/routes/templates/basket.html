@@ -46,7 +46,20 @@
 								{% endfor %}
 								<div class="basket-total">
 									<p>basket-total</p>
-									<p>{{cart.total_price}}</p>
+									<form action="/charge" method="post">
+										<article>
+										  <label>
+											<span>Amount is {{cart.total_price}}€</span>
+										  </label>
+										</article>
+									  
+										<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+												data-key="{{ key }}"
+												data-description="A Flask Charge"
+												data-amount="{{cart.total_price * 100}}"
+												data-locale="auto"></script>
+									  </form>
+									<p></p>
 								</div>
 							{% endfor %}
 							

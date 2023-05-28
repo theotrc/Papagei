@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from config import stripe_keys
+import stripe
 
 db = SQLAlchemy()
 def create_app():
@@ -35,7 +37,7 @@ def create_app():
 
     return app
 
-
+stripe.api_key = stripe_keys['secret_key']
 app = create_app()
 
 with app.app_context():
