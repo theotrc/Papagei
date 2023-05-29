@@ -1,19 +1,20 @@
 <head>
 	<link rel="stylesheet" href="static/main.css">
 </head>
-
 {% extends "base.html" %}
 
 {% block content %}
-
+<head>
+	
+  </head>
 	<body>
 		<div class="grille">
-
-			{% for image in item %}
-			
-			<a href="{{url_for('sale.sale_page', id= image.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/></div></a>
+			{% for i in x  %}
+            {%for n in i %}
+                <p>{{n}}</p>
 
 			{% endfor %}
+            {% endfor %}
 		</div>
 	</body>
 {% endblock content%}

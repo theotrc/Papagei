@@ -3,10 +3,7 @@
 	margin: 0;
 	padding: 0;
 }
-@font-face {
-	font-family: 'APL';
-	src: url(fonts/APL386.ttf);
-  }
+
 html,body{
 	margin:0;
 	padding: 0;
@@ -23,7 +20,7 @@ html,body{
 	margin: 0;
 	padding: 0;
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: 1fr 1fr;
 
 	justify-content: center;
 	grid-gap: 0px;
@@ -39,15 +36,17 @@ html,body{
 
 }
 
-/* .asos{
-	width: 50%;
-} */
+.asos{
+	min-width: 450px;
+	max-width: 1280px;
+	width: 150%;
+}
 
 .first{
-	background: #afe2ff;
+	background: rgb(255, 253, 113);
 }
 .second{
-	background: #ffcceb;
+	background: rgb(144, 255, 246);
 }
 
 .papagei{
@@ -57,14 +56,14 @@ html,body{
 	left: 50%;
 	transform: translate(-50%, -50%);
 
-	font-family: 'APL';
+	font-family: 'Cherry Bomb';
 	font-style: normal;
 	font-weight: 400;
 	font-size: clamp(4rem, 10vw, 8rem);
 	line-height: 128px; 
 
 	z-index: 999;
-	color: #fcff51;
+	color: #ff51ff;
 }
 
 
@@ -92,9 +91,9 @@ html,body{
 		background: rgb(5, 210, 246);
 	}
 	.first{
-		background: rgb(230, 158, 252);
+		background: rgb(255, 253, 113);
 	}
 	.second{
-		background: rgb(249, 218, 162);
+		background: rgb(144, 255, 246);
 	}
 }

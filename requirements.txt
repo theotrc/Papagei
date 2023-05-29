@@ -4,4 +4,5 @@ Flask-Login==0.6.2
 python-dotenv==0.21.0
 flask-wtf==1.1.1
 wtforms==3.0.1
-psycopg2==2.9.6
+pg8000==1.29.*
+stripe==5.4.*

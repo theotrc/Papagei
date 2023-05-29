@@ -10,7 +10,7 @@
     <a href="{{url_for('auth.logout')}}">logout</a>
     hello {{current_user.name}}
     {%if current_user.is_admin%}
-    <a href="{{url_for('admin.add_item')}}">admin page</a>
+    <a href="{{url_for('admin.adminitems')}}">items</a>
     {% endif %}
 </body>
 </html>

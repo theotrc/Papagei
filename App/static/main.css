@@ -15,9 +15,9 @@ h1{
 }
 .grille {
 	max-width: 1300px;
-	width: 80%;
+	width: 100%;
 	height: auto;
-	margin: 30px auto;
+	margin: auto auto;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 300px);
 	justify-content: center;
@@ -28,6 +28,18 @@ h1{
 	width: 300px;
 	height: 200px;
 }
+.new-item{
+	width: 300px;
+	height: 200px;
+	background-color: black;
+}
+.new-item p{
+	margin: 0;
+	color: red;
+	text-align: center;
+	
+	
+} 
 
 img{
 	width: 300px;
@@ -45,4 +57,51 @@ img{
 }
 .button-auth{
 	justify-content: center;
+}
+
+.basket-head{
+	max-width: 800px;
+	width: 100%;
+	height: auto;
+	margin: auto auto;
+	background-color: gray;
+}
+.basket{
+	margin: auto auto;
+	width: 100%;
+	
+}
+.basket-title{
+	text-align: center;
+}
+.grille-basket {
+	max-width: 800px;
+	width: 100%;
+	height: auto;
+	margin: auto auto;
+	display: grid;
+	grid-template-columns: 1(1fr, 300px);
+	justify-content: left;
+	background-color: gray;
+
+}
+.grid-basket-item{
+	width: 300px;
+	height: 200px;
+	
+}
+.basket-item{
+	display:flex;
+
+}
+.item-info{
+	margin-left: 10px;
+}
+.basket-total{
+	text-align: center;
+	max-width: 800px;
+	width: 100%;
+	height: auto;
+	margin: auto auto;
+	background-color: gray;
 }

@@ -76,7 +76,7 @@ class Cart(db.Model):
     
     total_price = db.Column(db.Float, nullable=False, default=0)
 
-    
+     
     cart_items = db.relationship('Cart_item', backref='cart', lazy=True)
     
 
