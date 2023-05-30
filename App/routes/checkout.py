@@ -1,5 +1,5 @@
-from flask import redirect, Blueprint, render_template
-from App import stripe
+from flask import redirect, Blueprint, render_template,url_for
+from App import stripe, stripe_public_key
 from flask import request
 
 
@@ -11,14 +11,26 @@ checkout_blue= Blueprint("checkout", __name__, static_folder="../static", templa
 def checkout():
     
     session = stripe.checkout.Session.create(
-        payement_method_types=["card"],
-        line_items=[{"price":10, "quantity":1}], 
-        mode="payement", 
-        success_url="https://example.com/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url="https://example.com/cancel",
+        payment_method_types=["card"],
+        line_items=[{"price_data": {
+        "currency": "usd",
+        "unit_amount": 500,
+        "product_data": {
+          "name": "name of the product",
+        },
+      },
+      "quantity": 1,
+    },], 
+        mode="payment", 
+        success_url=url_for("home.home",_external=True) + '?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=url_for("basket.basket", _external=True),
     )
 
-    return render_template("checkout.html")
+    return render_template(
+                            "checkout.html",
+                            checkout_session_id=session["id"],
+                            checkout_public_key=stripe_public_key
+                        )
 
 
 

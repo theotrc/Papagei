@@ -38,7 +38,7 @@ def create_app():
     app.register_blueprint(basket_blue)
 
     return app
-
+stripe_public_key= stripe_keys['publishable_key']
 stripe.api_key = stripe_keys['secret_key']
 app = create_app()
 
