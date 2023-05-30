@@ -24,7 +24,9 @@ def create_app():
     from .routes.sale import sale_blue
     from .routes.basket import basket_blue
     from .routes.papagei import papagei_blue
+    from .routes.checkout import checkout_blue
 
+    app.register_blueprint(checkout_blue)
     app.register_blueprint(papagei_blue)
     app.register_blueprint(home_blueprint)
     app.register_blueprint(news_blue)
