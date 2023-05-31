@@ -4,21 +4,20 @@
   <head>
     <title>Buy cool new product</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://js.stripe.com/v3/"></script>
+    
   </head>
   <body>
-    <section>
-      <div class="product">
-        <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
-        <div class="description">
-          <h3>Stubborn Attachments</h3>
-          <h5>$20.00</h5>
-        </div>
-      </div>
-      <form action="/create-checkout-session" method="POST">
-        <button type="submit" id="checkout-button">Checkout</button>
-      </form>
-    </section>
+    {% extends "base.html" %}
+    {% block content %}
+    <a href="#" id="buy_now_btn">coucou les loulous</a>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      const checkout_public_key = "{{checkout_public_key}}"
+      const checkout_session_id = "{{checkout_session_id}}"
+    </script>
+    <script src="{{url_for('static', filename='script-no-ajax.js')}}"></script>
+    {% endblock content %}
   </body>
 
 </html>
