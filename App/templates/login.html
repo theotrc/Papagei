@@ -5,24 +5,26 @@
 
 {% block content %}
 <div class="grille-auth">
-<h3 class="title">Login</h3>
+
+<h3 class="title">Connexion</h3>
 <form method="POST" action="/login">
 
-    <p> <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus=""> </p>
+    <p> <input class="input is-large" type="email" name="email" placeholder="Adresse mail" autofocus=""> </p>
 
 
-    <p><input class="input is-large" type="password" name="password" placeholder="Your Password"> </p>
+    <p><input class="input is-large" type="password" name="password" placeholder="Mot de passe"> </p>
 
     <p> <label >
         <input type="checkbox" name="remember">
-        Remember me
+        Se souvenir de moi
     </label> </p>
 
-    <p> <input type = "submit" value="login"/> </p>
+    <p> <input type = "submit" value="Se connecter"/> </p>
     
 </form>
-    <p> <button><a href="{{url_for('auth.signup')}}">signup</a></button> </p>
-    <p><a href="{{url_for('auth.resetpwd')}}">mot de passe oublié</a></p>
+    <p> <button><a href="{{url_for('auth.signup')}}">Créer un compte</a></button> </p>
+    <p><a href="{{url_for('auth.resetpwd')}}">Mot de passe oublié ?</a></p>
+
     {% with messages = get_flashed_messages(with_categories=true,
          category_filter=["error","info"]) %}
 

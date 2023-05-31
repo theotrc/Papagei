@@ -7,11 +7,32 @@
 {% block content %}
 
 <body>
-    <a href="{{url_for('auth.logout')}}">logout</a>
-    hello {{current_user.name}}
-    {%if current_user.is_admin%}
-    <a href="{{url_for('admin.adminitems')}}">items</a>
-    {% endif %}
+  
+    <div class= header-compte>
+
+        {%if current_user.is_admin%}
+            <div class="gestion">
+                <a href="{{url_for('admin.adminitems')}}">Gestion des articles</a>
+            </div>
+        {% endif %}
+        <div class="bonjour">
+            Bonjour {{current_user.firstname}}
+        </div>
+
+        <div class="informationspersos">
+            <a href="#">Informations Personnelles</a>
+        </div>
+
+        <div class="commandes">
+            <a href="#">Mes commandes</a>
+        </div>
+
+        <div class="deconnexion">
+            <a href="{{url_for('auth.logout')}}">Se déconnecter</a>
+        </div>
+        
+    </div>
+
 </body>
 </html>
 {% endblock content%}

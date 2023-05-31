@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "rumeur";
+	src: url(fonts/rumeur.otf);
+}
+
 ::before, ::after{
 	box-sizing: border-box;
 	margin: 0;
@@ -13,6 +18,25 @@ html,body{
 	border:1px solid #333;
 } */
 
+.div_groupe_mer{
+	width: 100%;
+	height: 100%;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+.groupe_mer {
+	max-width: 100%;
+	max-height: ;
+	object-fit:scale-down;
+	margin: 0;
+	padding: 0;
+	
+	
+
+}
+
 .grille {
 	/* max-width: 1300px; */
 	width: 100%;
@@ -20,7 +44,7 @@ html,body{
 	margin: 0;
 	padding: 0;
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr;
 
 	justify-content: center;
 	grid-gap: 0px;
@@ -36,18 +60,6 @@ html,body{
 
 }
 
-.asos{
-	min-width: 450px;
-	max-width: 1280px;
-	width: 150%;
-}
-
-.first{
-	background: rgb(255, 253, 113);
-}
-.second{
-	background: rgb(144, 255, 246);
-}
 
 .papagei{
 	margin:0;
@@ -56,14 +68,15 @@ html,body{
 	left: 50%;
 	transform: translate(-50%, -50%);
 
-	font-family: 'Cherry Bomb';
+	font-family : 'rumeur';
 	font-style: normal;
 	font-weight: 400;
 	font-size: clamp(4rem, 10vw, 8rem);
 	line-height: 128px; 
 
 	z-index: 999;
-	color: #ff51ff;
+	color: #FFFFFF;
+
 }
 
 
@@ -85,15 +98,9 @@ html,body{
 	.grille > :nth-child(n+3){
 		display: none;
 	}
-	.grid-item{
-		width: 100%;
-		height: 100vh;
-		background: rgb(5, 210, 246);
-	}
-	.first{
-		background: rgb(255, 253, 113);
-	}
-	.second{
-		background: rgb(144, 255, 246);
-	}
+	
+}
+
+.entête:hover{ 
+	color: #FFCCEB;
 }

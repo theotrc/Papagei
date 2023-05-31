@@ -11,7 +11,12 @@
 
 			{% for image in item %}
 			
-			<a href="{{url_for('sale.sale_page', id= image.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/></div></a>
+
+			<a href="{{url_for('sale.sale_page', id= image.id)}}">
+				<div class="grid-item">
+					<img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/>
+				</div>
+			</a>
 
 			{% endfor %}
 		</div>

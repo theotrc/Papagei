@@ -1,31 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>papagei</title>
-</head>
-{%extends "base.html" %}
 
-{% block content %}
-
-
-<!-- <form action="/checkout" method="POST">
-  <script src="https://js.stripe.com/v3/"></script>
-  <input type="text" name="amount" placeholder="Montant">
-  <div id="card-element"></div>
-  <input type="text" name="cvc" placeholder="CVC">
-  <input type="text" name="expiration" placeholder="Expiration (MM/AAAA)">
-  <button type="submit">Payer</button>
-</form> -->
-<a href="#" id="buy_now_btn">acheter</a>
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-  const checkout_public_key = "{{checkout_public_key}}"
-  const checkout_session_id = "{{checkout_session_id}}"
-</script>
-<script src="{{url_for('static', filename='script-no-ajax.js')}}"></script>
-{% endblock %}
+<html>
+  <head>
+    <title>Buy cool new product</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <section>
+      <div class="product">
+        <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
+        <div class="description">
+          <h3>Stubborn Attachments</h3>
+          <h5>$20.00</h5>
+        </div>
+      </div>
+      <form action="/create-checkout-session" method="POST">
+        <button type="submit" id="checkout-button">Checkout</button>
+      </form>
+    </section>
+  </body>
 
 </html>

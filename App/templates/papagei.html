@@ -13,16 +13,17 @@
 <body>
 
     {% block content %}
-    <h1 class="papagei">papagei</h1>
 
-    <div class="test"></div>
-    
-    <div class="grille">
+    <a class='papagei' href="{{url_for('home.home')}}">
 
-        <div  class="grid-item first"></div>
-        <div class="grid-item second"></div>
-        <div class="grid-item second"></div>
-        <div class="grid-item first"></div>
+       papagei
+    </a>
+
+    <div class="div_groupe_mer">
+        <a href="{{url_for('home.home')}}">
+            <img class="groupe_mer" src="static/img/cap blanc/04_papagei_large copie.jpg" alt="photo de groupe sur la plage">
+        </a>
+
     </div>
     {% endblock %}
 

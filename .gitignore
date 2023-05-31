@@ -5,3 +5,6 @@
 /tuto.py
 .env
 notebook.ipynb
+.DS_Store
+Veille_framework.ipynb
+App/static/img
