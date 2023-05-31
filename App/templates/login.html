@@ -5,6 +5,7 @@
 
 {% block content %}
 <div class="grille-auth">
+
 <h3 class="title">Connexion</h3>
 <form method="POST" action="/login">
 
@@ -23,6 +24,7 @@
 </form>
     <p> <button><a href="{{url_for('auth.signup')}}">Créer un compte</a></button> </p>
     <p><a href="{{url_for('auth.resetpwd')}}">Mot de passe oublié ?</a></p>
+
     {% with messages = get_flashed_messages(with_categories=true,
          category_filter=["error","info"]) %}
 
