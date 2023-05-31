@@ -1,0 +1,46 @@
+<head>
+	<link rel="stylesheet" href="static/main.css">
+</head>
+
+{% extends "base.html" %}
+
+{% block content %}
+
+	<body>
+		<div class= "box_achat" id="box_achat">
+			<a class= image_article href="{{url_for('sale.sale_page', id= item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{item.image.decode()}}" alt="{{item.title}}"/></div></a>
+			<div class="size">
+				<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket_post', id = item.id)}}">
+					<label for="size">Taille</label>
+					<select name="size" id="size">
+						<option value="XtraSmall">XS</option>
+						<option value="Small">S</option>
+						<option value="Medium">M</option>
+						<option value="Large">L</option>
+						<option value="Xtralarge">XL</option>
+
+					</select>
+					<label for="quatity">Quantité</label>
+					<select name="quatity" id="quantity">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+					<label for="couleur">Couleur</label>
+					<select name="couleur" id="couleur">
+						<option value="Bleu">Bleu</option>
+						<option value="Rouge">Rouge</option>
+						<option value="Jaune">Jaune</option>
+
+					</select>
+					<p> <input type = "submit" value="Ajouter au panier"/> </p>
+				</form>
+				
+			</div>
+			</div>
+	</body>
+{% endblock content%}
+
+
+
+</html>

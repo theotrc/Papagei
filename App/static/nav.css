@@ -5,8 +5,13 @@
     
 }
 @font-face {
-  font-family: 'APL';
-  src: url(fonts/APL386.ttf);
+  font-family: 'Lexend';
+  src: url(fonts/Lexend-Regular.ttf); 
+
+}
+@font-face {
+  font-family: "rumeur";
+  src: url(fonts/rumeur.otf);
 }
 
 html,body{
@@ -18,15 +23,18 @@ html,body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
-    color: #452121;
+    background-color: rgba(rgb(255, 255, 255), 0.5);
+    color: #000000;
     padding: 10px;
-    font-size: 1.5em;
-    font-family: 'APL';
+    font-size: 1em;
+    font-family: 'Lexend';
     padding-left: 40px;
     padding-right: 40px;
+    z-index: 999;
+    position:sticky;
   }
-  
+
+
 .nav-left, .nav-right {
   display: flex;
   justify-content: space-between;
@@ -67,6 +75,7 @@ a {
   .nav-mobile{
     display: flex;
     flex-direction: row;
+    justify-content: right;
   }
 }
 .account_icon{
@@ -75,5 +84,20 @@ a {
 }
 
 svg {
-height: 1em;
+height: 1.5em;
 }
+
+.navbar-brand{
+  font-family: "rumeur";
+  font-size: 1.5em;
+  
+}
+
+a:hover { 
+  color: #FFCCEB;
+}
+
+.icon:hover{
+  fill:#FFCCEB;
+}
+

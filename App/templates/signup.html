@@ -1,0 +1,39 @@
+<head>
+	<link rel="stylesheet" href="static/main.css">
+</head>
+
+{% extends "base.html" %}
+{% block content %}
+<div class="grille-signup">
+    <h3>Je crée mon compte</h3>
+    <form method="POST" action="/signup">
+
+        <p> <input  type="email" name="email" placeholder="Email" autofocus=""> </p>
+
+        <p> <input  type="text" name="firstname" placeholder="Prénom" autofocus=""> </p>
+
+        <p> <input  type="text" name="name" placeholder="Nom" autofocus=""> </p>
+        
+        <p> <input  type="text" name="adress" placeholder="Adresse" autofocus=""> </p>
+
+        <p> <input  type="text" name="country" placeholder="Pays"> </p>
+
+        <p> <input  type="password" name="password" placeholder="Mot de passe"> </p>
+
+        <p> <button class="button is-block is-info is-large is-fullwidth">Valider</button> </p>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true,
+        category_filter=["error","info"]) %}
+
+       {%if messages %}
+           {% for category, message in messages %}
+               <p>{{message}}</p>
+               
+           {% endfor %}
+
+       {%endif %}
+
+   {% endwith %}
+</div>
+
+{% endblock %}
