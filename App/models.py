@@ -30,17 +30,6 @@ class User(UserMixin,db.Model):
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    main_image = db.Column(db.LargeBinary, nullable=False)
-    image2 = db.Column(db.LargeBinary)
-    image3 = db.Column(db.LargeBinary)
-    image4 = db.Column(db.LargeBinary)
-    image5 = db.Column(db.LargeBinary)
-    image6 = db.Column(db.LargeBinary)
-    image7 = db.Column(db.LargeBinary)
-    image8 = db.Column(db.LargeBinary)
-    image9 = db.Column(db.LargeBinary)
-    image10 = db.Column(db.LargeBinary)
-    image11 = db.Column(db.LargeBinary)
 
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
@@ -54,6 +43,8 @@ class Item(db.Model):
 
     weight = db.Column(db.Float, nullable=False)
     
+    image = db.relationship('ItemImage', backref='item', lazy=True)
+
     Orders = db.relationship('Cart_item', backref='item', lazy="joined")
 
 
@@ -113,4 +104,11 @@ class Order(db.Model):
     cart = db.relationship('Cart', backref='order', lazy=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
+        nullable=False)
+    
+
+class ItemImage(db.Model):
+    
+    image = db.Column(db.LargeBinary, nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
         nullable=False)
