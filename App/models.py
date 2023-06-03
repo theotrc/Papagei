@@ -34,7 +34,7 @@ class Item(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     composition = db.Column(db.String(1000), nullable=False)
-
+    image = db.Column(db.LargeBinary)
     color= db.Column(db.String(100))
 
     price = db.Column(db.Float, nullable=False)
@@ -43,9 +43,18 @@ class Item(db.Model):
 
     weight = db.Column(db.Float, nullable=False)
     
-    image = db.relationship('ItemImage', backref='item', lazy=True)
+    images = db.relationship('ItemImage', backref='item', lazy="joined")
 
     Orders = db.relationship('Cart_item', backref='item', lazy="joined")
+
+class ItemImage(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    
+    image = db.Column(db.LargeBinary)
+
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
+        nullable=False)
 
 
 class Cart_item(db.Model):
@@ -107,8 +116,3 @@ class Order(db.Model):
         nullable=False)
     
 
-class ItemImage(db.Model):
-    
-    image = db.Column(db.LargeBinary, nullable=False)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
-        nullable=False)

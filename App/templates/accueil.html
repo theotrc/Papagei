@@ -9,13 +9,13 @@
 	<body>
 		<div class="grille">
 
-			{% for image in item %}
+			{% for image in items %}
 			
 			{% if image.main_image !=byte %}
 			<a href="{{url_for('sale.sale_page', id= image.id)}}">
 				<div class="grid-item">
 
-					<img src="data:image/png;base64,{{image.main_image.decode()}}" alt="{{image.title}}"/>
+					<img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/>
 
 				</div>
 			</a>
