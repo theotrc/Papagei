@@ -135,7 +135,7 @@ def resetpwd_post():
             smtp.login(email_sender, pwd)
             smtp.sendmail(email_sender,email_receiver,em.as_string())
 
-        message = f"un email vous a été envoyé"
+        message = f"Un email vous a été envoyé"
         flash(message, "info")
 
     elif not user:

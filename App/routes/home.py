@@ -15,4 +15,4 @@ def home():
 
     item = Item.query.all()  
     
-    return render_template("accueil.html", item = item)
+    return render_template("accueil.html", item = item, byte = bytes())

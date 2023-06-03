@@ -44,12 +44,68 @@ def add_item_post():
             ## ajout de l'article dans la bdd
             description = request.form.get('description')
             prix = request.form.get('prix')
-            category = request.form.get('category')
-            image2=request.files['image']
+            composition = request.form.get('composition')
+
+            couleur = request.form.get('couleur')
+
+            poids = request.form.get('poids')
+
+            image1=request.files['image']
+            image1 = image1.stream.read()
+            image1 = base64.encodebytes(image1)
+            
+            image2=request.files['image2']
             image2 = image2.stream.read()
             image2 = base64.encodebytes(image2)
+
+            image3=request.files['image3']
+            image3 = image3.stream.read()
+            image3 = base64.encodebytes(image3)
+
+            image4=request.files['image4']
+            image4 = image4.stream.read()
+            image4 = base64.encodebytes(image4)
+
+            image5=request.files['image5']
+            image5 = image5.stream.read()
+            image5 = base64.encodebytes(image5)
+
+            image6=request.files['image6']
+            image6 = image6.stream.read()
+            image6 = base64.encodebytes(image6)
+            
+            image7=request.files['image7']
+            image7 = image7.stream.read()
+            image7 = base64.encodebytes(image7)
+
+            image8=request.files['image8']
+            image8 = image8.stream.read()
+            image8 = base64.encodebytes(image8)
+
+            image9=request.files['image9']
+            image9 = image9.stream.read()
+            image9 = base64.encodebytes(image9)
+
+            image10=request.files['image10']
+            image10 = image10.stream.read()
+            image10 = base64.encodebytes(image10)
+
+            image11=request.files['image11']
+            image11 = image11.stream.read()
+            image11 = base64.encodebytes(image11)
+
+            
+
+
+
             titre = request.form.get('titre')
-            new_item = Item(description = description, image = image2, price = float(prix), category = category, title = titre)
+            new_item = Item(
+                description = description,
+                composition=composition,
+                color=couleur,
+                weight=poids,
+                  main_image = image1, image2=image2,image3=image3,image4=image4,image5=image5,image6=image6,image7=image7,image8=image8,image9=image9,image10=image10,image11=image11,
+                    price = float(prix), title = titre)
             db.session.add(new_item)
             db.session.commit()
             message = f"article ajouté"

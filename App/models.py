@@ -5,11 +5,11 @@ from App import db
 
 
 
-
-
 class User(UserMixin,db.Model):
+
     id = db.Column(db.Integer, primary_key=True) 
-    email = db.Column(db.String(100), unique=True)# primary keys are required by SQLAlchemy
+
+    email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
     firstname = db.Column(db.String(1000))
@@ -24,34 +24,38 @@ class User(UserMixin,db.Model):
 
     Carts = db.relationship('Cart', backref='user', lazy=True)
 
+    order = db.relationship('Order', backref='user', lazy=True)
+
 
 class Item(db.Model):
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    title = db.Column(db.String(100))
-    category = db.Column(db.String(100))
-    description = db.Column(db.String(1000))
-    price = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
-    image = db.Column(db.LargeBinary)
+    id = db.Column(db.Integer, primary_key=True)
+
+
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
+    composition = db.Column(db.String(1000), nullable=False)
+
+    color= db.Column(db.String(100))
+
+    price = db.Column(db.Float, nullable=False)
+
+    quantity =db.Column(db.Integer)
+
+    weight = db.Column(db.Float, nullable=False)
+    
+    image = db.relationship('ItemImage', backref='item', lazy=True)
+
     Orders = db.relationship('Cart_item', backref='item', lazy="joined")
 
-# class Purchased_item(db.Model):
-#     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-#     size = db.Column(db.String(100))
-#     item_status = db.Column(db.String(100)) #status for each item
-#     color = db.Column(db.String(100))
-#     #  "fk item id and order id"
 
 class Cart_item(db.Model):
     """item_quantity (Int) | order_status (String) | cart_item_id (Int) | item_id (Int)"""
 
     ##unique ID
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    id = db.Column(db.Integer, primary_key=True)
     ##quantité de l'item
     item_quantity = db.Column(db.Integer)
     
-    ##status de la commande 
-    order_status = db.Column(db.String(100)) #status for all items
-
     ##size
     size = db.Column(db.String(100))
 
@@ -66,20 +70,45 @@ class Cart_item(db.Model):
 
 
 class Cart(db.Model):
-    """user_id (int): Unique id of user | 
-        total_price (float): default: 0"""
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
 
-    ##id du client 
+    id = db.Column(db.Integer, primary_key=True)
+
+
+    expedition_price = db.Column(db.Float, nullable=False, default=0)
+    
+    price = db.Column(db.Float, nullable=False, default=0)
+
+    cart_weight = db.Column(db.Float, nullable=False, default=0)
+
+    status = db.Column(db.Boolean, default=True, nullable=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
+        nullable=False)
+
+    cart_items = db.relationship('Cart_item', backref='cart', lazy=True)
+
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'),
+        nullable=False)
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    facture =db.Column(db.LargeBinary)
+    
+    status =  db.Column(db.String(100))
+    
+    detail =  db.Column(db.String(100))
+    
+    stripe_id =  db.Column(db.String(100))
+
+    cart = db.relationship('Cart', backref='order', lazy=True)
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
     
-    total_price = db.Column(db.Float, nullable=False, default=0)
 
-     
-    cart_items = db.relationship('Cart_item', backref='cart', lazy=True)
+class ItemImage(db.Model):
     
-
-
-    
-
+    image = db.Column(db.LargeBinary, nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
+        nullable=False)
