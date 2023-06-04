@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint,flash
 from App import db
 from logging import FileHandler, WARNING
-from ..models import User, Item, Cart, Cart_item
+from ..models import User, Item, Cart, Cart_item, ItemImage
 from flask_login import login_user, login_required, current_user, logout_user
 from wtforms import FileField, SubmitField
 from flask_wtf import FlaskForm
@@ -126,3 +126,52 @@ def remove_item():
         return "no"
 
 
+@admin.route("/admin_pagetest", methods=['POST'])
+@login_required
+def add_item_posttest():
+    if current_user.is_admin:
+        try:
+            ## ajout de l'article dans la bdd
+            description = request.form.get('description')
+            prix = request.form.get('prix')
+            composition = request.form.get('composition')
+
+            couleur = request.form.get('couleur')
+
+            poids = request.form.get('poids')
+
+            image1=request.files['image']
+            image1 = image1.stream.read()
+            image1 = base64.encodebytes(image1)
+
+            titre = request.form.get('titre')
+            new_item = Item(
+                description = description,
+                composition=composition,
+                color=couleur,
+                weight=poids,
+                  image = image1,
+                    price = float(prix), title = titre)
+            db.session.add(new_item)
+            db.session.commit()
+
+            images = request.files.getlist('image1')
+            
+            itemid = Item.query.all()[-1].id
+            for image in images:
+                # Vérifier si une image a été sélectionnée
+                if image.filename != '':
+                    image = image.stream.read()
+                    image = base64.encodebytes(image)
+                    new_pic = ItemImage(image=image, item_id=itemid)
+                    db.session.add(new_pic)
+                    db.session.commit()
+            message = f"article ajouté"
+            flash(message, "info")
+        except Exception as e:
+            ## récupération de l'erreur de l'ajout + message flash
+            print(e)
+            message = f"erreur lors de l'ajout de l'article"
+            flash(message, "info")
+        return redirect(url_for("admin.add_item"))
+    else: return redirect(url_for("home.home"))

@@ -7,9 +7,12 @@
 {% block content %}
 
 	<body>
+		{% for image in second_images %}
+			<img src="data:image/png;base64,{{image.image.decode()}}" alt="{{item.title}}"/>
+		{% endfor %}
 
 		<div class= "box_achat" id="box_achat">
-			<a class= image_article href="{{url_for('sale.sale_page', id= item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{item.main_image.decode()}}" alt="{{item.title}}"/></div></a>
+			<a class= image_article href="{{url_for('sale.sale_page', id= item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{item.image.decode()}}" alt="{{item.title}}"/></div></a>
 			<div class="size">
 				<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket_post', id = item.id)}}">
 					<label for="size">Taille</label>
