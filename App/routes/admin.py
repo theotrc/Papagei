@@ -155,12 +155,14 @@ def add_item_posttest():
             db.session.add(new_item)
             db.session.commit()
 
-            images = request.files.getlist('image1')
+            images = request.files.getlist('second_images')
             
             itemid = Item.query.all()[-1].id
+            print(images)
             for image in images:
                 # Vérifier si une image a été sélectionnée
                 if image.filename != '':
+                    print(image)
                     image = image.stream.read()
                     image = base64.encodebytes(image)
                     new_pic = ItemImage(image=image, item_id=itemid)

@@ -8,6 +8,7 @@
 
 	<body>
 		{% for image in second_images %}
+			<!-- affichage image secondaires dans page_achats -->
 			<img src="data:image/png;base64,{{image.image.decode()}}" alt="{{item.title}}"/>
 		{% endfor %}
 
