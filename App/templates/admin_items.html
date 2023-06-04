@@ -10,9 +10,10 @@
 		<div class="grille">
 
 			{% for image in items %}
-			
-			<a href="{{url_for('sale.sale_page', id= image.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/></div></a>
-
+			<div class="grid-item">
+				<a href="{{url_for('sale.sale_page', id= image.id)}}"><div><img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/></div></a>
+				<a href="{{url_for('admin.remove_item', id= image.id)}}">supprimer</a>
+			</div>
 			{% endfor %}
             <a href="{{url_for('admin.add_item')}}">
 				
