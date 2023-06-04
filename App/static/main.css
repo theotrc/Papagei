@@ -166,7 +166,10 @@ h3{
 	width: 55%;
     display: grid;
 	justify-content: center;
-	background-color: #FFCCEB;
+	border-top: 4px solid #FCFF51;
+	border-left: 4px solid#FCFF51;
+	border-right: 4px solid #FCFF51;
+	border-bottom: 4px solid #FCFF51;
 	border-radius: 5%;
 	align-items: center;
 	position: absolute;
@@ -179,7 +182,7 @@ h3{
 }
 
 .header-compte :hover{
-	color:white;
+	color:#FFCCEB;
 }
 
 .cart-page{

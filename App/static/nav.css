@@ -30,8 +30,9 @@ html,body{
     font-family: 'Lexend';
     padding-left: 40px;
     padding-right: 40px;
-    z-index: 999;
-    position:sticky;
+    position:fixed;
+    border-bottom: 1px solid #ececec;
+    width:100%;
   }
 
 
@@ -94,10 +95,9 @@ height: 1.5em;
 }
 
 a:hover { 
-  color: #FFCCEB;
+  color: #FCFF51;
 }
 
 .icon:hover{
-  fill:#FFCCEB;
+  fill:#FCFF51;
 }
-
