@@ -1,42 +1,65 @@
 <head>
-	<link rel="stylesheet" href="static/main.css">
+	<link rel="stylesheet" href="static/admin.css">
 </head>
 {%extends "base.html" %}
 
 {% block content %}
 
-<h3 class="title">Nouvel article</h3>
 
 
-<form method="POST" enctype="multipart/form-data" action="/admin_page">
+<div class="new_item">
+  <form method="POST" enctype="multipart/form-data" action="/admin_pagetest" required>
 
-    <p><input class="input is-large" type="text" name="titre" placeholder="titre"> </p>
-
-    <p> <input class="input is-large" type="file" name="image"> </p>
-    <p> <input class="input is-large" type="file" name="image2"> </p>
-    <p> <input class="input is-large" type="file" name="image3"> </p>
-    <p> <input class="input is-large" type="file" name="image4"> </p>
-    <p> <input class="input is-large" type="file" name="image5"> </p>
-    <p> <input class="input is-large" type="file" name="image6"> </p>
-    <p> <input class="input is-large" type="file" name="image7"> </p>
-    <p> <input class="input is-large" type="file" name="image8"> </p>
-    <p> <input class="input is-large" type="file" name="image9"> </p>
-    <p> <input class="input is-large" type="file" name="image10"> </p>
-    <p> <input class="input is-large" type="file" name="image11"> </p>
-
-    <p><input class="input is-large" type="text" name="description" placeholder="description"> </p>
-
-    <p><input class="input is-large" type="text" name="composition" placeholder="composition"> </p>
-
-    <p><input class="input is-large" type="text" name="prix" placeholder="prix"> </p>
-
-    <p><input class="input is-large" type="text" name="couleur" placeholder="couleur"> </p>
-
-    <p><input class="input is-large" type="text" name="poids" placeholder="poids"> </p>
+      <h3 class="title">Nouvel article</h3>
 
 
-    <p> <input type = "submit" value="Valider"/> </p>
-</form>
+      <p><input class="input is-large" type="text" name="titre" placeholder="titre" required> </p>
+
+      <p> Image principale: <input class="input is-large" type="file" name="image" required> </p>
+
+
+      <p><input class="input is-large" type="text" name="description" placeholder="description" required> </p>
+
+      <p><input class="input is-large" type="text" name="composition" placeholder="composition" required> </p>
+
+      <p><input class="input is-large" type="text" name="prix" placeholder="prix" required> </p>
+
+      <p><input class="input is-large" type="text" name="couleur" placeholder="couleur" required> </p>
+
+      <p><input class="input is-large" type="text" name="poids" placeholder="poids" required> </p>
+
+      <div id="images-container">
+          <p>Images secondaires</p>
+          <label for="image1">Image 1 :</label>
+          <input type="file" name="second_images" id="image1" accept="image/*" required>
+          <br>
+      </div>
+      
+        <!-- Bouton pour ajouter de nouveaux champs d'image -->
+        <button type="button" onclick="ajouterChampImage()">Ajouter une image</button>
+
+      <p> <input type = "submit" value="Valider"/> </p>
+  </form>
+</div>
+
+<script>
+    function ajouterChampImage() {
+      // Comptez le nombre de champs d'image existants
+      const imagesContainer = document.getElementById('images-container');
+      const existingImageFields = imagesContainer.getElementsByTagName('input').length;
+  
+      // Créez un nouvel élément de champ d'image
+      const newImageField = document.createElement('div');
+      newImageField.innerHTML = `
+        <label for="image${existingImageFields + 1}">Image ${existingImageFields + 1} :</label>
+        <input type="file" name="second_images" id="image${existingImageFields + 1}" accept="image/*" required>
+        <br>
+      `;
+  
+      // Ajoutez le nouveau champ d'image au conteneur
+      imagesContainer.appendChild(newImageField);
+    }
+  </script>
     {% with messages = get_flashed_messages(with_categories=true,
          category_filter=["error","info"]) %}
 
