@@ -27,6 +27,7 @@
 									<th>Quantité</th>
 									<th>Prix</th>
 								</tr>
+								{% if cart.status=="N" %}
 								{% for cart_item in cart.cart_items %}
 
 								
@@ -70,7 +71,7 @@
     									<table>
       										<tr>
         										<td>Produits</td>
-        										<td><span>Total {{cart.total_price}}€</span></td>
+        										<td><span>Total {{cart.price}}€</span></td>
       										</tr>
       										<tr>
         										<td>Livraison</td>
@@ -81,16 +82,11 @@
        									 		<td>prix?</td>
       										</tr>
     									</table>
-  								
-								  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-								  data-key="{{ key }}"
-								  data-description="A Flask Charge"
-								  data-amount="{{cart.total_price * 100}}"
-								  data-locale="auto"></script>
-								</div>
-						</form>
+  								<button><a href="{{url_for('checkout.checkout')}}">payement</a></button>
+					
 					  <p></p>
 				  </div>
+				  {% endif %}
 			  {% endfor %}
 			  
 
