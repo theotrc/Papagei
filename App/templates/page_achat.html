@@ -7,12 +7,17 @@
 {% block content %}
 
 	<body>
+		<button onclick="window.history.back()">
+			<i class="fa fa-arrow-left" aria-hidden="true">
+			</i>
+		</button>
 
+	
 		<div class= "box_achat" id="box_achat">
 			<a class= "image_article" href="{{url_for('sale.sale_page', id= item.id)}}"><div class="grid-item"><img src="data:image/png;base64,{{item.image.decode()}}" alt="{{item.title}}"/></div></a>
 			<div class="size">
 				<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket_post', id = item.id)}}">
-					<label for="size">Taille</label>
+					<label for="size">Taille: </label>
 					<select name="size" id="size">
 						<option value="XtraSmall">XS</option>
 						<option value="Small">S</option>
@@ -21,7 +26,7 @@
 						<option value="Xtralarge">XL</option>
 
 					</select>
-					<label for="quatity">Quantité</label>
+					<label for="quatity">Quantité: </label>
 
 					<select name="quatity" id="quantity">
 						<option value="1">1</option>
@@ -29,13 +34,19 @@
 						<option value="3">3</option>
 					</select>
 
-					<label for="couleur">Couleur</label>
-					<select name="couleur" id="couleur">
-						<option value="Bleu">Bleu</option>
-						<option value="Rouge">Rouge</option>
-						<option value="Jaune">Jaune</option>
-
-					</select>
+					<label for="couleur">Couleur: </label>
+						<div class="carre_bleu"></div>
+						<div class="carre_rouge"></div>
+						<div class="carre_marron"></div>
+						
+					<div>
+						<label for="+taille">Autre taille : </label>
+						<input type="text" id="+taille" name="taille" size="45"
+						placeholder="Exemple : XXS, 3XL, 4XL"
+						minlength="3"
+						maxlength="3"
+						pattern="[l,L,s,S,x,X][2,3,4,5,6,7,8,9]">
+					</div>
 					<button type = "submit" value="Ajouter au panier" ></button>
 
 				</form>
