@@ -24,11 +24,12 @@ h1{
 	width: 80%;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 5px;
-	margin: auto auto;
+	grid-gap: 10px;
+	margin: 10px auto;
+	justify-content: center;
 }
 .grid-item{
-	width: 100%;
+	width: 80%;
 	justify-items: cover;
 }
 .new-item{
@@ -47,7 +48,7 @@ h1{
 img{
 	max-width: 100%;
 	height: auto;
-	border-radius: 2%;
+	border-radius: 8px;
 }
 
 .grille-auth {
@@ -132,11 +133,14 @@ h3{
 	height: auto;
 	margin: 10% auto;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items:center;
 
 }
-
+.image_article{
+	min-width: 100px;
+	width: 100%
+}
 .size{
 	text-align: left;
 	margin-left: 100px;
@@ -251,11 +255,11 @@ svg :hover{
 	max-width: 320px;
   }
   
-  td: last-child{
+  td last-child{
 	text-align: right;
   }
   
-  th: last-child{
+  th last-child{
 	text-align: right;
   }
   
@@ -282,3 +286,40 @@ svg :hover{
 	  display: none;
 	}
   }
+
+
+
+button {
+  background-color: #ffffff;
+  border: 1px solid #FFCCEB;
+  border-radius: 30px;
+  box-shadow: #FFCCEB  2px 2px 0 0;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0 12px;
+  line-height: 40px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover {
+  background-color: #FFCCEB ;
+}
+
+button:active {
+  box-shadow: #FFCCEB 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  button {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}

@@ -12,7 +12,7 @@
 			{% for image in items %}
 			<div class="grid-item">
 				<a href="{{url_for('sale.sale_page', id= image.id)}}"><div><img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/></div></a>
-				<a href="{{url_for('admin.remove_item', id= image.id)}}">supprimer</a>
+				<button><a href="{{url_for('admin.remove_item', id= image.id)}}">supprimer</a></button>
 			</div>
 			{% endfor %}
             <a href="{{url_for('admin.add_item')}}">
