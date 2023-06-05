@@ -12,13 +12,15 @@
 			{% for image in items %}
 			
 			{% if image.main_image !=byte %}
-			<a href="{{url_for('sale.sale_page', id= image.id)}}">
 				<div class="grid-item">
+					<a href="{{url_for('sale.sale_page', id= image.id)}}">
 
 					<img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/>
-
-				</div>
 			</a>
+					<p>{{image.title}}</p>
+					<p>{{image.price}}</p>
+				</div>
+			
 			{% endif %}
 			{% endfor %}
 		</div>
