@@ -1,7 +1,7 @@
-from flask import redirect, Blueprint, render_template,url_for
+from flask import Blueprint, render_template,url_for
 from App import stripe, stripe_public_key
 from flask import request
-from ..models import Cart, User, Order
+from ..models import Cart
 from flask_login import current_user
 from flask_login import  login_required
 
