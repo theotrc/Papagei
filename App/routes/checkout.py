@@ -14,7 +14,7 @@ checkout_blue= Blueprint("checkout", __name__, static_folder="../static", templa
 @login_required
 def checkout():
     
-    checkout_price = int(float(Cart.query.filter_by(user_id=current_user.id).first().price) * 100)
+    checkout_price = int(float(Cart.query.filter_by(user_id=current_user.id,status="N").first().price) * 100)
 
     
     session = stripe.checkout.Session.create(
