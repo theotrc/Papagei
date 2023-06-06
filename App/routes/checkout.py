@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template,url_for
 from App import stripe, stripe_public_key
 from flask import request
-from ..models import Cart
+from ..models import Cart, Order
 from flask_login import current_user
 from flask_login import  login_required
+from App import db
 
 checkout_blue= Blueprint("checkout", __name__, static_folder="../static", template_folder="../templates")
 
@@ -41,11 +42,21 @@ def checkout():
 @checkout_blue.route('/success')
 @login_required
 def success():
+
+    # paiement validé | ajout du pannier dans un commande
+
     session_id = request.args.get('session_id')
     payment_status = stripe.checkout.Session.retrieve(session_id)["payment_status"]
+
     if payment_status == "paid":
-        print(Cart.query.filter_by(user_id=current_user.id, status="N").first())
-        print(stripe.checkout.Session.retrieve(session_id)["invoice"])
+
+        cart_id = Cart.query.filter_by(user_id=current_user.id, status="N").first().id
+        new_order = Order(status="paiement validé",stripe_id=session_id,cart_id= cart_id, user_id=current_user.id)
+        
+        Cart.query.filter_by(user_id=current_user.id, status="N").update(values={"status":"V"})
+        
+        db.session.add(new_order)
+        db.session.commit()
     return render_template("success.html")
 
 @checkout_blue.route('/cancel')
@@ -53,19 +64,3 @@ def success():
 def cancel():
     return render_template("cancel.html")
 
-
-# @checkout_blue.route('/checkout', methods=['POST'])
-# def checkout_post():
-#     amount = request.form["amount"]
-#     token = request.form["stripeToken"]
-
-#     charge = stripe.Charge.create(
-#     amount=amount,
-#     currency='EUR',
-#     source=token,
-#     description='Paiement test'
-#   )
-
-#   Traitez le résultat du paiement ici et affichez une confirmation à l'utilisateur
-
-#     return 'Paiement effectué avec succès !'
