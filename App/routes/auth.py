@@ -1,12 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, Blueprint, flash
+from flask import render_template, request, redirect, url_for, Blueprint, flash
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from App import db
 from App.utils import generate_code
 from ..models import User
-from logging import FileHandler, WARNING
-from flask_login import login_user, login_required, current_user, logout_user
-from datetime import date, datetime, timedelta
+from flask_login import login_user, login_required, logout_user
+from datetime import datetime, timedelta
 from hashlib import sha256
 
 import smtplib

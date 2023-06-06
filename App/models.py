@@ -1,3 +1,4 @@
+
 from flask_sqlalchemy import SQLAlchemy
 import logging as lg
 from flask_login import UserMixin
@@ -91,7 +92,7 @@ class Cart(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
-
+    status = db.Column(db.String(1), default="N")
     cart_items = db.relationship('Cart_item', backref='cart', lazy=True)
     
     order = db.relationship('Order', backref='cart', lazy=True)
@@ -113,4 +114,5 @@ class Order(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
     
+
 

@@ -1,7 +1,7 @@
-from flask import redirect, Blueprint, render_template,url_for
+from flask import Blueprint, render_template,url_for
 from App import stripe, stripe_public_key
 from flask import request
-from ..models import Cart, User
+from ..models import Cart
 from flask_login import current_user
 from flask_login import  login_required
 
@@ -13,7 +13,7 @@ checkout_blue= Blueprint("checkout", __name__, static_folder="../static", templa
 @login_required
 def checkout():
     
-    checkout_price = int(float(Cart.query.filter_by(user_id=current_user.id).first().total_price) * 100)
+    checkout_price = int(float(Cart.query.filter_by(user_id=current_user.id).first().price) * 100)
 
     
     session = stripe.checkout.Session.create(
@@ -41,6 +41,11 @@ def checkout():
 @checkout_blue.route('/success')
 @login_required
 def success():
+    session_id = request.args.get('session_id')
+    payment_status = stripe.checkout.Session.retrieve(session_id)["payment_status"]
+    if payment_status == "paid":
+        print(Cart.query.filter_by(user_id=current_user.id, status="N").first())
+        print(stripe.checkout.Session.retrieve(session_id)["invoice"])
     return render_template("success.html")
 
 @checkout_blue.route('/cancel')

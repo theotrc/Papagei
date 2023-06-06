@@ -1,15 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, Blueprint,flash
+from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from logging import FileHandler, WARNING
-from ..models import User, Item, Cart, Cart_item, ItemImage
-from flask_login import login_user, login_required, current_user, logout_user
-from wtforms import FileField, SubmitField
-from flask_wtf import FlaskForm
-import os
+from ..models import Item, ItemImage
+from flask_login import login_required, current_user
 import base64
-# class UploadFileForm(FlaskForm):
-#     file = FileField('File')
-#     submit = SubmitField("Upload File")
+
 
 admin = Blueprint("admin", __name__, static_folder="../static", template_folder="../templates")
 
