@@ -14,7 +14,7 @@ def create_app():
     
 
 
-
+    from .routes.mention import mention_blue
     from .routes.home import home_blueprint
     from .routes.news import news_blue
     from .routes.account import account_blue
@@ -26,6 +26,8 @@ def create_app():
     from .routes.papagei import papagei_blue
     from .routes.checkout import checkout_blue
 
+
+    app.register_blueprint(mention_blue)
     app.register_blueprint(checkout_blue)
     app.register_blueprint(papagei_blue)
     app.register_blueprint(home_blueprint)
