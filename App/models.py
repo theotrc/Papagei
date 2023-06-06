@@ -1,3 +1,4 @@
+
 from flask_sqlalchemy import SQLAlchemy
 import logging as lg
 from flask_login import UserMixin
@@ -113,4 +114,5 @@ class Order(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
     
+
 
