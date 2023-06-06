@@ -89,15 +89,12 @@ class Cart(db.Model):
 
     cart_weight = db.Column(db.Float, nullable=False, default=0)
 
-    status = db.Column(db.Boolean, default=True, nullable=False)
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
 
     cart_items = db.relationship('Cart_item', backref='cart', lazy=True)
-
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'),
-        nullable=False)
+    
+    order = db.relationship('Order', backref='cart', lazy=True)
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -110,8 +107,9 @@ class Order(db.Model):
     
     stripe_id =  db.Column(db.String(100))
 
-    cart = db.relationship('Cart', backref='order', lazy=True)
-
+    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'),
+        nullable=False)
+    
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
     

@@ -92,7 +92,9 @@ a {
 svg {
 height: 1.5em;
 }
-
+svg:hover{
+  fill:#3F9DF3;
+}
 .navbar-brand{
   font-family: "rumeur";
   font-size: 1.5em;

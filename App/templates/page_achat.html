@@ -7,10 +7,8 @@
 {% block content %}
 
 	<body>
-		<button onclick="window.history.back()">
-			<i class="fa fa-arrow-left" aria-hidden="true">
-			</i>
-		</button>
+		<a class="return" onclick="window.history.back()">--
+		</a>
 
 	
 		<div class= "box_achat" id="box_achat">
@@ -26,6 +24,7 @@
 						<option value="Xtralarge">XL</option>
 
 					</select>
+					<br>
 					<label for="quatity">Quantité: </label>
 
 					<select name="quatity" id="quantity">
@@ -33,30 +32,35 @@
 						<option value="2">2</option>
 						<option value="3">3</option>
 					</select>
-
+					<br>
 					<label for="couleur">Couleur: </label>
+					<div class="carre">
 						<div class="carre_bleu"></div>
 						<div class="carre_rouge"></div>
 						<div class="carre_marron"></div>
-						
+					</div>
+					<br>
 					<div>
 						<label for="+taille">Autre taille : </label>
-						<input type="text" id="+taille" name="taille" size="45"
+						<input type="text" id="+taille" name="taille" size="20"
 						placeholder="Exemple : XXS, 3XL, 4XL"
 						minlength="3"
 						maxlength="3"
 						pattern="[l,L,s,S,x,X][2,3,4,5,6,7,8,9]">
 					</div>
-					<button type = "submit" value="Ajouter au panier" ></button>
+					<br>
+					<button type = "submit" value="Ajouter au panier" >Ajouter au panier</button>
 
 				</form>
 				
 			</div>
 		</div>
+		<div class="img_achat">
 		{% for image in second_images %}
 			<!-- affichage image secondaires dans page_achats -->
-			<img src="data:image/png;base64,{{image.image.decode()}}" alt="{{item.title}}"/>
+			<div class ="img_grille"><img src="data:image/png;base64,{{image.image.decode()}}" alt="{{item.title}}"/></div>
 		{% endfor %}
+		</div>
 	</body>
 {% endblock content%}
 
