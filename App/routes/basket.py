@@ -21,7 +21,7 @@ def basket_post(id):
         cart = Cart.query.filter_by(user_id = current_user.id, status = "N" ).first()
     
     basket_cost = Cart.query.filter_by(user_id=current_user.id, status="N").first().price
-    basket_cost += float(Item.query.filter_by(id=int(id)).first().price)
+    basket_cost += float(Item.query.filter_by(id=int(id)).first().price) *int(quantity)
     Cart.query.filter_by(user_id=current_user.id, status = "N").update(values={"price":basket_cost})
 
 
@@ -50,7 +50,7 @@ def deleteitem_basket(id):
     item = Cart_item.query.filter_by(id=int(id)).first()
 
     basket_cost = Cart.query.filter_by(user_id=current_user.id, status="N").first().price
-    basket_cost += - float(Item.query.filter_by(id=item.item_id).first().price)
+    basket_cost += - float(Item.query.filter_by(id=item.item_id).first().price)*int(item.item_quantity)
 
     Cart.query.filter_by(user_id=current_user.id, status="N").update(values={"price":basket_cost})
     
