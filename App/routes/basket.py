@@ -13,16 +13,16 @@ basket_blue= Blueprint("basket", __name__, static_folder="../static", template_f
 def basket_post(id):
     size = request.form.get('size')
     quantity = request.form.get('quantity')
-    cart = Cart.query.filter_by(user_id = current_user.id).first()
+    cart = Cart.query.filter_by(user_id = current_user.id, status = "N").first()
     if not cart:
         new_cart = Cart(user_id = current_user.id)
         db.session.add(new_cart)
         db.session.commit()
-        cart = Cart.query.filter_by(user_id = current_user.id).first()
+        cart = Cart.query.filter_by(user_id = current_user.id, status = "N" ).first()
     
-    basket_cost = Cart.query.filter_by(user_id=current_user.id).first().price
+    basket_cost = Cart.query.filter_by(user_id=current_user.id, status="N").first().price
     basket_cost += float(Item.query.filter_by(id=int(id)).first().price)
-    Cart.query.filter_by(user_id=current_user.id).update(values={"price":basket_cost})
+    Cart.query.filter_by(user_id=current_user.id, status = "N").update(values={"price":basket_cost})
 
 
     new_item = Cart_item(item_quantity=quantity, cart_item_id=cart.id, item_id=int(id), size=size)
@@ -38,7 +38,7 @@ def basket_post(id):
 @basket_blue.route("/basket")
 @login_required
 def basket():
-    carts = Cart.query.filter_by(user_id=current_user.id)
+    carts = Cart.query.filter_by(user_id=current_user.id, status="N")
 
     return render_template("basket.html", carts = carts)
 
@@ -49,10 +49,10 @@ def deleteitem_basket(id):
 
     item = Cart_item.query.filter_by(id=int(id)).first()
 
-    basket_cost = Cart.query.filter_by(user_id=current_user.id).first().price
+    basket_cost = Cart.query.filter_by(user_id=current_user.id, status="N").first().price
     basket_cost += - float(Item.query.filter_by(id=item.item_id).first().price)
 
-    Cart.query.filter_by(user_id=current_user.id).update(values={"price":basket_cost})
+    Cart.query.filter_by(user_id=current_user.id, status="N").update(values={"price":basket_cost})
     
     db.session.delete(item)
     db.session.commit()
