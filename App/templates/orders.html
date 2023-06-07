@@ -1,0 +1,29 @@
+
+
+
+</html>
+<head>
+	<link rel="stylesheet" href="static/main.css">
+</head>
+
+{% extends "base.html" %}
+
+{% block content %}
+<body class="login">
+<body>
+  
+    <div class= header-compte>
+
+        {% for order in orders %}
+        <div>
+            <p>numéro de commade: {{order.id}}</p>
+
+        </div>
+        {% endfor %}
+        
+    </div>
+
+</body>
+</html>
+</body>
+{% endblock content%}
