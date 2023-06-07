@@ -14,8 +14,8 @@ import ssl
 import os
 
 
-pwd =os.environ.get('EMAIL_PWD')
-email_sender = os.environ.get('EMAIL_SENDER')
+pwd =os.environ.get('MAIL_MDP')
+email_sender = os.environ.get('MAIL_SENDER')
 email_receiver = 'theotricot12@gmail.com'
 
 
@@ -118,7 +118,9 @@ def resetpwd_post():
 
 
         subject = "réinitialisation de mot de passe"
-        body = f"lien de réinitialisation: :http://127.0.0.1:8000/mailvalidation{id}?code={code}"
+
+        body = f"lien de réinitialisation: http://127.0.0.1:8000/mailvalidation{id}?code={code}"
+
 
         em = EmailMessage()
         em['From'] = email_sender
@@ -145,8 +147,12 @@ def resetpwd_post():
     return render_template("Password.html")
 
 @auth_blue.route("/mailvalidation<id>")
-def mailvalidation(id,code):
-    print(request.args.get("code"))
+
+def mailvalidation(id):
+        
+    code = request.args.get("code")
+    print(code)
+
     user = User.query.filter_by(id=int(id)).filter_by(reset_token=code).first()
     if user:
         if user.reset_token_expiry > datetime.now():
@@ -159,7 +165,11 @@ def mailvalidation(id,code):
 
 
 @auth_blue.route('/mailvalidation<id>', methods=['POST'])
-def change_pwd(id, code):
+
+def change_pwd(id):
+    code = request.args.get("code")
+    print(code)
+
     password = request.form.get('password')
     confirm_password = request.form.get('confirm_password')
 
