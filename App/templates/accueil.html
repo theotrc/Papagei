@@ -18,7 +18,7 @@
 					<img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/>
 			</a>
 					<p>{{image.title}}</p>
-					<p>{{image.price}}</p>
+					<p>{{image.price|int}} €</p>
 				</div>
 			
 			{% endif %}

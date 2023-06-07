@@ -5,7 +5,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<body class="login">
 <body>
   
     <div class= header-compte>
@@ -24,7 +24,7 @@
         </div>
 
         <div class="commandes">
-            <a href="{{url_for('order.orders')}}">Mes commandes</a>
+            <a href="#">Mes commandes</a>
         </div>
 
         <div class="deconnexion">
@@ -35,4 +35,5 @@
 
 </body>
 </html>
+</body>
 {% endblock content%}
