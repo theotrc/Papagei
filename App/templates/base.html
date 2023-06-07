@@ -71,14 +71,20 @@
 
     </nav>
 
-    
+
     <main>
 
         {% block content %}
 
         {% endblock content %}
 
-
+        <div class ="mentions">
+            <a class ="cgv" href = "{{url_for('mention.cgv')}}"> CGV</a>
+            <a class ="cgu" href ="{{url_for('mention.cgu')}}">CGU</a>
+            <a class ="mentions_légales" href="{{url_for('mention.mentions_legales')}}">Mentions Légales</a>
+            </div>
+            <div class="background"></div>
     </main>
+
 </body>
 </html>
