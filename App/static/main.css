@@ -113,13 +113,14 @@ h3{
 }
 .grille-basket {
 	max-width: 800px;
-	width: 55%;
+	width: 70%;
 	height: auto;
 	margin: auto auto;
 	display: grid;
 	grid-template-columns: 1(1fr, 300px);
 	justify-content: left;
 	border-radius: 5%;
+	background-color: #ffffff;
 
 }
 .grid-basket-item{
@@ -251,9 +252,10 @@ h3{
 }
 
 .cart-page{
-	margin: 80px auto;
+	margin: auto auto;
 	border-radius: 6%;
-	width: 55%;
+	width: 70%;
+	background-color: #ffffff;
 	
 }
 .basket_back{
@@ -303,7 +305,6 @@ svg :hover{
   
   td img{
 	width: 80px;
-	height: 80px;
 	
   }
   

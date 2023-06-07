@@ -58,10 +58,10 @@
 										</div>
 
        								</td>
-										<td>Taille: {{cart_item.size}}</td>
-										<td>Couleur : {{cart_item.item.color}}</td>
-       									<td><input type="number" value="{{cart_item.item.quantity}}"></td>
-       									<td>{{cart_item.item.price}}</td>
+										<td>{{cart_item.size}}</td>
+										<td>{{cart_item.item.color}}</td>
+       									<td>{{cart_item.item_quantity}}</td>
+       									<td>{{cart_item.item.price *cart_item.item_quantity}}</td>
     							</tr>
   							
 							  {% endfor %}
