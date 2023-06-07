@@ -9,7 +9,7 @@
     <title>Validation mail</title>
 </head>
 <body>
-    <form method="POST" action="/mailvalidation/{{id}}/{{code}}">
+    <form method="POST" action="/mailvalidation{{id}}?code={{code}}">
         <p><input class="input is-large" type="password" name="password" placeholder="Your Password"> </p>
         <p><input class="input is-large" type="password" name="confirm_password" placeholder="Your Password"> </p>
         <p> <input type = "submit" value="validate"/> </p>
