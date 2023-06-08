@@ -30,7 +30,6 @@ html,body{
 	font-family : 'rumeur';
 	font-style: normal;
 	font-weight: 400;
-	font-size: clamp(4rem, 10vw, 8rem);
 	line-height: 128px; 
 
 	z-index: 999;

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shopping Cart UI</title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
+</head>
+<body>
+   <div class="CartContainer">
+   	   <div class="Header">
+   	   	<h3 class="Heading">Votre panier</h3>
+   	   	<h5 class="Action">Vider</h5>
+   	   </div>
+
+   	   <div class="Cart-Items">
+   	   	  <div class="image-box">
+            <a href="{{url_for('sale.sale_page', id= cart_item.item.id)}}">
+										
+                <img src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.item.title}}"/>
+            
+            </a> 
+   	   	  </div>
+   	   	  <div class="about">
+   	   	  	<h1 class="title">{{cart_item.item.title}}</h1>
+   	   	  	<h3 class="subtitle">{{cart_item.size}}</h3>
+   	   	  </div>
+   	   	  <div class="counter">
+   	   	  	<div class="btn">+</div>
+   	   	  	<div class="count">{{cart_item.item_quantity}}</div>
+   	   	  	<div class="btn">-</div>
+   	   	  </div>
+                <div class="prices">
+   	   	  	<div class="amount">{{cart_item.item.price *cart_item.item_quantity}}</div>
+   	   	  	<div class="remove"><u>Supprimer</u></div>
+   	   	  </div>
+   	   </div>
+
+   	   <div class="Cart-Items pad">
+   	   	  
+   	   </div>
+   	 <hr> 
+   	 <div class="checkout">
+        <div class="total">
+   	 	<div>
+   	 		<div class="Subtotal">Sous-total</div>
+   	 		<div class="items">Livraison</div>
+   	 	</div>
+   	 	<div class="total-amount">Total</div>
+   	 </div>
+   	 <button class="button">Payer</button></div>
+   </div>
+</body>
+</html>
+
+
+<head>
+	<link rel="stylesheet" href="static/main.css">
+</head>
+{% extends "base.html" %}
+
+{% block content %}
+<body class="basket_back">
+<head>
+	
+  </head>
+	<body>		
+				
+					
+						<div class="cart-page">
+							
+						
+							<!-- for cart in carts -->
+							<!--  -->
+							<!-- for item in cart_items -->
+
+							{% for cart in carts %}
+							<table>
+								<div class= "titre"><p>Votre panier</p></div>
+								<tr>
+									<th>Produit</th>
+									<th>Taille</th>
+									<th>Couleur</th>
+									<th>Quantité</th>
+									<th>Prix</th>
+								</tr>
+								{% if cart.status=="N" %}
+								{% for cart_item in cart.cart_items %}
+
+								
+								<tr>
+									<td>
+										<div class ="cart-info">
+											<a href="{{url_for('sale.sale_page', id= cart_item.item.id)}}">
+										
+												<img src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.item.title}}"/>
+											
+											</a> 
+											
+										<div>
+											
+											<p>{{cart_item.item.title}}</p>
+								
+											<br>
+											<a href="{{url_for('basket.deleteitem_basket', id= cart_item.id)}}" onclick="return confirm('Retirer du panier?')">
+												<div class= "svg"> <svg  xmlns="http://www.w3.org/2000/svg" version="1.0" preserveAspectRatio="xMidYMid meet" viewBox="16 0.17 91 122.83">
+	
+													<g transform="translate(0.000000,123.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+													<path d="M467 1224 c-4 -4 -7 -18 -7 -31 0 -23 0 -23 -131 -23 -72 0 -139 -5 -150 -10 -16 -9 -19 -22 -19 -80 l0 -70 455 0 455 0 0 70 c0 58 -3 71 -19 80 -11 5 -78 10 -150 10 l-130 0 -3 28 -3 27 -146 3 c-80 1 -148 -1 -152 -4z"/>
+													<path d="M231 848 c0 -46 8 -247 18 -447 17 -357 18 -364 40 -382 21 -18 46 -19 326 -19 280 0 305 1 326 19 22 18 23 25 40 382 10 200 18 401 18 447 l1 82 -385 0 -385 0 1 -82z m247 -120 c17 -17 17 -509 0 -526 -18 -18 -75 -15 -82 4 -8 20 -8 498 0 518 7 19 64 22 82 4z m177 -263 l0 -270 -40 0 -40 0 -3 260 c-1 143 0 266 3 273 3 9 18 12 42 10 l38 -3 0 -270z m179 259 c8 -20 8 -498 0 -518 -7 -19 -64 -22 -82 -4 -17 17 -17 509 0 526 18 18 75 15 82 -4z"/>
+													</g>
+												</svg> </div>
+											</a>
+										</div>
+
+       								</td>
+										<td>{{cart_item.size}}</td>
+										<td>{{cart_item.item.color}}</td>
+       									<td>{{cart_item.item_quantity}}</td>
+       									<td>{{cart_item.item.price *cart_item.item_quantity}}</td>
+    							</tr>
+  							
+							  {% endfor %}
+							  </table>
+  
+  								<div class="total-price">
+    
+    									<table>
+      										<tr>
+        										<td>Produits</td>
+        										<td><span>Total {{cart.price}}€</span></td>
+      										</tr>
+      										<tr>
+        										<td>Livraison</td>
+        										<td>prix?</td>
+      										</tr>
+      										<tr>
+        										<td>Total</td>
+       									 		<td>prix?</td>
+      										</tr>
+    									</table>
+  								<button><a href="{{url_for('checkout.checkout')}}">Payer</a></button>
+					
+					  <p></p>
+				  </div>
+				  {% endif %}
+			  {% endfor %}
+			  
+
+	  
+  </div>
+
+  
+
+
+
+</body>
+</body>
+{% endblock content%}
+				
+
+
+/* basket essai */
+
+.CartContainer{
+	width: 70%;
+	height: 90%;
+	background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 10px 20px #1687d933;
+}
+
+.Header{
+	margin: auto;
+	width: 90%;
+	height: 15%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.Heading{
+	font-size: 20px;
+	font-family: 'Open Sans';
+	font-weight: 700;
+	color: #2F3841;
+}
+
+.Action{
+	font-size: 14px;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	color: #E44C4C;
+	cursor: pointer;
+	border-bottom: 1px solid #E44C4C;
+}
+
+.Cart-Items{
+	margin: auto;
+	width: 90%;
+	height: 30%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.image-box{
+	width: 15%;
+	text-align: center;
+}
+.about{
+	height: 100%;
+	width: 24%;
+}
+.title{
+	padding-top: 10px;
+	line-height: 10px;
+	font-size: 32px;
+	font-family: 'Open Sans';
+	font-weight: 800;
+	color: #202020;
+}
+.subtitle{
+	line-height: 10px;
+	font-size: 18px;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	color: #909090;
+}
+
+.counter{
+	width: 15%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.btn{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #d9d9d9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	font-family: 'Open Sans';
+	font-weight: 900;
+	color: #202020;
+	cursor: pointer;
+}
+.count{
+	font-size: 20px;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	color: #202020;
+}
+
+.prices{
+	height: 100%;
+	text-align: right;
+}
+.amount{
+	padding-top: 20px;
+	font-size: 26px;
+	font-family: 'Open Sans';
+	font-weight: 800;
+	color: #202020;
+}
+.save{
+	padding-top: 5px;
+	font-size: 14px;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	color: #1687d9;
+	cursor: pointer;
+}
+.remove{
+	padding-top: 5px;
+	font-size: 14px;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	color: #E44C4C;
+	cursor: pointer;
+}
+
+.pad{
+	margin-top: 5px;
+}
+
+hr{
+	width: 66%;
+	float: right;
+	margin-right: 5%;
+}
+.checkout{
+	float: right;
+	margin-right: 5%;
+	width: 28%;
+}
+.total{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.Subtotal{
+	font-size: 22px;
+	font-family: 'Open Sans';
+	font-weight: 700;
+	color: #202020;
+}
+.items{
+	font-size: 16px;
+	font-family: 'Open Sans';
+	font-weight: 500;
+	color: #909090;
+	line-height: 10px;
+}
+.total-amount{
+	font-size: 36px;
+	font-family: 'Open Sans';
+	font-weight: 900;
+	color: #202020;
+}
+.button{
+	margin-top: 10px;
+	width: 100%;
+	height: 40px;
+	border: none;
+	background: linear-gradient(to bottom right, #B8D7FF, #8EB7EB);
+	border-radius: 20px;
+	cursor: pointer;
+	font-size: 16px;
+	font-family: 'Open Sans';
+	font-weight: 600;
+	color: #202020;
+}
