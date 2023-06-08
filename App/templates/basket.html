@@ -1,3 +1,4 @@
+
 <head>
 	<link rel="stylesheet" href="static/main.css">
 </head>
@@ -19,16 +20,22 @@
 							<!-- for item in cart_items -->
 
 							{% for cart in carts %}
-							<table>
-								<div class= "titre"><p>Votre panier</p></div>
-								<tr>
-									<th>Produit</th>
-									<th>Taille</th>
-									<th>Couleur</th>
-									<th>Quantité</th>
-									<th>Prix</th>
-								</tr>
+							
 								{% if cart.status=="N" %}
+								{% if cart.cart_items| length < 1 %}
+								<p>Votre panier est vide. Connectez-vous à votre compte pour le remplir ! 
+								</p>
+								{% endif %}
+								{% if cart.cart_items| length > 0 %}
+								<table>
+									<div class= "titre"><p>Votre panier</p></div>
+									<tr>
+										<th>Produit</th>
+										<th>Taille</th>
+										<th>Couleur</th>
+										<th>Quantité</th>
+										<th>Prix</th>
+									</tr>
 								{% for cart_item in cart.cart_items %}
 
 								
@@ -83,10 +90,15 @@
        									 		<td>prix?</td>
       										</tr>
     									</table>
-  								<button><a href="{{url_for('checkout.checkout')}}">Payer</a></button>
+							<form action="/checkout">
+										<input type="checkbox" required>Accepter les Conditions Générales de vente (CGV) et les Conditions générales d'utilisation (CGU)</input>
+  								
+										<button type="submit">Payer</button>
+							</form>
 					
 					  <p></p>
 				  </div>
+				  {% endif %}
 				  {% endif %}
 			  {% endfor %}
 			  
