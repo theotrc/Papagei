@@ -12,7 +12,7 @@
 	<body>		
 				
 					
-						<div class="cart-page">
+						
 							
 						
 							<!-- for cart in carts -->
@@ -23,10 +23,14 @@
 							
 								{% if cart.status=="N" %}
 								{% if cart.cart_items| length < 1 %}
-								<p>Votre panier est vide. Connectez-vous à votre compte pour le remplir ! 
+								<div class="oups_page">
+									<p class="oups">Oups... Votre panier est vide! 
 								</p>
+							</div>
+								
 								{% endif %}
 								{% if cart.cart_items| length > 0 %}
+								<div class="cart-page">
 								<table>
 									<div class= "titre"><p>Votre panier</p></div>
 									<tr>

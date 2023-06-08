@@ -11,12 +11,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <h1>Merci pour votre commande</h1>
-    <p>{{session_id}}
+<div class="success_page">
+    <p class="success">Merci pour votre commande !
+        <br>
+    {{session_id}}
+    <br>
         Un mail récapitulatif de votre commande va vous être envoyé. 
     </p>
-
+</div>
 
 
 {% endblock %}
