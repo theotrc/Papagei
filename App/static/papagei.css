@@ -112,3 +112,25 @@ section{
 	font-family: 'Lexend';
 	font-size: 12px;
 }
+
+.popup{
+	width:450px;
+	padding: 20px 20px;
+	position:absolute;
+	background-color: #FCFF51;
+	transform: translate(-50%, -50%);
+	left:50%;
+	top:25%;
+	border-radius: 10px;
+	font-family: 'Lexend';
+	display: none;
+}
+.popup button{
+	display: block;
+	margin: 0 0 20px auto;
+	border:none;
+	outline:none;
+	cursor: pointer;
+	font-size: 30px;
+	background-color: transparent;
+}

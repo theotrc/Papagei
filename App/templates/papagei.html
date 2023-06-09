@@ -26,6 +26,14 @@
     </div>
     <div class="background"></div>
 <section></section>
+<div class="popup" id="popup">
+    <button id="close" href="popup">&times;</button>
+    <p>Nous n'utilisons pas de cookies !
+        Si vous remplissez votre panier sans être connecté à votre compte, il ne pourra pas s'enregistrer.
+        N'oubliez de vous connecter à votre compte ou d'en créer un !
+    </p>
+</div>
+<script src={{url_for('static', filename='script-popup.js')}}></script>
 
     {% endblock %}
 
