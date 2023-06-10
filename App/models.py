@@ -17,6 +17,7 @@ class User(UserMixin,db.Model):
     address = db.Column(db.String(1000))
     country = db.Column(db.String(1000))
 
+    verify_account = db.Column(db.Boolean, default=False)
     ## reset token for reset password
     reset_token = db.Column(db.String(100))
     reset_token_expiry = db.Column(db.DateTime)

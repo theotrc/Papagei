@@ -1,23 +1,23 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
-from App import db
+from App import db,pwd, email_sender
 from App.utils import generate_code
 from ..models import User
 from flask_login import login_user, login_required, logout_user
 from datetime import datetime, timedelta
 from hashlib import sha256
 
-import smtplib
+
 from email.message import EmailMessage
+import smtplib
 import ssl
 import os
 
 
 pwd =os.environ.get('MAIL_MDP')
 email_sender = os.environ.get('MAIL_SENDER')
-email_receiver = 'theotricot12@gmail.com'
-
+em = EmailMessage()
 
 
 auth_blue= Blueprint("auth", __name__, static_folder="../static", template_folder="../templates")
@@ -38,8 +38,7 @@ def signup_post():
     adress = request.form.get('adress')
     country = request.form.get('country')
 
-    user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
-
+    user = User.query.filter_by(email=email).first()
     if user: # if a user is found, we want to redirect back to signup page so user can try again
         return redirect(url_for('auth.signup'))
     if not password or len(password)<8:
@@ -53,7 +52,39 @@ def signup_post():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect(url_for("auth.login"))
+    user = User.query.filter_by(email=email).first()
+    
+    
+    id = user.id
+
+    code = sha256(str(generate_code()).encode()).hexdigest()
+    expiry = datetime.now() + timedelta(days=1)
+
+
+    User.query.filter_by(id=id).update(values={"reset_token":code,"reset_token_expiry":expiry})
+    db.session.commit()
+
+
+    subject = "papagei - Validation de compte"
+    body = f"Bienvenue {firstname},\nCliquez ici pour valider la création de votre compte: localhost:8000/accountvalidation{id}?code={code}"
+
+    em['From'] = email_sender
+    em['To'] = email
+    em['Subject'] =  subject
+    em.set_content(body)
+
+
+
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(email_sender, pwd)
+        smtp.sendmail(email_sender,email,em.as_string())
+
+    
+
+
+    return render_template("account_validation.html")
 
 
 @auth_blue.route('/login')
@@ -80,8 +111,11 @@ def login_post():
         return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
     # if the above check passes, then we know the user has the right credentials
-    login_user(user, remember=remember)
-    return redirect(url_for('home.home'))
+    if user.verify_account:
+        login_user(user, remember=remember)
+        return redirect(url_for('home.home'))
+    else: return redirect(url_for('auth.login'))
+
 
 @auth_blue.route('/logout')
 @login_required
@@ -120,7 +154,6 @@ def resetpwd_post():
         subject = "réinitialisation de mot de passe"
         body = f"lien de réinitialisation: http://127.0.0.1:8000/mailvalidation{id}?code={code}"
 
-        em = EmailMessage()
         em['From'] = email_sender
         em['To'] = email_receiver
         em['Subject'] =  subject
@@ -163,7 +196,6 @@ def mailvalidation(id):
 @auth_blue.route('/mailvalidation<id>', methods=['POST'])
 def change_pwd(id):
     code = request.args.get("code")
-    print(code)
     password = request.form.get('password')
     confirm_password = request.form.get('confirm_password')
 
@@ -181,5 +213,52 @@ def change_pwd(id):
     else:
         flash("les deux mots de passe ne sont pas indentiques", "info")
         return render_template('ValidateMail.html', id=id,code=code)
+    
+    return redirect(url_for('auth.login'))
+
+
+@auth_blue.route('/accountvalidation<id>', methods=['POST', "GET"])
+def account_validation(id):
+    code = request.args.get("code")
+
+ 
+    try:
+
+        user = User.query.filter_by(id=int(id))
+
+        user.filter_by(reset_token=code).update(values={"reset_token":None,
+                                                                            "reset_token_expiry":None,
+                                                                            "verify_account":True})
+        db.session.commit()
+
+        
+    except Exception as e:
+        return redirect(url_for("home.home"))
+    
+    try:
+
+
+        email_receiver = user.first().email
+        firstname = user.first().firstname
+        subject = "papagei - Confirmation de création de compte"
+        body = f"Bienvenue {firstname},\nVotre compte est créé, vous pouvez maintenant vous connecter sur www.papagei-shop.fr pour remplir votre panier.\nÀ très vite,\nL'équipe papagei."
+
+        
+        em['From'] = email_sender
+        em['To'] = email_receiver
+        em['Subject'] =  subject
+        em.set_content(body)
+
+
+
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_sender, pwd)
+            smtp.sendmail(email_sender,email_receiver,em.as_string())
+
+    except Exception as e:
+        return str(e)
+
     
     return redirect(url_for('auth.login'))

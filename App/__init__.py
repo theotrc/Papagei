@@ -3,8 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import stripe_keys
 import stripe
+import os
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 def create_app():
     app=Flask(__name__)
     app.config.from_object('config')
@@ -42,11 +45,15 @@ def create_app():
     return app
 stripe_public_key= stripe_keys['publishable_key']
 stripe.api_key = stripe_keys['secret_key']
+pwd =os.environ.get('MAIL_MDP')
+email_sender = os.environ.get('MAIL_SENDER')
 app = create_app()
 
 with app.app_context():
     db.init_app(app)
+    migrate.init_app(app, db)
     db.create_all()
+
 
 
 
