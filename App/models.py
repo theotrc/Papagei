@@ -12,10 +12,19 @@ class User(UserMixin,db.Model):
 
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
-    firstname = db.Column(db.String(1000))
-    address = db.Column(db.String(1000))
-    country = db.Column(db.String(1000))
+    name = db.Column(db.String(100))
+    firstname = db.Column(db.String(100))
+
+
+    street = db.Column(db.String(100))
+
+    streetnumber = db.Column(db.String(100))
+    
+    zipecode = db.Column(db.Integer)
+
+    city = db.Column(db.String(100))
+
+    country = db.Column(db.String(100))
 
     verify_account = db.Column(db.Boolean, default=False)
     ## reset token for reset password

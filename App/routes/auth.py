@@ -32,10 +32,16 @@ def signup():
 def signup_post():
     # code to validate and add user to database goes here
     email = request.form.get('email')
+    email = email.lower()
     name = request.form.get('name')
     password = request.form.get('password')
     firstname = request.form.get('firstname')
-    adress = request.form.get('adress')
+
+    city = request.form.get('city')
+    zipcode = request.form.get('zipcode')
+    street = request.form.get('street')
+    street_number = request.form.get('street_number')
+
     country = request.form.get('country')
 
     user = User.query.filter_by(email=email).first()
@@ -46,7 +52,7 @@ def signup_post():
         return render_template('signup.html')
 
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'),firstname = firstname, address=adress,country=country, is_admin=False)
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'),firstname = firstname, street= street, city=city, zipcode=zipcode,street_number=street_number,country=country, is_admin=False)
 
     # add the new user to the database
     db.session.add(new_user)
@@ -96,6 +102,7 @@ def login():
 def login_post():
     # login code goes here
     email = request.form.get('email')
+    email=email.lower()
     password = request.form.get('password')
     
 
