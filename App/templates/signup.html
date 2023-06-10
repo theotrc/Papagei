@@ -32,14 +32,17 @@
         <p> <input  type="text" name="country" placeholder="Pays" required> </p>
 
 
+
         
+
 
         <p> <input  type="password" name="password" placeholder="Mot de passe" required> </p>
 
         <p> <input  type="password" name="confirm_password" placeholder="Confirmez votre mot de passe" required> </p>
 
 
-        <p> <input type = "submit" value="Valider"/></p>
+
+        <p> <input class='input-btn'type = "submit" value="Valider"/></p>
 
     </form>
     {% with messages = get_flashed_messages(with_categories=true,
