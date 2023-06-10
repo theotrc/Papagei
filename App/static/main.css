@@ -226,6 +226,7 @@ h3{
 		display: grid;
 		
 	}
+
 	fieldset, input, legend, select, textarea{
 		-webkit-appearance: none;
 		-moz-appearance: none;
@@ -311,7 +312,9 @@ h3{
 	font-size: 3vw;
 	border: 2px solid #FFCCEB;
 }
-
+.header-compte a{
+	font-size: 15px;
+}
 .cart-page{
 	margin: auto auto;
 	border-radius: 6%;
@@ -619,7 +622,7 @@ textarea{
 	min-height: 10rem;
 }
 
-input[type="radio"],
+input[type="radio"]
 {
 	height:1.5em;
 	width:1.5em;

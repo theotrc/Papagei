@@ -4,13 +4,12 @@ window.addEventListener("load", function(){
             document.querySelector(".popup").style.
             display ="block";
         },
-        1100
+        1000
     )
 });
 
 document.querySelector("#close").addEventListener
 ("click", function(){
-    console.log("closndejzfjezbfjk")
-    document.querySelector("#popup"). 
-    getElementsByClassName.display ="none";
+document.querySelector(".popup").style.display ="none";
 });
+
