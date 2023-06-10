@@ -33,65 +33,90 @@ def signup_post():
     # code to validate and add user to database goes here
     email = request.form.get('email')
     email = email.lower()
-    name = request.form.get('name')
+    name = request.form.get('name').lower()
     password = request.form.get('password')
-    firstname = request.form.get('firstname')
+    confirm_password = request.form.get('confirm_password')
+    firstname = request.form.get('firstname').lower()
+    addressmore = request.form.get("addressmore")
 
-    city = request.form.get('city')
-    zipcode = request.form.get('zipcode')
-    street = request.form.get('street')
+    city = request.form.get('city').lower()
+    zipcode = int(request.form.get('zipcode'))
+    street = request.form.get('street').lower()
     street_number = request.form.get('street_number')
 
     country = request.form.get('country')
 
+    if not addressmore:
+        addressmore=""
+
     user = User.query.filter_by(email=email).first()
+    
     if user: # if a user is found, we want to redirect back to signup page so user can try again
         return redirect(url_for('auth.signup'))
     if not password or len(password)<8:
         flash("le mot de passe doit faire 8 caractères minimum", "info")
         return render_template('signup.html')
+    if password == confirm_password: 
+        try:
+        # create a new user with the form data. Hash the password so the plaintext version isn't saved.
+            new_user = User(
+                            email=email,
+                            name=name,
+                            password=generate_password_hash(password, method='sha256'),
+                            firstname = firstname,
+                            street= street,
+                            city=city,
+                            zipecode=zipcode,
+                            streetnumber=street_number,
+                            country=country,
+                            addressmore=addressmore,
+                            is_admin=False
+                                )
 
-    # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'),firstname = firstname, street= street, city=city, zipcode=zipcode,street_number=street_number,country=country, is_admin=False)
+            # add the new user to the database
+            db.session.add(new_user)
+            db.session.commit()
 
-    # add the new user to the database
-    db.session.add(new_user)
-    db.session.commit()
+            user = User.query.filter_by(email=email).first()
+            
+            
+            id = user.id
 
-    user = User.query.filter_by(email=email).first()
-    
-    
-    id = user.id
-
-    code = sha256(str(generate_code()).encode()).hexdigest()
-    expiry = datetime.now() + timedelta(days=1)
-
-
-    User.query.filter_by(id=id).update(values={"reset_token":code,"reset_token_expiry":expiry})
-    db.session.commit()
-
-
-    subject = "papagei - Validation de compte"
-    body = f"Bienvenue {firstname},\nCliquez ici pour valider la création de votre compte: localhost:8000/accountvalidation{id}?code={code}"
-
-    em['From'] = email_sender
-    em['To'] = email
-    em['Subject'] =  subject
-    em.set_content(body)
-
-
-
-    context = ssl.create_default_context()
-
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-        smtp.login(email_sender, pwd)
-        smtp.sendmail(email_sender,email,em.as_string())
-
-    
+            code = sha256(str(generate_code()).encode()).hexdigest()
+            expiry = datetime.now() + timedelta(days=1)
 
 
-    return render_template("account_validation.html")
+            User.query.filter_by(id=id).update(values={"reset_token":code,"reset_token_expiry":expiry})
+            db.session.commit()
 
+
+            subject = "papagei - Validation de compte"
+            body = f"Bienvenue {firstname},\nCliquez ici pour valider la création de votre compte: localhost:8000/accountvalidation{id}?code={code}"
+
+            em['From'] = email_sender
+            em['To'] = email
+            em['Subject'] =  subject
+            em.set_content(body)
+
+
+
+            context = ssl.create_default_context()
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+                smtp.login(email_sender, pwd)
+                smtp.sendmail(email_sender,email,em.as_string())
+
+        
+
+
+            return render_template("account_validation.html")
+        except Exception as e:
+            print(e)
+            flash("Une erreur s'est produite lors de la création de votre compte", "info")
+            return render_template('signup.html')
+    else:
+        flash("les deux mots de passe ne sont pas indentiques", "info")
+        return render_template('signup.html')
 
 @auth_blue.route('/login')
 def login():
@@ -245,8 +270,9 @@ def account_validation(id):
     try:
 
 
-        email_receiver = user.first().email
+        email_receiver = User.query.filter_by(id=int(id)).first().email
         firstname = user.first().firstname
+        
         subject = "papagei - Confirmation de création de compte"
         body = f"Bienvenue {firstname},\nVotre compte est créé, vous pouvez maintenant vous connecter sur www.papagei-shop.fr pour remplir votre panier.\nÀ très vite,\nL'équipe papagei."
 
