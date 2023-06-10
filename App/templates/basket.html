@@ -12,7 +12,7 @@
 	<body>		
 				
 					
-						<div class="cart-page">
+						
 							
 						
 							<!-- for cart in carts -->
@@ -23,81 +23,84 @@
 							
 								{% if cart.status=="N" %}
 								{% if cart.cart_items| length < 1 %}
-								<p>Votre panier est vide. Connectez-vous à votre compte pour le remplir ! 
+								<div class="oups_page">
+									<p class="oups">Oups... Votre panier est vide! 
 								</p>
+							</div>
+								
 								{% endif %}
 								{% if cart.cart_items| length > 0 %}
-								<table>
-									<div class= "titre"><p>Votre panier</p></div>
-									<tr>
-										<th>Produit</th>
-										<th>Taille</th>
-										<th>Couleur</th>
-										<th>Quantité</th>
-										<th>Prix</th>
-									</tr>
+						
+								<div class= "titre"><p>Votre panier</p>
+								<div class="cart">
 								{% for cart_item in cart.cart_items %}
-
 								
-								<tr>
-									<td>
-										<div class ="cart-info">
-											<a href="{{url_for('sale.sale_page', id= cart_item.item.id)}}">
+								<div class="wrapper">
+							
+									
+									<div class="project">
+										<div class="shop">
+											<div class="box">
+												<a href="{{url_for('sale.sale_page', id= cart_item.item.id)}}">
 										
-												<img src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.item.title}}"/>
-											
-											</a> 
-											
-										<div>
-											
-											<p>{{cart_item.item.title}}</p>
-								
-											<br>
-											<a href="{{url_for('basket.deleteitem_basket', id= cart_item.id)}}" onclick="return confirm('Retirer du panier?')">
-												<div class= "svg"> <svg  xmlns="http://www.w3.org/2000/svg" version="1.0" preserveAspectRatio="xMidYMid meet" viewBox="16 0.17 91 122.83">
-	
-													<g transform="translate(0.000000,123.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-													<path d="M467 1224 c-4 -4 -7 -18 -7 -31 0 -23 0 -23 -131 -23 -72 0 -139 -5 -150 -10 -16 -9 -19 -22 -19 -80 l0 -70 455 0 455 0 0 70 c0 58 -3 71 -19 80 -11 5 -78 10 -150 10 l-130 0 -3 28 -3 27 -146 3 c-80 1 -148 -1 -152 -4z"/>
-													<path d="M231 848 c0 -46 8 -247 18 -447 17 -357 18 -364 40 -382 21 -18 46 -19 326 -19 280 0 305 1 326 19 22 18 23 25 40 382 10 200 18 401 18 447 l1 82 -385 0 -385 0 1 -82z m247 -120 c17 -17 17 -509 0 -526 -18 -18 -75 -15 -82 4 -8 20 -8 498 0 518 7 19 64 22 82 4z m177 -263 l0 -270 -40 0 -40 0 -3 260 c-1 143 0 266 3 273 3 9 18 12 42 10 l38 -3 0 -270z m179 259 c8 -20 8 -498 0 -518 -7 -19 -64 -22 -82 -4 -17 17 -17 509 0 526 18 18 75 15 82 -4z"/>
-													</g>
-												</svg> </div>
-											</a>
+													<img src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.item.title}}"/>
+												
+												</a>
+												<div class="content">
+													<p>{{cart_item.item.title}}
+														<br>
+													{{cart_item.size}}
+													<br>
+													{{cart_item.item.price *cart_item.item_quantity}}
+													<br>
+													Quantité:{{cart_item.item_quantity}}
+													
+														
+														<a href="{{url_for('basket.deleteitem_basket', id= cart_item.id)}}" onclick="return confirm('Retirer du panier?')">
+															<div class= "svg-poubelle"> <svg class="svg-poubelle"  xmlns="http://www.w3.org/2000/svg" version="1.0" preserveAspectRatio="xMidYMid meet" viewBox="16 0.17 91 122.83">
+				
+																<g transform="translate(0.000000,123.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+																<path d="M467 1224 c-4 -4 -7 -18 -7 -31 0 -23 0 -23 -131 -23 -72 0 -139 -5 -150 -10 -16 -9 -19 -22 -19 -80 l0 -70 455 0 455 0 0 70 c0 58 -3 71 -19 80 -11 5 -78 10 -150 10 l-130 0 -3 28 -3 27 -146 3 c-80 1 -148 -1 -152 -4z"/>
+																<path d="M231 848 c0 -46 8 -247 18 -447 17 -357 18 -364 40 -382 21 -18 46 -19 326 -19 280 0 305 1 326 19 22 18 23 25 40 382 10 200 18 401 18 447 l1 82 -385 0 -385 0 1 -82z m247 -120 c17 -17 17 -509 0 -526 -18 -18 -75 -15 -82 4 -8 20 -8 498 0 518 7 19 64 22 82 4z m177 -263 l0 -270 -40 0 -40 0 -3 260 c-1 143 0 266 3 273 3 9 18 12 42 10 l38 -3 0 -270z m179 259 c8 -20 8 -498 0 -518 -7 -19 -64 -22 -82 -4 -17 17 -17 509 0 526 18 18 75 15 82 -4z"/>
+																</g>
+																
+															</svg> </div>
+														</a>
+													</p>
+												</div>
+											</div>
 										</div>
+									
 
-       								</td>
-										<td>{{cart_item.size}}</td>
-										<td>{{cart_item.item.color}}</td>
-       									<td>{{cart_item.item_quantity}}</td>
-       									<td>{{cart_item.item.price *cart_item.item_quantity}}</td>
-    							</tr>
+									
+								</div>
+							
+							
   							
 							  {% endfor %}
-							  </table>
-  
-  								<div class="total-price">
-    
-    									<table>
-      										<tr>
-        										<td>Produits</td>
-        										<td><span>Total {{cart.price}}€</span></td>
-      										</tr>
-      										<tr>
-        										<td>Livraison</td>
-        										<td>prix?</td>
-      										</tr>
-      										<tr>
-        										<td>Total</td>
-       									 		<td>prix?</td>
-      										</tr>
-    									</table>
-							<form action="/checkout">
-										<input type="checkbox" required>Accepter les Conditions Générales de vente (CGV) et les Conditions générales d'utilisation (CGU)</input>
-  								
-										<button type="submit">Payer</button>
-							</form>
+							  <div class="right-bar">
+									<p><span>Sous-total</span> <span>{{cart.price}}€</span></p>
+									<hr>
+									<p><span>Livraison</span> <span>5€</span></p>
+									<hr>
+									<p><span>Total</span> <span>{{cart.price}}</span></p>
+
+							
+								
+
+								</div>
+							</div>
+							</div>
 					
-					  <p></p>
-				  </div>
+							<div class="form-checkout">
+							<form action="/checkout">
+										<input type="checkbox" required><p class="acceptercgu">Accepter les Conditions Générales de vente (CGV) et les Conditions générales d'utilisation (CGU)</p></input>
+  								
+										<button class="payer" type="submit">Payer</button>
+							</form>
+						</div>
+					  
+				  
 				  {% endif %}
 				  {% endif %}
 			  {% endfor %}
