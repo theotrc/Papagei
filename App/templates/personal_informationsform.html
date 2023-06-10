@@ -11,15 +11,33 @@
     <div class= header-compte>
     <form method="POST" action="/personalinformationsmodify" >
         <div>
-            <input class="input is-large" type="text" name="name" placeholder="Nom"> 
+            Nom: <input class="input is-large" type="text" name="name" placeholder="Nom" value="{{current_user.name|upper}}" required> 
         </div>
 
         <div>
-            <input class="input is-large" type="text" name="firstname" placeholder="Prénom">
+            Prénom: <input class="input is-large" type="text" name="firstname" placeholder="Prénom" value="{{current_user.firstname}}" required>
         </div>
 
         <div>
-            <input class="input is-large" type="text" name="address" placeholder="Adresse">
+            Nom de la voie: <input class="input is-large" type="text" name="street" placeholder="Rue" value="{{current_user.street}}" required>
+        </div>
+
+        <div>
+            Numéro de voie: <input class="input is-large" type="text" name="streetnumber" placeholder="Numéro de rue" value="{{current_user.streetnumber}}" required>
+        </div>
+        <div>
+            Complément d'adresse: <input class="input is-large" type="text" name="addressmore" placeholder="Complément d'adresse" value="{{current_user.addressmore}}">
+        </div>
+        <div>
+            Code postal: <input class="input is-large" type="text" name="zipcode" placeholder="Code postal" value="{{current_user.zipecode}}" required>
+        </div>
+
+        <div>
+            Ville: <input class="input is-large" type="text" name="city" placeholder="Ville" value="{{current_user.city}}" required>
+        </div>
+
+        <div>
+            Pays: <input class="input is-large" type="text" name="country" placeholder="Pays" value="{{current_user.country}}" required>
         </div>
 
         <p> <input type = "submit" value="Valider"/></p>

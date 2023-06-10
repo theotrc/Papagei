@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from ..models import Item, ItemImage
+from ..models import Item, ItemImage, Order
 from flask_login import login_required, current_user
 import base64
 
@@ -110,4 +110,23 @@ def add_item_post():
             message = f"erreur lors de l'ajout de l'article"
             flash(message, "info")
         return redirect(url_for("admin.add_item"))
+    else: return redirect(url_for("home.home"))
+
+
+@admin.route("/admin_cmd")
+@login_required
+def admincmd():
+
+    if current_user.is_admin:
+        orders = Order.query.all()
+        return render_template("admincmd.html", orders=orders)
+    else: return redirect(url_for("home.home"))
+
+@admin.route("/cmddetails<id>")
+@login_required
+def details(id):
+
+    if current_user.is_admin:
+        order = Order.query.filter_by(id=int(id))
+        return render_template("admincmd_details.html", order=order)
     else: return redirect(url_for("home.home"))

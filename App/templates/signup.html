@@ -11,30 +11,32 @@
 
     <form method="POST" action="/signup">
 
-        <p> <input  type="email" name="email" placeholder="Email" autofocus=""> </p>
+        <p> <input  type="email" name="email" placeholder="Email" autofocus="" required> </p>
 
 
-        <p> <input  type="text" name="firstname" placeholder="Prénom" autofocus=""> </p>
+        <p> <input  type="text" name="firstname" placeholder="Prénom" autofocus="" required> </p>
 
-        <p> <input  type="text" name="name" placeholder="Nom" autofocus=""> </p>
+        <p> <input  type="text" name="name" placeholder="Nom" autofocus="" required> </p>
         
 
-        <p> <input  type="text" name="street" placeholder="Nom de la rue"> </p>
+        <p> <input  type="text" name="street" placeholder="Nom de la voie" required> </p>
 
-        <p> <input  type="text" name="street_number" placeholder="Numéro de rue"> </p>
+        <p> <input  type="text" name="street_number" placeholder="Numéro de la voie" required> </p>
 
-        <p> <input  type="text" name="city" placeholder="Ville"> </p>
+        <p> <input  type="text" name="addressmore" placeholder="Complément d'adresse"> </p>
 
-        <p> <input  type="text" name="zipcode" placeholder="Code postal"> </p>
+        <p> <input  type="text" name="city" placeholder="Ville" required> </p>
 
-        <p> <input  type="text" name="country" placeholder="Pays"> </p>
+        <p> <input  type="text" name="zipcode" placeholder="Code postal" required> </p>
+
+        <p> <input  type="text" name="country" placeholder="Pays" required> </p>
 
 
         
 
-        <p> <input  type="password" name="password" placeholder="Mot de passe"> </p>
+        <p> <input  type="password" name="password" placeholder="Mot de passe" required> </p>
 
-        <p> <input  type="password" name="password" placeholder="Confirmez votre mot de passe"> </p>
+        <p> <input  type="password" name="confirm_password" placeholder="Confirmez votre mot de passe" required> </p>
 
 
         <p> <input type = "submit" value="Valider"/></p>

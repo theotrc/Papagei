@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import logging as lg
 from flask_login import UserMixin
 from App import db
+from datetime import datetime
 
 
 
@@ -25,6 +26,8 @@ class User(UserMixin,db.Model):
     city = db.Column(db.String(100))
 
     country = db.Column(db.String(100))
+
+    addressmore = db.Column(db.String(100))
 
     verify_account = db.Column(db.Boolean, default=False)
     ## reset token for reset password
@@ -118,6 +121,7 @@ class Order(db.Model):
     
     stripe_id =  db.Column(db.String(100))
 
+    created_date = db.Column(db.DateTime, default=datetime.now())
     cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'),
         nullable=False)
     

@@ -13,3 +13,12 @@ def orders():
     orders = Order.query.filter_by(user_id=current_user.id).all()
     
     return render_template("orders.html", orders = orders)
+
+
+@order_blue.route("/details<id>")
+@login_required
+def details(id):
+
+    order = Order.query.filter_by(user_id=current_user.id, id=int(id)).first()
+    
+    return render_template("order_details.html", order = order)

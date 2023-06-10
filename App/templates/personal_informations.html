@@ -14,17 +14,22 @@
             </div>
 
             <div>
-                Nom: {{current_user.name}}
+                Nom: {{current_user.name | upper}}
             </div>
 
             <div>
-                Adresse: {{current_user.address}}
+                Adresse: {{current_user.streetnumber}} {{current_user.street}}, {{current_user.zipecode}}, {{current_user.city}}
             </div>
-
+            {% if current_user.addressmore | length > 0%}
+            <div>
+                Complément d'adresse: {{current_user.addressmore}}
+            </div>
+            {%endif%}
             <div>
                 Email: {{current_user.email}}
             </div>
-            <a href="{{url_for('account.modify')}}"><div>modifier mes informations</div></a>
+            <a href="{{url_for('account.modify')}}"><div>Modifier mes informations</div></a>
+            <a href="{{url_for('account.deleteaccount')}}" onclick="return confirm('Etes-vous sur de vouloir supprimer votre compte ?')">Supprimer mon compte</a>
         </div>
 
 
