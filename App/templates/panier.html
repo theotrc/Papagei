@@ -341,12 +341,8 @@ select{
 	color :black;
 	background-color: #ffffff;
 	border-radius: 5px;
-	
-
 }
-
-
-fieldset, input, legend, select, textarea{
+fieldset, legend, select, textarea{
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -357,7 +353,6 @@ fieldset, input, legend, select, textarea{
 	box-sizing: border-box;
 
 }
-input, 
 select,
 textarea{
 	border: 2px solid #FFCCEB;
@@ -382,22 +377,6 @@ textarea{
 textarea{
 	min-height: 10rem;
 }
-
-input[type="radio"]
-{
-	height:1.5em;
-	width:1.5em;
-	vertical-align: middle;
-}
-
-input[type="radio"]{
-	border-radius: 50%;
-}
-
-input[type="radio"]:checked{
-	background-image: radial-gradient(hsl(213,73%,50%)40%, transparent calc(40% + 1px));
-}
-
 input::placeholder,
 textarea::placeholder{
 	opacity: 1;
@@ -419,8 +398,7 @@ form{
 	display: grid;
 	
 }
-
-fieldset, input, legend, select, textarea{
+fieldset, legend, select, textarea{
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -431,7 +409,6 @@ fieldset, input, legend, select, textarea{
 	box-sizing: border-box;
 
 }
-input, 
 select,
 textarea{
 	border: 1px solid black;
@@ -451,37 +428,4 @@ textarea{
 	box-sizing: border-box;
 	width:100%;
 	padding: 0.5rem 0.75rem;
-}
-
-textarea{
-	min-height: 10rem;
-}
-
-input[type="radio"],
-{
-	height:1.5em;
-	width:1.5em;
-	vertical-align: middle;
-}
-
-input[type="radio"]{
-	border-radius: 50%;
-}
-
-input[type="radio"]:checked{
-	background-image: radial-gradient(hsl(213,73%,50%)40%, transparent calc(40% + 1px));
-}
-
-input::placeholder,
-textarea::placeholder{
-	opacity: 1;
-	color : hsl(0, 0%, 70%);
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-	outline:none;
-	box-shadow: 0 0 0 1px white;
-}
 }

@@ -47,14 +47,14 @@
 							<br>
 						{{item.composition}}
 						<br>
-						{{item.color}}</h5>
+						</h5>
 							</div>
 						</div>
 						</div>
 						<div class="div-taille">
 							<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket_post', id = item.id)}}">
 								<label for="size" class="large-label">Taille: </label>
-								<select name="size" id="size">
+								<select class='text-select' name="size" id="size">
 									<option value="XS">XS</option>
 									<option value="S">S</option>
 									<option value="M">M</option>
@@ -66,30 +66,25 @@
 								<br>
 								<label for="quantity" class="large-label">Quantité: </label>
 			
-								<select name="quantity" id="quantity">
+								<select class='text-select' name="quantity" id="quantity">
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
 								</select>
 								<br>
-								<label for="couleur" class="large-label">Couleur: </label>
-								<div class="carre">
-									<div class="carre_bleu"></div>
-									<div class="carre_rouge"></div>
-									<div class="carre_marron"></div>
-								</div>
+								<label for="couleur" class="large-label">Couleur: {{item.color}}</label>
+								
 								<br>
 								
 									<label for="+taille" class="large-label">Autre taille: </label>
-									<input type="text" id="+taille" name="taille" size="20"
+									<input class="input-is-large" type="text" id="+taille" name="taille" size="20"
 									placeholder="Exemple : XXS, 3XL, 4XL"
 									minlength="3"
 									maxlength="3"
 									pattern="[l,L,s,S,x,X][2,3,4,5,6,7,8,9]"/>
 								
 								<br>
-								<button type = "submit" value="Ajouter au panier" class="large-label">Ajouter au panier</button>
-								
+								<p> <input class='input-btn'type = "submit" value="Ajouter au panier"/></p>
 							</form>
 						</div>
 					</div>
