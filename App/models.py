@@ -29,6 +29,8 @@ class User(UserMixin,db.Model):
 
     addressmore = db.Column(db.String(100))
 
+    phone = db.Column(db.Integer)
+
     verify_account = db.Column(db.Boolean, default=False)
     ## reset token for reset password
     reset_token = db.Column(db.String(100))
