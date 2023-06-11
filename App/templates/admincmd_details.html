@@ -15,19 +15,20 @@
     <div class= header-compte>
         
         <div>
-            <form action="">
+            <form method="POST" action="{{url_for('admin.newstatus', id=order.id)}}">
                 <p>Commande N. {{order.id}}</p>
                 <p>Date: {{order.created_date.strftime('%d/%m/%Y')}}</p>
+                <p>Statut: {{order.status}}</p>
 
-                <p>status</p>
+                <p>Statut</p>
                 <select class='text-select' name="order_status" id="order_status">
-                    <option value="in_progress">En cours</option>
-                    <option value="sent">Expédiée</option>
-                    <option value="end">Finalisée</option>
-                    <option value="cancel">Annulée</option>
+                    <option value="En cours">En cours</option>
+                    <option value="Expédiée">Expédiée</option>
+                    <option value="Finalisée">Finalisée</option>
+                    <option value="Annulée">Annulée</option>
                     
                 </select>
-                
+
             <input type="submit" value="Valider">
             </form>
         </div>

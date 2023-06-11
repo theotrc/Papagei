@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template,url_for
 from App import stripe, stripe_public_key, pwd, email_sender
 from flask import request
-from ..models import Cart, Order, User
+from ..models import Cart, Order, User, Cart_item, Item
 from flask_login import current_user
 from flask_login import  login_required
 from App import db
@@ -18,6 +18,24 @@ checkout_blue= Blueprint("checkout", __name__, static_folder="../static", templa
 def checkout():
     
     checkout_price = int(float(Cart.query.filter_by(user_id=current_user.id,status="N").first().price) * 100)
+
+    cart = Cart.query.filter_by(user_id=current_user.id,status="N").first()
+    if cart.cart_weight < 250 :
+        checkout_price = checkout_price + 495
+
+    elif cart.cart_weight < 500 and cart.cart_weight >= 250:
+        checkout_price = checkout_price + 670
+    elif cart.cart_weight < 750 and cart.cart_weight >= 500:
+        checkout_price = checkout_price + 760
+
+    elif cart.cart_weight < 1000 and cart.cart_weight >= 750:
+        checkout_price = checkout_price + 825
+
+    elif cart.cart_weight < 2000 and cart.cart_weight >= 1000:
+        checkout_price = checkout_price + 955
+
+    elif cart.cart_weight >= 2000:
+        checkout_price = checkout_price + 1465
 
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],
@@ -54,6 +72,19 @@ def success():
     if payment_status == "paid":
 
         cart_id = Cart.query.filter_by(user_id=current_user.id, status="N").first().id
+
+
+        for item in Cart_item.query.filter_by(cart_item_id=cart_id).all():
+            itemid = item.item_id
+            quantity = item.item_quantity
+            item_quantity = Item.query.filter_by(id=itemid).first().quantity
+
+            new_quantity = int(item_quantity) - int(quantity)
+            Item.query.filter_by(id=itemid).update(values={"quantity":new_quantity})
+            db.session.commit()
+
+
+
         new_order = Order(status="paiement validé",stripe_id=session_id,cart_id= cart_id, user_id=current_user.id)
         
         Cart.query.filter_by(user_id=current_user.id, status="N").update(values={"status":"V"})
@@ -71,7 +102,7 @@ def success():
         email_receiver = User.query.filter_by(id=current_user.id).first().email
         order_id = Order.query.filter_by(cart_id=cart_id, user_id=current_user.id).first().id
         subject = f"commade numéro {order_id}"
-        body = f"merci pour votre commade, vous pouvez suivre son avancement dans l'onglet compte puis mes commandes"
+        body = f"Merci pour votre commande, vous pouvez suivre son avancement dans l'onglet compte puis mes commandes"
 
         em = EmailMessage()
         em['From'] = email_sender

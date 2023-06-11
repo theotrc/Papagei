@@ -28,6 +28,18 @@
 
       <p><input class="input is-large" type="text" name="poids" placeholder="poids" required> </p>
 
+      <p> <input class="input is-large" type="text" name="size" placeholder="size" required> </p>
+
+      <p> <input class="input is-large" type="number" name="quantity" placeholder="Quantité" required> </p>
+
+      <p> <input class="input is-large" type="text" name="about_model" placeholder="Description du model" required> </p>
+
+      
+      <div id="input-container"></div>
+      
+      <button type="button" onclick="ajouterChampTexte()">Ajouter une taille</button>
+
+
       <div id="images-container">
           <p>Images secondaires</p>
           <label for="image1">Image 1 :</label>
@@ -58,7 +70,23 @@
   
       // Ajoutez le nouveau champ d'image au conteneur
       imagesContainer.appendChild(newImageField);
+    };
+
+    let inputCount = 0; // Compteur pour les champs de saisie de texte
+
+    function ajouterChampTexte() {
+      inputCount++;
+  
+      // Créer un nouvel élément de champ de saisie de texte
+      const inputElement = document.createElement('input');
+      inputElement.type = 'text';
+      inputElement.name = 'size'; // Nom unique pour chaque champ de saisie de texte
+  
+      // Ajouter le champ de saisie de texte au conteneur
+      const inputContainer = document.getElementById('input-container');
+      inputContainer.appendChild(inputElement);
     }
+  
   </script>
     {% with messages = get_flashed_messages(with_categories=true,
          category_filter=["error","info"]) %}

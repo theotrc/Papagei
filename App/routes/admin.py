@@ -1,9 +1,18 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from ..models import Item, ItemImage, Order
+from ..models import Item, ItemImage, Order, Item_size
 from flask_login import login_required, current_user
 import base64
 
+from email.message import EmailMessage
+import smtplib
+import ssl
+import os
+
+
+pwd =os.environ.get('MAIL_MDP')
+email_sender = os.environ.get('MAIL_SENDER')
+em = EmailMessage()
 
 admin = Blueprint("admin", __name__, static_folder="../static", template_folder="../templates")
 
@@ -71,9 +80,9 @@ def add_item_post():
             composition = request.form.get('composition')
 
             couleur = request.form.get('couleur')
-
+            about_model = request.form.get("about_model")
             poids = request.form.get('poids')
-
+            quantity = request.form.get('quantity')
             image1=request.files['image']
             image1 = image1.stream.read()
             image1 = base64.encodebytes(image1)
@@ -83,25 +92,36 @@ def add_item_post():
                 description = description,
                 composition=composition,
                 color=couleur,
-                weight=poids,
+                weight=float(poids),
                   image = image1,
-                    price = float(prix), title = titre)
+                    price = float(prix),
+                    title = titre,
+                    quantity=int(quantity),
+                    about_model=about_model)
             db.session.add(new_item)
             db.session.commit()
 
             images = request.files.getlist('second_images')
-            
-            itemid = Item.query.all()[-1].id
-            print(images)
+            sizes = request.form.getlist('size')
+            itemid = Item.query.filter_by(description=description, composition=composition,title=titre,weight=float(poids),price = float(prix), image=image1).first().id
+
             for image in images:
                 # Vérifier si une image a été sélectionnée
                 if image.filename != '':
-                    print(image)
+
                     image = image.stream.read()
                     image = base64.encodebytes(image)
                     new_pic = ItemImage(image=image, item_id=itemid)
                     db.session.add(new_pic)
                     db.session.commit()
+
+            for size in sizes:
+                size = size.upper()
+                new_size = Item_size(size=size, item_id=itemid)
+                db.session.add(new_size)
+                db.session.commit()
+
+            
             message = f"article ajouté"
             flash(message, "info")
         except Exception as e:
@@ -130,3 +150,77 @@ def details(id):
         order = Order.query.filter_by(id=int(id)).first()
         return render_template("admincmd_details.html", order=order)
     else: return redirect(url_for("home.home"))
+
+
+@admin.route("/newstatus<id>", methods=["POST"])
+@login_required
+def newstatus(id):
+
+    if current_user.is_admin:
+        try:
+            status = request.form.get("order_status")
+            Order.query.filter_by(id=int(id)).update(values = {"status":status})
+            db.session.commit()
+
+            email_receiver = Order.query.filter_by(id=int(id)).first().user.email
+            firstname = Order.query.filter_by(id=int(id)).first().user.firstname
+            
+
+            if status.lower() in ["en cours","expédiée", "annulée"]:
+
+                if status.lower()=="en cours":
+
+                    subject = f"papagei - Commande N. {id} - {status}"
+                    body = f"Bonjour {firstname},\nVotre commade N. {id} est en cours de confection,un mail vous sera envoyé au moment de son expédition. Vous pouvez à tout moment voir son avancement sur www.papagei-shop.fr dans la rubrique 'Compte' puis 'Mes commandes'.\nÀ très vite,\nL'équipe papagei."
+
+                elif status.lower()=="expédiée":
+                    subject = f"papagei - Commande N. {id} - {status}"
+                    body = f"Bonjour {firstname},\nVotre commade N. {id} est expédiée, vous recevrez des notififications concernant la livraison de votre colis par La Poste à l'adresse mail utilisée pour la commande.\nÀ très vite,\nL'équipe papagei."
+
+                elif status.lower()=="annulée":
+                    subject = f"papagei - Commande N. {id} - {status}"
+                    body = f"Bonjour {firstname},\nVotre commande N. {id} a été annulée. N'hésitez pas à contacter le service client à cette adresse mail: contact.papageishop@gmail.com.\nÀ très vite,\nL'équipe papagei."
+
+
+                em['From'] = email_sender
+                em['To'] = email_receiver
+                em['Subject'] =  subject
+                em.set_content(body)
+
+
+
+                context = ssl.create_default_context()
+
+                with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+                    smtp.login(email_sender, pwd)
+                    smtp.sendmail(email_sender,email_receiver,em.as_string())
+
+
+            return redirect(url_for("admin.admincmd"))
+        except Exception as e:
+            return redirect(url_for("admin.admincmd"))
+    else: return redirect(url_for("home.home"))
+
+
+
+@admin.route("/modfifyitem<id>")
+@login_required
+def modify_item(id):
+    if current_user.is_admin:
+        item = Item.query.filter_by(id=int(id)).first()
+        return render_template("modifyitem.html", item=item)
+    else:redirect(url_for("home.home"))
+
+
+
+
+
+@admin.route("/modfifyitem<id>", methods=["POST"])
+@login_required
+def modify_item_post(id):
+    if current_user.is_admin:
+        quantity = int(request.form.get("quantity"))
+        Item.query.filter_by(id=int(id)).update(values={"quantity":quantity})
+        db.session.commit()
+        return redirect(url_for("admin.adminitems"))
+    else:redirect(url_for("home.home"))

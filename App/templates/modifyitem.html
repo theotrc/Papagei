@@ -1,0 +1,29 @@
+
+</html>
+<head>
+	<link rel="stylesheet" href="static/main.css">
+</head>
+
+{% extends "base.html" %}
+
+{% block content %}
+<body class="login">
+<body>
+  
+    <div class= header-compte>
+        
+        <div>
+            <form method="POST" action="{{url_for('admin.modify_item_post', id=item.id)}}">
+                <p> <input class="input is-large" type="number" name="quantity" placeholder="Quantité" required> </p>
+            <input type="submit" value="Valider">
+            </form>
+        </div>
+        
+        
+    </div>
+
+</body>
+{% endblock content%}
+
+
+</html>

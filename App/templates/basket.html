@@ -90,9 +90,9 @@
 							  <div class="right-bar">
 									<p><span>Sous-total</span> <span>{{cart.price}}€</span></p>
 									<hr>
-									<p><span>Livraison</span> <span>5€</span></p>
+									<p><span>Livraison</span> <span>{{delivery_price}}€</span></p>
 									<hr>
-									<p><span>Total</span> <span>{{cart.price}}</span></p>
+									<p><span>Total</span> <span>{{cart.price + delivery_price}}€</span></p>
 
 								</div>
 								
@@ -100,7 +100,7 @@
 							</div>
 					
 							<div class="form-checkout">
-							<form action="/checkout">
+							<form action="{{url_for('checkout.checkout')}}">
 								<p class="acceptercgu"><input class='checkbox-1'type="checkbox" required> Accepter les Conditions Générales de vente (CGV) et les Conditions générales d'utilisation (CGU)</input></p>
   								
 										<p> <input class='input-btn-payer'type = "submit" value="Payer"/></p>

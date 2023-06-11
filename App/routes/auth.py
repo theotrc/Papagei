@@ -38,6 +38,7 @@ def signup_post():
     confirm_password = request.form.get('confirm_password')
     firstname = request.form.get('firstname').lower()
     addressmore = request.form.get("addressmore")
+    phone = request.form.get("phone")
 
     city = request.form.get('city').lower()
     zipcode = int(request.form.get('zipcode'))
@@ -70,6 +71,7 @@ def signup_post():
                             streetnumber=street_number,
                             country=country,
                             addressmore=addressmore,
+                            phone=phone,
                             is_admin=False
                                 )
 
@@ -291,7 +293,7 @@ def account_validation(id):
             smtp.sendmail(email_sender,email_receiver,em.as_string())
 
     except Exception as e:
-        return str(e)
+        return redirect(url_for('auth.login'))
 
     
     return redirect(url_for('auth.login'))

@@ -58,11 +58,9 @@
 							<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket_post', id = item.id)}}">
 								<label for="size" class="large-label">Taille: </label>
 								<select class='text-select' name="size" id="size">
-									<option value="XS">XS</option>
-									<option value="S">S</option>
-									<option value="M">M</option>
-									<option value="L">L</option>
-									<option value="XL">XL</option>
+									{% for size in item.sizes %}
+										<option value="{{size.size}}">{{size.size}}</option>
+									{% endfor %}
 									
 									
 								</select>
@@ -89,7 +87,11 @@
 									pattern="[l,L,s,S,x,X][2,3,4,5,6,7,8,9]"/>
 								
 								<br>
-								<p> <input class='input-btn'type = "submit" value="Ajouter au panier"/></p>
+								{% if item.quantity > 0 %}
+									<p> <input class='input-btn'type = "submit" value="Ajouter au panier"/></p>
+								{% else %}
+									<p>Rupture de stock</p>
+								{% endif %}
 							</form>
 						</div>
 					</div>
