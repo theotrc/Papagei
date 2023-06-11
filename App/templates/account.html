@@ -18,7 +18,7 @@
 <body>
   
     <div class= header-compte>
-
+        <div class="header-compte-infos">
         {%if current_user.is_admin%}
             <div class="gestion">
                 <a href="{{url_for('admin.adminitems')}}">Gestion des articles</a>
@@ -39,9 +39,9 @@
         <div class="commandes">
             <a href="{{url_for('order.orders')}}">Mes commandes</a>
         </div>
-
+    </div>
         <div class="deconnexion">
-            <a href="{{url_for('auth.logout')}}"><input class='input-btn'type = "submit" value="Se déconnecter"/>
+            <a href="{{url_for('auth.logout')}}"><input class='input-btn-deconnexion'type = "submit" value="Se déconnecter"/>
         </div>
         
     </div>
