@@ -80,7 +80,7 @@ def add_item_post():
             composition = request.form.get('composition')
 
             couleur = request.form.get('couleur')
-
+            about_model = request.form.get("about_model")
             poids = request.form.get('poids')
             quantity = request.form.get('quantity')
             image1=request.files['image']
@@ -96,14 +96,14 @@ def add_item_post():
                   image = image1,
                     price = float(prix),
                     title = titre,
-                    quantity=int(quantity))
+                    quantity=int(quantity),
+                    about_model=about_model)
             db.session.add(new_item)
             db.session.commit()
 
             images = request.files.getlist('second_images')
             sizes = request.form.getlist('size')
-            print(sizes)
-            itemid = Item.query.filter_by(description=description, composition=composition,title=titre,weight=float(poids),price = float(prix),color=couleur, image=image1).first().id
+            itemid = Item.query.filter_by(description=description, composition=composition,title=titre,weight=float(poids),price = float(prix), image=image1).first().id
 
             for image in images:
                 # Vérifier si une image a été sélectionnée

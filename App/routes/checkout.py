@@ -102,7 +102,7 @@ def success():
         email_receiver = User.query.filter_by(id=current_user.id).first().email
         order_id = Order.query.filter_by(cart_id=cart_id, user_id=current_user.id).first().id
         subject = f"commade numéro {order_id}"
-        body = f"merci pour votre commade, vous pouvez suivre son avancement dans l'onglet compte puis mes commandes"
+        body = f"Merci pour votre commande, vous pouvez suivre son avancement dans l'onglet compte puis mes commandes"
 
         em = EmailMessage()
         em['From'] = email_sender
