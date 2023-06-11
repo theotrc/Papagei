@@ -57,7 +57,7 @@ class Item(db.Model):
 
     stock = db.Column(db.Integer)
 
-    about_model = color= db.Column(db.String(1000))
+    about_model = db.Column(db.String(1000))
 
     quantity =db.Column(db.Integer)
 
