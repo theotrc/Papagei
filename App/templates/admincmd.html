@@ -13,16 +13,20 @@
 <body>
   
     <div class= header-compte>
-        <form method="POST" action="/">
-            <div>
-                
-                    <p>Date: {{order.created_date.strftime('%d/%m/%Y')}}</p>
+        
+        {% for order in orders %}
+        <div>
+            <a href="{{url_for('admin.details', id= order.id)}}"><p>Commande N. {{order.id}}</p>
+                <p>Date: {{order.created_date.strftime('%d/%m/%Y')}}</p>
+            </a>
 
-            </div>
-        </form>
+        </div>
+        {% endfor %}
+        
     </div>
 
 </body>
-</html>
-</body>
 {% endblock content%}
+
+
+</html>

@@ -127,6 +127,6 @@ def admincmd():
 def details(id):
 
     if current_user.is_admin:
-        order = Order.query.filter_by(id=int(id))
+        order = Order.query.filter_by(id=int(id)).first()
         return render_template("admincmd_details.html", order=order)
     else: return redirect(url_for("home.home"))

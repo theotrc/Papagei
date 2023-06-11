@@ -1,0 +1,42 @@
+
+
+
+</html>
+<head>
+	<link rel="stylesheet" href="static/main.css">
+</head>
+
+{% extends "base.html" %}
+
+{% block content %}
+<body class="login">
+<body>
+  
+    <div class= header-compte>
+        
+        <div>
+            <form action="">
+                <p>Commande N. {{order.id}}</p>
+                <p>Date: {{order.created_date.strftime('%d/%m/%Y')}}</p>
+
+                <p>status</p>
+                <select class='text-select' name="order_status" id="order_status">
+                    <option value="in_progress">En cours</option>
+                    <option value="sent">Expédiée</option>
+                    <option value="end">Finalisée</option>
+                    <option value="cancel">Annulée</option>
+                    
+                </select>
+                
+            <input type="submit" value="Valider">
+            </form>
+        </div>
+        
+        
+    </div>
+
+</body>
+{% endblock content%}
+
+
+</html>
