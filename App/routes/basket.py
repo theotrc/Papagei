@@ -22,7 +22,12 @@ def basket_post(id):
     
     basket_cost = Cart.query.filter_by(user_id=current_user.id, status="N").first().price
     basket_cost += float(Item.query.filter_by(id=int(id)).first().price) *int(quantity)
-    Cart.query.filter_by(user_id=current_user.id, status = "N").update(values={"price":basket_cost})
+
+    basket_weight = Cart.query.filter_by(user_id=current_user.id, status="N").first().cart_weight
+    basket_weight += float(Item.query.filter_by(id=int(id)).first().weight) *int(quantity)
+
+
+    Cart.query.filter_by(user_id=current_user.id, status = "N").update(values={"price":basket_cost, "cart_weight": basket_weight})
 
 
     new_item = Cart_item(item_quantity=quantity, cart_item_id=cart.id, item_id=int(id), size=size)
@@ -40,7 +45,24 @@ def basket_post(id):
 def basket():
     carts = Cart.query.filter_by(user_id=current_user.id, status="N")
 
-    return render_template("basket.html", carts = carts)
+    if carts.first().cart_weight < 250 :
+        delivery_price = 4.95
+
+    elif carts.first().cart_weight < 500 and carts.first().cart_weight >= 250:
+        delivery_price = 6.70
+    elif carts.first().cart_weight < 750 and carts.first().cart_weight >= 500:
+        delivery_price =  + 7.60
+
+    elif carts.first().cart_weight < 1000 and carts.first().cart_weight >= 750:
+        delivery_price =  + 8.25
+
+    elif carts.first().cart_weight < 2000 and carts.first().cart_weight >= 1000:
+        delivery_price =  + 9.55
+
+    elif carts.first().cart_weight >= 2000:
+        delivery_price =  14.65
+
+    return render_template("basket.html", carts = carts, delivery_price=delivery_price)
 
 
 @basket_blue.route("/removeitem<id>")
@@ -52,7 +74,10 @@ def deleteitem_basket(id):
     basket_cost = Cart.query.filter_by(user_id=current_user.id, status="N").first().price
     basket_cost += - float(Item.query.filter_by(id=item.item_id).first().price)*int(item.item_quantity)
 
-    Cart.query.filter_by(user_id=current_user.id, status="N").update(values={"price":basket_cost})
+    basket_weight = Cart.query.filter_by(user_id=current_user.id, status="N").first().cart_weight
+    basket_weight += - float(Item.query.filter_by(id=item.item_id).first().weight)*int(item.item_quantity)
+
+    Cart.query.filter_by(user_id=current_user.id, status="N").update(values={"price":basket_cost, "cart_weight":basket_weight})
     
     db.session.delete(item)
     db.session.commit()

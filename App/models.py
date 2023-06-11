@@ -55,6 +55,9 @@ class Item(db.Model):
 
     price = db.Column(db.Float, nullable=False)
 
+    stock = db.Column(db.Integer)
+
+
     quantity =db.Column(db.Integer)
 
     weight = db.Column(db.Float, nullable=False)
@@ -62,6 +65,8 @@ class Item(db.Model):
     images = db.relationship('ItemImage', backref='item', lazy="joined")
 
     Orders = db.relationship('Cart_item', backref='item', lazy="joined")
+
+    sizes = db.relationship('Item_size', backref='item', lazy="joined")
 
 class ItemImage(db.Model):
 
@@ -132,3 +137,11 @@ class Order(db.Model):
     
 
 
+class Item_size(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    size = db.Column(db.String(100))
+
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
+        nullable=False)
+    

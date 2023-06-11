@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from ..models import Item, ItemImage, Order
+from ..models import Item, ItemImage, Order, Item_size
 from flask_login import login_required, current_user
 import base64
 
@@ -82,7 +82,7 @@ def add_item_post():
             couleur = request.form.get('couleur')
 
             poids = request.form.get('poids')
-
+            quantity = request.form.get('quantity')
             image1=request.files['image']
             image1 = image1.stream.read()
             image1 = base64.encodebytes(image1)
@@ -92,25 +92,36 @@ def add_item_post():
                 description = description,
                 composition=composition,
                 color=couleur,
-                weight=poids,
+                weight=float(poids),
                   image = image1,
-                    price = float(prix), title = titre)
+                    price = float(prix),
+                    title = titre,
+                    quantity=int(quantity))
             db.session.add(new_item)
             db.session.commit()
 
             images = request.files.getlist('second_images')
-            
-            itemid = Item.query.all()[-1].id
-            print(images)
+            sizes = request.form.getlist('size')
+            print(sizes)
+            itemid = Item.query.filter_by(description=description, composition=composition,title=titre,weight=float(poids),price = float(prix),color=couleur, image=image1).first().id
+
             for image in images:
                 # Vérifier si une image a été sélectionnée
                 if image.filename != '':
-                    print(image)
+
                     image = image.stream.read()
                     image = base64.encodebytes(image)
                     new_pic = ItemImage(image=image, item_id=itemid)
                     db.session.add(new_pic)
                     db.session.commit()
+
+            for size in sizes:
+                size = size.upper()
+                new_size = Item_size(size=size, item_id=itemid)
+                db.session.add(new_size)
+                db.session.commit()
+
+            
             message = f"article ajouté"
             flash(message, "info")
         except Exception as e:
@@ -189,3 +200,27 @@ def newstatus(id):
         except Exception as e:
             return redirect(url_for("admin.admincmd"))
     else: return redirect(url_for("home.home"))
+
+
+
+@admin.route("/modfifyitem<id>")
+@login_required
+def modify_item(id):
+    if current_user.is_admin:
+        item = Item.query.filter_by(id=int(id)).first()
+        return render_template("modifyitem.html", item=item)
+    else:redirect(url_for("home.home"))
+
+
+
+
+
+@admin.route("/modfifyitem<id>", methods=["POST"])
+@login_required
+def modify_item_post(id):
+    if current_user.is_admin:
+        quantity = int(request.form.get("quantity"))
+        Item.query.filter_by(id=int(id)).update(values={"quantity":quantity})
+        db.session.commit()
+        return redirect(url_for("admin.adminitems"))
+    else:redirect(url_for("home.home"))
