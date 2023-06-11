@@ -40,7 +40,7 @@
 								{% endif %}
 								{% if cart.cart_items| length > 0 %}
 						
-								<div class= "titre"><p>Votre panier</p>
+								<div class= "titre-panier"><p>Votre panier</p></div>
 								<div class="cart">
 								{% for cart_item in cart.cart_items %}
 								
@@ -103,7 +103,7 @@
 							<form action="{{url_for('checkout.checkout')}}">
 								<p class="acceptercgu"><input class='checkbox-1'type="checkbox" required> Accepter les Conditions Générales de vente (CGV) et les Conditions générales d'utilisation (CGU)</input></p>
   								
-										<p> <input class='input-btn'type = "submit" value="Payer"/></p>
+										<p> <input class='input-btn-payer'type = "submit" value="Payer"/></p>
 							</form>
 						</div>
 					  

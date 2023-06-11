@@ -16,8 +16,8 @@
             </g>
           </svg></div>
     </a>
-        <div class= header-compte>
-
+        <div class= header-infos>
+            <div class="infospersos">
             <div>
                 Prénom: {{current_user.firstname}}
             </div>
@@ -37,8 +37,11 @@
             <div>
                 Email: {{current_user.email}}
             </div>
+        </div>
+            <div class="boutonsinfo">
             <a href="{{url_for('account.modify')}}"><div>Modifier mes informations</div></a>
             <a href="{{url_for('account.deleteaccount')}}" onclick="return confirm('Etes-vous sur de vouloir supprimer votre compte ?')">Supprimer mon compte</a>
+        </div>
         </div>
 
 
