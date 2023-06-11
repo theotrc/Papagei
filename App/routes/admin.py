@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from ..models import Item, ItemImage, Order, Item_size
+from ..models import Item, ItemImage, Order, Item_size, Cart_item
 from flask_login import login_required, current_user
 import base64
 
@@ -45,6 +45,16 @@ def add_item():
 @login_required
 def remove_item(id):
     if current_user.is_admin:
+        del_cart_item = Cart_item.query.filter_by(item_id=int(id)).all()
+        for cart_item in del_cart_item:
+            db.session.delete(cart_item)
+        
+
+        del_sizes = Item_size.query.filter_by(item_id=int(id)).all()
+        for size in del_sizes:
+            db.session.delete(size)
+        
+
         del_images = ItemImage.query.filter_by(item_id=int(id)).all()
         for image in del_images:
             db.session.delete(image)
