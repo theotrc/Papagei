@@ -11,13 +11,21 @@
 {% block content %}
 <body class="login">
 <body>
-  
-    <div class= header-compte>
+    <a class="return" onclick="window.history.back()">
+        <div class='fleche'><svg class="fleche"xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" version="1.1" id="svg2" sodipodi:docname="arrow_left.svg" inkscape:version="1.2.2 (732a01da63, 2022-12-09)" viewBox="136.66 318.88 54.63 37.8">
+            <defs id="defs6"/>
+            <sodipodi:namedview id="namedview4" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" showgrid="false" inkscape:zoom="2.0883073" inkscape:cx="287.55346" inkscape:cy="329.45343" inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" inkscape:current-layer="g8"/>
+            <g inkscape:groupmode="layer" inkscape:label="Image" id="g8">
+              <path d="m 154.47142,356.43712 c -0.53482,-0.25134 -16.54465,-16.01688 -17.30644,-17.04236 -0.47253,-0.63612 -0.6358,-1.71344 -0.38128,-2.5159 0.14335,-0.45196 1.7898,-2.17702 8.54877,-8.95696 4.60418,-4.61846 8.60102,-8.51682 8.88187,-8.66303 1.11174,-0.57875 2.13499,-0.50012 3.12629,0.24023 0.99489,0.74304 1.34859,2.3494 0.76433,3.4712 -0.15303,0.29381 -2.80954,3.06082 -5.90336,6.14889 -3.09381,3.08809 -5.62512,5.6636 -5.62512,5.72338 0,0.0597 -2.67666,0.10868 8.18395,0.10868 h 34.43877 l 0.63773,0.30872 c 0.42282,0.20468 0.78121,0.5322 1.06352,0.97189 0.38708,0.60285 0.42145,0.75608 0.37798,1.68444 -0.04,0.8538 -0.11386,1.10784 -0.45048,1.54917 -0.22145,0.29033 -0.65548,0.65687 -0.9645,0.81452 -0.55636,0.28383 -0.90007,0.0598 -35.05182,0.28665 -11.26288,0.0748 -8.23515,0.0489 -8.23515,0.10867 0,0.0598 2.53355,2.6353 5.63012,5.72338 3.72148,3.71129 5.72167,5.80993 5.90019,6.19063 0.50446,1.07577 0.23346,2.5686 -0.60647,3.34076 -0.81216,0.74662 -2.07076,0.95731 -3.0289,0.50704 z" id="path894" sodipodi:nodetypes="sssssssssscsssssssssss"/>
+            </g>
+          </svg></div>
+    </a>
+    <div class= header-orders>
         
         {% for order in orders %}
-        <div>
-            <a href="{{url_for('order.details', id= order.id)}}"><p>Commande N. {{order.id}}</p>
-                <p>Date: {{order.created_date.strftime('%d/%m/%Y')}}</p>
+        <div class="order-date">
+            <a href="{{url_for('order.details', id= order.id)}}"><p>Commande N°{{order.id}} 
+                {{order.created_date.strftime('%d/%m/%Y')}}</p>
             </a>
 
         </div>
