@@ -49,13 +49,15 @@
 						<br>
 						<br> Tous les articles sont faits main et à la commande
 						<br>Made in France
+						<br>
+						{{item.about_model}}
 						</h5>
 
 							</div>
 						</div>
 						</div>
 						<div class="div-taille">
-							<form method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket_post', id = item.id)}}">
+							<form class='form-taille'method="POST" enctype="multipart/form-data" action="{{url_for('basket.basket_post', id = item.id)}}">
 								<label for="size" class="large-label">Taille: </label>
 								<select class='text-select' name="size" id="size">
 									{% for size in item.sizes %}
@@ -65,7 +67,7 @@
 									
 								</select>
 								<br>
-								<h5>Si vous ne trouvez pas votre taille, contactez-nous par mail à l'adresse <a href="mailto:contact.papageishop@gmail.com">contact.papageishop@gmail.com</a> pour passer commande
+								<h5>Si vous ne trouvez pas votre taille, contactez-nous par mail à l'adresse:<a href="mailto:contact.papageishop@gmail.com">contact.papageishop@gmail.com</a> pour passer commande
 		</h5>
 								<label for="quantity" class="large-label">Quantité: </label>
 			
@@ -73,18 +75,12 @@
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
+									<option value="4">4</option>
 								</select>
 								<br>
 								<label for="couleur" class="large-label">Couleur: {{item.color}}</label>
 								
 								<br>
-								
-									<label for="+taille" class="large-label">Autre taille: </label>
-									<input class="input-is-large" type="text" id="+taille" name="taille" size="20"
-									placeholder="Exemple : XXS, 3XL, 4XL"
-									minlength="3"
-									maxlength="3"
-									pattern="[l,L,s,S,x,X][2,3,4,5,6,7,8,9]"/>
 								
 								<br>
 								{% if item.quantity > 0 %}
