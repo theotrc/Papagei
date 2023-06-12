@@ -12,14 +12,32 @@
 <body class="login">
 <body>
   
-    <div class= header-compte>
+    
         
-        <div>
+        <div class="form-cmd">
             <form method="POST" action="{{url_for('admin.newstatus', id=order.id)}}">
                 <p>Commande N. {{order.id}}</p>
+                <div class="wrapper">
+                    
+                {% for cart_item in order.cart.cart_items %}
+                <div class="shop-cmd">
+                    <div class="box">
+                        
+                        <img class="cmd-img" src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.title}}">
+                        <div class="content">
+                            <p>{{cart_item.item.title}}</p>
+                            <p>{{cart_item.item.price * cart_item.item_quantity}}€</p>
+                            <p>Taille: {{cart_item.size}}</p>
+                            <p>Quantité: {{cart_item.item_quantity}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
                 <p>Date: {{order.created_date.strftime('%d/%m/%Y')}}</p>
+                <p>Email: {{order.user.email}} Adresse: {{order.user.streetnumber}} {{order.user.street}} {{order.user.addressmore}},{{order.user.zipecode}},{{order.user.city}}</p>
                 <p>Statut: {{order.status}}</p>
-
+                <p class="stripe">Stripe : {{order.stripe_id}}</p>
                 <p>Statut</p>
                 <select class='text-select' name="order_status" id="order_status">
                     <option value="En cours">En cours</option>
@@ -29,12 +47,12 @@
                     
                 </select>
 
-            <input type="submit" value="Valider">
+            <input class="input-btn-valider" type="submit" value="Valider">
             </form>
         </div>
         
         
-    </div>
+    
 
 </body>
 {% endblock content%}

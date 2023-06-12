@@ -85,7 +85,7 @@ def success():
 
 
 
-        new_order = Order(status="paiement validé",stripe_id=session_id,cart_id= cart_id, user_id=current_user.id)
+        new_order = Order(status="Paiement validé",stripe_id=session_id,cart_id= cart_id, user_id=current_user.id)
         
         Cart.query.filter_by(user_id=current_user.id, status="N").update(values={"status":"V"})
         
@@ -101,9 +101,8 @@ def success():
         
         email_receiver = User.query.filter_by(id=current_user.id).first().email
         order_id = Order.query.filter_by(cart_id=cart_id, user_id=current_user.id).first().id
-        subject = f"commade numéro {order_id}"
-        body = f"Merci pour votre commande, vous pouvez suivre son avancement dans l'onglet compte puis mes commandes"
-
+        subject = f"papagei - Commande Numéro {order_id} confirmée"
+        body = f"Bonjour {cart.user.firstname}, \n Merci pour votre commande (N.{order_id}), elle est bien enregistrée et sera traitée au plus vite.\n\nLes articles sont faits main et à la demande, il faut compter au maximum deux semaines pour le délai de fabrication.Vous pouvez suivre son avancement sur notre site internet dans l'onglet 'Compte' puis 'Mes commandes'.\n\nUn mail vous sera communiqué lors de l'expédition de votre commande.\n\nÀ très vite sur www.papagei-shop.fr.\nL'équipe papagei"
         em = EmailMessage()
         em['From'] = email_sender
         em['To'] = email_receiver

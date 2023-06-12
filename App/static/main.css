@@ -586,6 +586,7 @@ button{
 
 .project{
 	display: flex;
+	width: 80%;
 }
 
 .shop{
@@ -593,6 +594,12 @@ button{
 	border:2px solid #dbe4ec;
 	margin-top:10px;
 	border-radius: 20px;
+}
+.shop-cmd{
+	border:2px solid #dbe4ec;
+	margin-top:10px;
+	border-radius: 20px;
+	width:80%;
 }
 
 .box{
@@ -1031,4 +1038,14 @@ textarea{
 	justify-content: center;
 	display: flex;
 }
+.form-cmd{
+	font-size: 12px;
 
+}
+.cmd-img{
+	width: 20%;
+
+}
+.cmd-infos{
+	font-size: 12px;
+}

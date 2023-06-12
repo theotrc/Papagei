@@ -42,9 +42,10 @@
 						
 								<div class= "titre-panier"><p>Votre panier</p></div>
 								<div class="cart">
+									<div class="wrapper">
 								{% for cart_item in cart.cart_items %}
 								
-								<div class="wrapper">
+								
 							
 									
 									<div class="project">
@@ -85,7 +86,7 @@
 								
 							
 							
-  							
+								
 							  {% endfor %}
 							  <div class="right-bar">
 									<p><span>Sous-total</span> <span>{{cart.price}}€</span></p>
