@@ -230,7 +230,8 @@ def modify_item(id):
 def modify_item_post(id):
     if current_user.is_admin:
         quantity = int(request.form.get("quantity"))
-        Item.query.filter_by(id=int(id)).update(values={"quantity":quantity})
+        sort = int(request.form.get("sort"))
+        Item.query.filter_by(id=int(id)).update(values={"quantity":quantity, "sort":sort})
         db.session.commit()
         return redirect(url_for("admin.adminitems"))
     else:redirect(url_for("home.home"))

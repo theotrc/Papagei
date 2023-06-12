@@ -14,6 +14,8 @@
 				<a href="{{url_for('sale.sale_page', id= image.id)}}"><div><img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/></div></a>
 				<button ><a href="{{url_for('admin.remove_item', id= image.id)}}" onclick="return confirm('supprimer cet article?')" >supprimer</a></button>
 				<p>Quantité restante: {{image.quantity}}</p>
+				<p>ordre: {{image.sort}}</p>
+
 				<a href="{{url_for('admin.modify_item', id= image.id)}}">modifier l'article</a>
 			</div>
 			{% endfor %}

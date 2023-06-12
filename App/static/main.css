@@ -157,7 +157,7 @@ h3{
 
 .text_item{
 	display: flex;
-	justify-content: center;
+	justify-content: end;
 	align-items: center;
 	
 
@@ -457,10 +457,16 @@ p{
 
 .div-taille{
 	display: flex;
-	justify-content: flex-end;
-	align-items: flex-end;
+	flex-direction: column;
 	text-align: end;
+	align-items: end;
 
+}
+.form-taille{
+	display: flex;
+	flex-direction: column;
+	text-align: end;
+	align-items: end;
 }
 
 h4{
@@ -481,7 +487,7 @@ h5{
 	justify-content: space-between;
 }
 
-@media only screen and (max-width: 480px){
+@media only screen and (max-width: 600px){
 	.box_achat{
 		max-width: 800px;
 		width: 80%;
@@ -501,6 +507,17 @@ h5{
 	}
 	h5{
 		text-align: start;
+	}
+	.form-taille{
+		display: flex;
+		flex-direction: column;
+		text-align: end;
+		align-items: flex-start;
+	}
+	.text_item{
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
 	}
 }
 
@@ -820,6 +837,7 @@ textarea{
 }
 .text-select{
 	font-size: 11px;
+	width: 110px;
 }
 .input-btn{
 	border: 1px solid #FFCCEB;
@@ -882,12 +900,12 @@ textarea{
 	display: flex;
 	justify-content: left;
 	border: 1px solid #FFCCEB;
-	height: 10%;
 	margin-top: 10px;
 	margin-left: 10px;
 	margin-right: 10px;
 	align-items: center;
 	border-radius: 20px;
+	margin-bottom: 10px;
 }
 
 .header-orders{

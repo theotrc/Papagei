@@ -62,6 +62,8 @@ class Item(db.Model):
     quantity =db.Column(db.Integer)
 
     weight = db.Column(db.Float, nullable=False)
+
+    sort = db.Column(db.Integer)
     
     images = db.relationship('ItemImage', backref='item', lazy="joined")
 

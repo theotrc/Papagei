@@ -8,7 +8,7 @@ home_blueprint= Blueprint("home", __name__, static_folder='../static', template_
 @home_blueprint.route("/home")
 def home():
 
-    item = Item.query.all()  
+    item = Item.query.order_by(Item.sort).all()  
     return render_template("accueil.html", items = item, byte = bytes())
 
 

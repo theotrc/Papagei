@@ -14,7 +14,9 @@
         
         <div>
             <form method="POST" action="{{url_for('admin.modify_item_post', id=item.id)}}">
-                <p> <input class="input is-large" type="number" name="quantity" placeholder="Quantité" required> </p>
+                <p> <input class="input is-large" type="number" name="quantity" placeholder="Quantité" value={{item.quantity}} required> </p>
+                <p> <input class="input is-large" type="number" name="sort" placeholder="ordre" value={{item.sort}} required> </p>
+
             <input type="submit" value="Valider">
             </form>
         </div>
