@@ -848,7 +848,6 @@ textarea{
 }
 .input-btn{
 	border: 1px solid #FFCCEB;
-	background-color: white;
 	border-radius: 0.25rem;
 	padding: 0.5rem 0.75rem;
 	box-sizing: border-box;
@@ -861,7 +860,6 @@ textarea{
 }
 .input-btn-payer{
 	border: 1px solid #FFCCEB;
-	background-color: white;
 	border-radius: 0.25rem;
 	padding: 0.5rem 0.75rem;
 	box-sizing: border-box;
@@ -982,7 +980,6 @@ textarea{
 	margin:auto;
 	width: 60%;
 	display: flex;
-	background-color: #ffffff;
 	border-radius: 20px;
 	 margin: 5%;
 	margin-left: auto;
@@ -1031,6 +1028,36 @@ textarea{
 	.header-modif{
 		font-size: 14px;
 	}
+	.input-btn-valider:hover{
+		background-color: #FFCCEB;
+		color: black;
+	}
+	.input-btn-deconnexion:hover{
+		background-color: #FFCCEB;
+		color: black;
+	}
+	.input-btn-payer:hover{
+		background-color: #FFCCEB;
+		color: black;
+	}
+	.input-btn:hover{
+		background-color: #FFCCEB;
+		color: black;
+	}
+	.input-btn{
+		color:black;
+	}
+	.input-btn-payer{
+		color:black;
+	}
+	
+	.input-btn-valider{
+		color:black;
+	}
+	.input-btn-deconnexion{
+		color:black;
+	}
+
 }
 .titre-panier{
 	font-size: 20px;
