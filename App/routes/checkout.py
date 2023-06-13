@@ -5,9 +5,7 @@ from ..models import Cart, Order, User, Cart_item, Item
 from flask_login import current_user
 from flask_login import  login_required
 from App import db
-from email.message import EmailMessage
-import smtplib
-import ssl
+from App.utils import send_mail
 
 checkout_blue= Blueprint("checkout", __name__, static_folder="../static", template_folder="../templates")
 
@@ -102,20 +100,8 @@ def success():
         email_receiver = User.query.filter_by(id=current_user.id).first().email
         order_id = Order.query.filter_by(cart_id=cart_id, user_id=current_user.id).first().id
         subject = f"papagei - Commande Numéro {order_id} confirmée"
-        body = f"Bonjour {cart.user.firstname}, \n Merci pour votre commande (N.{order_id}), elle est bien enregistrée et sera traitée au plus vite.\n\nLes articles sont faits main et à la demande, il faut compter au maximum deux semaines pour le délai de fabrication.Vous pouvez suivre son avancement sur notre site internet dans l'onglet 'Compte' puis 'Mes commandes'.\n\nUn mail vous sera communiqué lors de l'expédition de votre commande.\n\nÀ très vite sur www.papagei-shop.fr.\nL'équipe papagei"
-        em = EmailMessage()
-        em['From'] = email_sender
-        em['To'] = email_receiver
-        em['Subject'] =  subject
-        em.set_content(body)
-
-
-
-        context = ssl.create_default_context()
-
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-            smtp.login(email_sender, pwd)
-            smtp.sendmail(email_sender,email_receiver,em.as_string())
+        body = f"Bonjour {str(cart.user.firstname).capitalize()}, \n Merci pour votre commande (N.{order_id}), elle est bien enregistrée et sera traitée au plus vite.\n\nLes articles sont faits main et à la demande, il faut compter au maximum deux semaines pour le délai de fabrication.Vous pouvez suivre son avancement sur notre site internet dans l'onglet 'Compte' puis 'Mes commandes'.\n\nUn mail vous sera communiqué lors de l'expédition de votre commande.\n\nÀ très vite sur www.papagei-shop.fr.\nL'équipe papagei"
+        send_mail(body=body,subject=subject, user_mail=email_receiver)
 
         return render_template("success.html")
     else: return "echec"

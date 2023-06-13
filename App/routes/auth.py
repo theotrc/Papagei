@@ -7,17 +7,12 @@ from ..models import User
 from flask_login import login_user, login_required, logout_user
 from datetime import datetime, timedelta
 from hashlib import sha256
-
-
-from email.message import EmailMessage
-import smtplib
-import ssl
 import os
+site_address = os.environ.get("SITE_ADDRESS")
+
+from App.utils import send_mail
 
 
-pwd =os.environ.get('MAIL_MDP')
-email_sender = os.environ.get('MAIL_SENDER')
-em = EmailMessage()
 
 
 auth_blue= Blueprint("auth", __name__, static_folder="../static", template_folder="../templates")
@@ -93,20 +88,9 @@ def signup_post():
 
 
             subject = "papagei - Validation de compte"
-            body = f"Bienvenue {firstname},\nCliquez ici pour valider la création de votre compte: localhost:8000/accountvalidation{id}?code={code}"
+            body = f"Bienvenue {str(firstname).capitalize()},\nCliquez ici pour valider la création de votre compte: {site_address}accountvalidation{id}?code={code}"
 
-            em['From'] = email_sender
-            em['To'] = email
-            em['Subject'] =  subject
-            em.set_content(body)
-
-
-
-            context = ssl.create_default_context()
-
-            with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-                smtp.login(email_sender, pwd)
-                smtp.sendmail(email_sender,email,em.as_string())
+            send_mail(body=body,subject=subject, user_mail=email)
 
         
 
@@ -188,18 +172,7 @@ def resetpwd_post():
         subject = "réinitialisation de mot de passe"
         body = f"lien de réinitialisation: http://127.0.0.1:8000/mailvalidation{id}?code={code}"
 
-        em['From'] = email_sender
-        em['To'] = email_receiver
-        em['Subject'] =  subject
-        em.set_content(body)
-
-
-
-        context = ssl.create_default_context()
-
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-            smtp.login(email_sender, pwd)
-            smtp.sendmail(email_sender,email_receiver,em.as_string())
+        send_mail(body=body,subject=subject, user_mail=email_receiver)
 
         message = f"Un email vous a été envoyé"
         flash(message, "info")
@@ -276,21 +249,10 @@ def account_validation(id):
         firstname = user.first().firstname
         
         subject = "papagei - Confirmation de création de compte"
-        body = f"Bienvenue {firstname},\nVotre compte est créé, vous pouvez maintenant vous connecter sur www.papagei-shop.fr pour remplir votre panier.\nÀ très vite,\nL'équipe papagei."
+        body = f"Bienvenue {str(firstname).capitalize()},\nVotre compte est créé, vous pouvez maintenant vous connecter sur www.papagei-shop.fr pour remplir votre panier.\nÀ très vite,\nL'équipe papagei."
 
         
-        em['From'] = email_sender
-        em['To'] = email_receiver
-        em['Subject'] =  subject
-        em.set_content(body)
-
-
-
-        context = ssl.create_default_context()
-
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-            smtp.login(email_sender, pwd)
-            smtp.sendmail(email_sender,email_receiver,em.as_string())
+        send_mail(body=body,subject=subject, user_mail=email_receiver)
 
     except Exception as e:
         return redirect(url_for('auth.login'))

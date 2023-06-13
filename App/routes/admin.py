@@ -4,15 +4,12 @@ from ..models import Item, ItemImage, Order, Item_size, Cart_item
 from flask_login import login_required, current_user
 import base64
 
-from email.message import EmailMessage
-import smtplib
-import ssl
+
 import os
+from App.utils import send_mail
 
 
-pwd =os.environ.get('MAIL_MDP')
-email_sender = os.environ.get('MAIL_SENDER')
-em = EmailMessage()
+
 
 admin = Blueprint("admin", __name__, static_folder="../static", template_folder="../templates")
 
@@ -192,19 +189,7 @@ def newstatus(id):
                     body = f"Bonjour {firstname},\nVotre commande N. {id} a été annulée. N'hésitez pas à contacter le service client à cette adresse mail: contact.papageishop@gmail.com.\nÀ très vite,\nL'équipe papagei."
 
 
-                em['From'] = email_sender
-                em['To'] = email_receiver
-                em['Subject'] =  subject
-                em.set_content(body)
-
-
-
-                context = ssl.create_default_context()
-
-                with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-                    smtp.login(email_sender, pwd)
-                    smtp.sendmail(email_sender,email_receiver,em.as_string())
-
+                send_mail(body=body,subject=subject, user_mail=email_receiver)
 
             return redirect(url_for("admin.admincmd"))
         except Exception as e:
