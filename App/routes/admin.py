@@ -178,15 +178,15 @@ def newstatus(id):
                 if status.lower()=="en cours":
 
                     subject = f"papagei - Commande N. {id} - {status}"
-                    body = f"Bonjour {firstname},\nVotre commade N. {id} est en cours de confection,un mail vous sera envoyé au moment de son expédition. Vous pouvez à tout moment voir son avancement sur www.papagei-shop.fr dans la rubrique 'Compte' puis 'Mes commandes'.\nÀ très vite,\nL'équipe papagei."
+                    body = f"Bonjour {str(firstname).capitalize()},\nVotre commade N. {id} est en cours de confection,un mail vous sera envoyé au moment de son expédition. Vous pouvez à tout moment voir son avancement sur www.papagei-shop.fr dans la rubrique 'Compte' puis 'Mes commandes'.\nÀ très vite,\nL'équipe papagei."
 
                 elif status.lower()=="expédiée":
                     subject = f"papagei - Commande N. {id} - {status}"
-                    body = f"Bonjour {firstname},\nVotre commade N. {id} est expédiée, vous recevrez des notififications concernant la livraison de votre colis par La Poste à l'adresse mail utilisée pour la commande.\nÀ très vite,\nL'équipe papagei."
+                    body = f"Bonjour {str(firstname).capitalize()},\nVotre commade N. {id} est expédiée, vous recevrez des notififications concernant la livraison de votre colis par La Poste à l'adresse mail utilisée pour la commande.\nÀ très vite,\nL'équipe papagei."
 
                 elif status.lower()=="annulée":
                     subject = f"papagei - Commande N. {id} - {status}"
-                    body = f"Bonjour {firstname},\nVotre commande N. {id} a été annulée. N'hésitez pas à contacter le service client à cette adresse mail: contact.papageishop@gmail.com.\nÀ très vite,\nL'équipe papagei."
+                    body = f"Bonjour {str(firstname).capitalize()},\nVotre commande N. {id} a été annulée. N'hésitez pas à contacter le service client à cette adresse mail: contact.papageishop@gmail.com.\nÀ très vite,\nL'équipe papagei."
 
 
                 send_mail(body=body,subject=subject, user_mail=email_receiver)

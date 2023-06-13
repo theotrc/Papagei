@@ -167,10 +167,10 @@ def resetpwd_post():
 
         User.query.filter_by(id=id).update(values={"reset_token":code,"reset_token_expiry":expiry})
         db.session.commit()
+        firstname=user.firstname
 
-
-        subject = "réinitialisation de mot de passe"
-        body = f"lien de réinitialisation: http://127.0.0.1:8000/mailvalidation{id}?code={code}"
+        subject = "papagei - Réinitialisation de mot de passe"
+        body = f"Bonjour {str(firstname).capitalize()},\n Pour réinitialiser votre Mot de Passe veuillez cliquer sur ce lien: {site_address}mailvalidation{id}?code={code} \n\nÀ très vite sur papagei-shop.fr"
 
         send_mail(body=body,subject=subject, user_mail=email_receiver)
 
@@ -179,7 +179,7 @@ def resetpwd_post():
 
     elif not user:
 
-        message = f"L'adresse mail que vous avez rentré n'est associé à aucun compte"
+        message = f"L'adresse mail que vous avez rentré n'est associée à aucun compte"
         flash(message, "info")
 
     return render_template("Password.html")
@@ -218,7 +218,7 @@ def change_pwd(id):
         except Exception as e:
             return "error"
     else:
-        flash("les deux mots de passe ne sont pas indentiques", "info")
+        flash("Les deux mots de passe ne sont pas indentiques", "info")
         return render_template('ValidateMail.html', id=id,code=code)
     
     return redirect(url_for('auth.login'))
