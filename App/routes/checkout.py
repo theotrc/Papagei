@@ -96,12 +96,16 @@ def success():
             new_cart = Cart(user_id = current_user.id)
             db.session.add(new_cart)
             db.session.commit()
-        
-        email_receiver = User.query.filter_by(id=current_user.id).first().email
-        order_id = Order.query.filter_by(cart_id=cart_id, user_id=current_user.id).first().id
-        subject = f"papagei - Commande Numéro {order_id} confirmée"
-        body = f"Bonjour {str(cart.user.firstname).capitalize()}, \n Merci pour votre commande (N.{order_id}), elle est bien enregistrée et sera traitée au plus vite.\n\nLes articles sont faits main et à la demande, il faut compter au maximum deux semaines pour le délai de fabrication.Vous pouvez suivre son avancement sur notre site internet dans l'onglet 'Compte' puis 'Mes commandes'.\n\nUn mail vous sera communiqué lors de l'expédition de votre commande.\n\nÀ très vite sur www.papagei-shop.fr.\nL'équipe papagei"
-        send_mail(body=body,subject=subject, user_mail=email_receiver)
+        try:
+            cart = Cart.query.filter_by(user_id = current_user.id, status = "N").first()
+            email_receiver = User.query.filter_by(id=current_user.id).first().email
+            order_id = Order.query.filter_by(cart_id=cart_id, user_id=current_user.id).first().id
+            subject = f"papagei - Commande Numéro {order_id} confirmée"
+            body = f"Bonjour {str(cart.user.firstname).capitalize()}, \n Merci pour votre commande (N.{order_id}), elle est bien enregistrée et sera traitée au plus vite.\n\nLes articles sont faits main et à la demande, il faut compter au maximum deux semaines pour le délai de fabrication.Vous pouvez suivre son avancement sur notre site internet dans l'onglet 'Compte' puis 'Mes commandes'.\n\nUn mail vous sera communiqué lors de l'expédition de votre commande.\n\nÀ très vite sur www.papagei-shop.fr.\nL'équipe papagei"
+            send_mail(body=body,subject=subject, user_mail=email_receiver)
+        except Exception as e:
+            return render_template("success.html")
+
 
         return render_template("success.html")
     else: return "echec"
