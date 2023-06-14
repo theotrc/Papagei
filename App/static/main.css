@@ -960,7 +960,6 @@ textarea{
 }
 .input-btn:hover{
 	background-color: #FFCCEB;
-	color: #ffffff;
 }
 .mdp-oubli{
 	font-size: 12px;
@@ -989,15 +988,12 @@ textarea{
 }
 .input-btn-valider:hover{
 	background-color: #FFCCEB;
-	color: #ffffff;
 }
 .input-btn-deconnexion:hover{
 	background-color: #FFCCEB;
-	color: #ffffff;
 }
 .input-btn-payer:hover{
 	background-color: #FFCCEB;
-	color: #ffffff;
 }
 @media only screen and (max-width: 900px){
 	.infospersos{
