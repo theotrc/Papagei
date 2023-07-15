@@ -3,8 +3,7 @@ from App import db
 from ..models import Item, ItemImage, Order, Item_size, Cart_item
 from flask_login import login_required, current_user
 import base64
-
-
+from sqlalchemy import desc
 import os
 from App.utils import send_mail
 
@@ -145,7 +144,7 @@ def add_item_post():
 def admincmd():
 
     if current_user.is_admin:
-        orders = Order.query.all()
+        orders = Order.query.order_by(desc(Order.id)).all()
         return render_template("admincmd.html", orders=orders)
     else: return redirect(url_for("home.home"))
 
