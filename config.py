@@ -17,3 +17,5 @@ stripe_keys = {
   'secret_key': os.environ.get('STRIPE_SECRET_KEY'),
   'publishable_key': os.environ.get('STRIPE_PUBLISHABLE_KEY')
 }
+
+SENTRY_KEY=os.environ.get("SENTRY_KEY")
