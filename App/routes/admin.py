@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from ..models import Item, ItemImage, Order, Item_size, Cart_item
+from ..models import Item, ItemImage, Order, Item_size, Cart_item,Collection
 from flask_login import login_required, current_user
 import base64
 
@@ -203,7 +203,8 @@ def newstatus(id):
 def modify_item(id):
     if current_user.is_admin:
         item = Item.query.filter_by(id=int(id)).first()
-        return render_template("modifyitem.html", item=item)
+        collections = Collection.query.all()
+        return render_template("modifyitem.html", item=item, collections=collections)
     else:redirect(url_for("home.home"))
 
 
