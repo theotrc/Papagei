@@ -72,7 +72,7 @@ class Item(db.Model):
 
     sizes = db.relationship('Item_size', backref='item', lazy="joined")
     
-    collection = db.relationship('Collection', backref='user', lazy="joined")
+    collection = db.relationship('Collection', backref='user', lazy=True)
 
 class ItemImage(db.Model):
 
@@ -157,4 +157,4 @@ class Collection(db.Model):
     name = db.Column(db.String(100))
     
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
-        nullable=False)
+        nullable=True)

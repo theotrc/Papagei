@@ -10,9 +10,12 @@
 		<div class="grille">
 
 			{% for item in items %}
-                <p>{{item.name}}</p>
-                <a href="{{url_for('collection.delete_collection',id=item.id)}}">Supprimer</a>
-                
+                <form method="POST" action="/newcollection">
+                    <p>{{item.name}}</p>
+                    
+                    <a href="{{url_for('collection.delete_collection',id=item.id)}}">Supprimer</a>
+                    <p> <input class='input-btn' type = "submit" value="Supprimer la collection"/></p>
+                </form>
 			{% endfor %}
             <a href="{{url_for('collection.new')}}">Ajout d'une collection</a>
 		</div>
