@@ -41,6 +41,7 @@ class User(UserMixin,db.Model):
     Carts = db.relationship('Cart', backref='user', lazy=True)
 
     order = db.relationship('Order', backref='user', lazy=True)
+    
 
 
 class Item(db.Model):
@@ -70,6 +71,8 @@ class Item(db.Model):
     Orders = db.relationship('Cart_item', backref='item', lazy="joined")
 
     sizes = db.relationship('Item_size', backref='item', lazy="joined")
+    
+    collection = db.relationship('Collection', backref='user', lazy=True)
 
 class ItemImage(db.Model):
 
@@ -148,3 +151,10 @@ class Item_size(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
         nullable=False)
     
+class Collection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    
+    name = db.Column(db.String(100))
+    
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
+        nullable=True)

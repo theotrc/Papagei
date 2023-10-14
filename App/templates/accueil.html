@@ -15,7 +15,7 @@
 				<div class="grid-item">
 					<a href="{{url_for('sale.sale_page', id= image.id)}}">
 
-					<img src="data:image/png;base64,{{image.image.decode()}}" alt="{{image.title}}"/>
+					<img src="data:image/png;base64,{{image.image.decode()}}" loading="lazy" alt="{{image.title}}"/>
 			</a>
 					<p>{{image.title}}</p>
 					<p>{{image.price|int}} €</p>

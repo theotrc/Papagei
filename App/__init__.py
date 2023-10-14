@@ -1,10 +1,23 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from config import SENTRY_KEY
 from config import stripe_keys
 import stripe
 import os
 from flask_migrate import Migrate
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+
+sentry_sdk.init(
+    dsn=SENTRY_KEY,
+    integrations=[
+        FlaskIntegration(),
+    ],
+
+    traces_sample_rate=1.0
+)
+
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -28,7 +41,9 @@ def create_app():
     from .routes.basket import basket_blue
     from .routes.papagei import papagei_blue
     from .routes.checkout import checkout_blue
-
+    from .routes.collection import collection_blue
+    
+    app.register_blueprint(collection_blue)
     app.register_blueprint(order_blue)
     app.register_blueprint(mention_blue)
     app.register_blueprint(checkout_blue)

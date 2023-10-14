@@ -7,3 +7,5 @@ wtforms==3.0.1
 pg8000==1.29.*
 stripe==5.4.*
 flask-migrate==4.0.*
+sentry-sdk[flask]==1.29.*
+Werkzeug==2.3.7
