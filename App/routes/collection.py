@@ -33,7 +33,7 @@ def new_post():
         name = request.form.get('name')
         new_collection = Collection(
                             name=name,
-                            x="d"
+                            x="d" 
                                 )
 
             # add the new user to the database
