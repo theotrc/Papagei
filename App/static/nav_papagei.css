@@ -90,7 +90,7 @@ a {
 
 svg {
 height: 1.5em;
-fill:#FFFFFF;
+fill:#fff;
 }
 
 .navbar-brand{
@@ -100,9 +100,9 @@ fill:#FFFFFF;
 }
 
 a:hover { 
-  color: #FCFF51;
+  color: #7aff51;
 }
 
 .icon:hover{
-  fill:#FCFF51;
+  fill:#7aff51;
 }
