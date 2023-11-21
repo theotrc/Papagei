@@ -13,6 +13,7 @@
 
 		{% if item.main_image !=byte %}
 		<div class="grid-item">
+			{% if item.id not in items_id_collection %}
 			<form method="POST" action="{{url_for('collection.add_item_collection_post', collectionId=collectionId, itemId=item.id)}}">
 				<p>{{item.id}}</p>
 				<p>{{collectionId}}</p>
@@ -22,8 +23,25 @@
 				
 				<p>{{item.title}}</p>
 				<p>{{item.price|int}} €</p>
+				
 				<input type="submit" value="Ajouter à la collection" />
 			</form>
+
+			{% else %}
+			<form method="POST" action="{{url_for('collection.remove_item_collection_post', collectionId=collectionId, itemId=item.id)}}">
+				<p>{{item.id}}</p>
+				<p>{{collectionId}}</p>
+
+					<img src="data:image/png;base64,{{item.image.decode()}}" loading="lazy" alt="{{item.title}}" />
+
+				
+				<p>{{item.title}}</p>
+				<p>{{item.price|int}} €</p>
+				<span>&#10003;</span>
+				<input type="submit" value="Supprimer de la collection" />
+			</form>
+			{% endif %}
+
 		</div>
 
 		{% endif %}
