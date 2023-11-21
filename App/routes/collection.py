@@ -1,4 +1,3 @@
-from re import template
 from flask import render_template, Blueprint, request,redirect, url_for
 from ..models import Collection
 from flask_login import login_required,current_user
@@ -93,10 +92,16 @@ def add_item_collection(collectionId):
     
     """
     if current_user.is_admin:
-        
+        #get items and selected collection
         item = Item.query.order_by(Item.sort).all()  
+        collection = Collection.query.filter_by(id=int(collectionId)).first()
         
-        return render_template("add_items_collections.html", items = item, byte = bytes(),collectionId=collectionId)
+        #get item curently in the curent collection
+        items_in_collection = collection.items
+        items_id_collection = [x.id for x in items_in_collection]
+        
+        
+        return render_template("add_items_collections.html", items = item, byte = bytes(),collectionId=collectionId, items_id_collection=items_id_collection)
     else:
         return redirect(url_for("home.home"))
     
@@ -108,12 +113,49 @@ def add_item_collection_post(collectionId,itemId):
     
     """
     if current_user.is_admin:
-        print("collection: ",collectionId)
-        print("article: ", itemId)
-        item = Item.query.all()
-        print("collection",item[0].collection)
+        #get item to add to the collection
+        item = Item.query.filter_by(id=int(itemId)).first()
+        
+        #get the collection
+        collection = Collection.query.filter_by(id=int(collectionId)).first()
+        
+        #add selected item to the selected collection
+        collection.items.append(item)
+        
+        
+        db.session.commit()
         
         
         return redirect(url_for("collection.add_item_collection", collectionId=collectionId))
     else:
         return redirect(url_for("home.home"))
+    
+    
+    
+    
+@collection_blue.route('/removeitemcollection/<itemId>/<collectionId>', methods=["POST"])
+@login_required
+def remove_item_collection_post(collectionId, itemId):
+    """
+    Remove item from the collection
+    
+    """
+    
+    if current_user.is_admin:
+        #get item to add to the collection
+        item = Item.query.filter_by(id=int(itemId)).first()
+        
+        #get the collection
+        collection = Collection.query.filter_by(id=int(collectionId)).first()
+        
+        #remove selected item from the selected collection
+        collection.items.remove(item)
+        
+        
+        db.session.commit()
+        
+        
+        return redirect(url_for("collection.add_item_collection", collectionId=collectionId))
+    else:
+        return redirect(url_for("home.home"))
+    
