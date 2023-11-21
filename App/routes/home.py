@@ -12,3 +12,22 @@ def home():
     return render_template("accueil.html", items = item, byte = bytes())
 
 
+
+
+@home_blueprint.route("/temporarycollection")
+def temporary_collection():
+    return render_template("temporary_collection.html")
+
+
+
+@home_blueprint.route("/patern")
+def patern():
+    return render_template("patern.html")
+
+@home_blueprint.route("/tosave")
+def to_save():
+    return render_template("to_save.html")
+
+@home_blueprint.route("/oldcollection")
+def old_collection():
+    return render_template("old_collection.html")
