@@ -137,3 +137,30 @@ footer {
 	font-family: 'Lexend';
 	font-size: 12px;
 }
+
+ul {
+  list-style: none;
+}
+ul li{
+  display: inline-block;
+  position: relative;
+}
+ul li a{
+  display: block;
+  padding: 20px 25px;
+  color:#000000;
+  text-decoration: none;
+  text-align: center;
+}
+ul li ul.dropdown li{
+  display: block;
+}
+ul li ul.dropdown{
+  width: 100%;
+  position: absolute;
+  z-index: 999;
+  display: none;
+}
+ul li a:hover {
+  
+}
