@@ -42,7 +42,7 @@ html,body{
 .nav-left a:first-child{
   margin-right: 50px;
 }
-.nav-right a:last-child{
+.nav-right a.nav-link:last-child{
   margin-left: 50px;
   margin-right: 50px;
 }

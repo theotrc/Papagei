@@ -18,35 +18,15 @@
 
       <a class="navbar-brand" href="{{url_for('papagei.papagei')}}">papagei</a>
 
-      <div class="nav-item dropdown" onmouseenter="showDropDown(this)" onmouseleave="hideDropDown(this)">
-        <a class="nav-link dropbtn">boutique</a>
-        <div class="dropdown-content">
-          <a class="dropdown-item" href="#">collection permanente</a>
-          <a class="dropdown-item" href="#">collection temporaire</a>
-          <a class="dropdown-item" href="#">patrons</a>
-          <a class="dropdown-item" href="#">à sauver</a>
-          <a class="dropdown-item" href="#">anciennes collections</a>
-        </div>
-      </div>
+      <a class="nav-link" href="{{url_for('home.home')}}">boutique<span class="sr-only"></span></a>
 
-      <a class="nav-link" href="{{url_for('collection.collections')}}">toutes les collections <span
-          class="sr-only"></span></a>
 
 
     </div>
 
     <div class="nav-right">
 
-      <div class="nav-item dropdown" onmouseenter="showDropDown(this)" onmouseleave="hideDropDown(this)">
-      <a class="nav-link dropbtn" href="{{url_for('account.account')}}">compte</a>
-      <div class="dropdown-content">
-        <a class="dropdown-item" href="#">collection permanente</a>
-        <a class="dropdown-item" href="#">collection temporaire</a>
-        <a class="dropdown-item" href="#">patrons</a>
-        <a class="dropdown-item" href="#">à sauver</a>
-        <a class="dropdown-item" href="#">anciennes collections</a>
-      </div>
-    </div>
+      <a class="nav-link" href="{{url_for('account.account')}}">compte</a>
 
       <a class="nav-link" href="{{url_for('basket.basket')}}">panier</a>
 
@@ -151,11 +131,20 @@
   function showDropDown(element) {
     var dropdown =element.querySelector(".dropdown-content") ;
     dropdown.style.display = "block"
+
+    var rightOffset = dropdown.getBoundingClientRect().right;
+    var windowRight = window.innerWidth;
+    if (rightOffset >= windowRight) {
+      dropdown.style.left = "auto";
+      dropdown.style.right = "0";
+    }
+    console.log(windowRight)
+    console.log(rightOffset)
   };
 
-  function hideDropDown() {
-    var dropdown =document.getElementsByClassName("dropdown-content") ;
-    dropdown[0].style.display = "none";
+  function hideDropDown(element) {
+    var dropdown =element.querySelector(".dropdown-content") ;
+    dropdown.style.display = "none"
 
   }
 

@@ -72,7 +72,7 @@ class Item(db.Model):
 
     sizes = db.relationship('Item_size', backref='item', lazy="joined")
     
-    collections = db.relationship('Collection', secondary="item_collection", back_populates='items')
+    collections = db.relationship('Collection', secondary="item_collection", back_populates='items') 
 
 class ItemImage(db.Model):
 
@@ -82,7 +82,15 @@ class ItemImage(db.Model):
 
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
         nullable=False)
+    
+class ItemColor(db.Model):
 
+    id = db.Column(db.Integer, primary_key=True)
+
+    name = db.Column(db.String(100))
+    
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
+        nullable=False)
 
 class Cart_item(db.Model):
     """item_quantity (Int) | order_status (String) | cart_item_id (Int) | item_id (Int)"""
@@ -158,7 +166,12 @@ class Collection(db.Model):
     
     items = db.relationship('Item', secondary="item_collection", back_populates='collections')
     
-
+class test(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    
+    name = db.Column(db.String(100))
+    
+   
 item_collection = db.Table(
     'item_collection',
     db.Column('item_id', db.Integer, db.ForeignKey('item.id')),

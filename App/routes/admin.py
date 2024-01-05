@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from ..models import Item, ItemImage, Order, Item_size, Cart_item,Collection
+from ..models import Item, ItemImage, Order, Item_size, Cart_item,Collection, ItemColor
 from flask_login import login_required, current_user
 import base64
 
@@ -50,6 +50,10 @@ def remove_item(id):
         del_sizes = Item_size.query.filter_by(item_id=int(id)).all()
         for size in del_sizes:
             db.session.delete(size)
+            
+        del_colors = ItemColor.query.filter_by(item_id=int(id)).all()
+        for color in del_colors:
+            db.session.delete(color)
         
 
         del_images = ItemImage.query.filter_by(item_id=int(id)).all()
@@ -111,7 +115,9 @@ def add_item_post():
             images = request.files.getlist('second_images')
             sizes = request.form.getlist('size')
             itemid = Item.query.filter_by(description=description, composition=composition,title=titre,weight=float(poids),price = float(prix), image=image1).first().id
-
+            colors = request.form.getlist('colors')
+            
+            # ajout des images en bdd
             for image in images:
                 # Vérifier si une image a été sélectionnée
                 if image.filename != '':
@@ -122,10 +128,18 @@ def add_item_post():
                     db.session.add(new_pic)
                     db.session.commit()
 
+            # ajout des tailles en bdd
             for size in sizes:
                 size = size.upper()
                 new_size = Item_size(size=size, item_id=itemid)
                 db.session.add(new_size)
+                db.session.commit()
+                
+            # ajout des couleurs en bdd
+            for color in colors:
+                color = color.upper()
+                new_color = ItemColor(name=color, item_id=itemid)
+                db.session.add(new_color)
                 db.session.commit()
 
             
