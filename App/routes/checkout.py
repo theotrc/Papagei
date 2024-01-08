@@ -1,7 +1,8 @@
+from os import name
 from flask import Blueprint, render_template,url_for
 from App import stripe, stripe_public_key, pwd, email_sender
 from flask import request
-from ..models import Cart, Order, User, Cart_item, Item
+from ..models import Cart, Order, User, Cart_item, Item,ItemColor
 from flask_login import current_user
 from flask_login import  login_required
 from App import db
@@ -75,10 +76,9 @@ def success():
         for item in Cart_item.query.filter_by(cart_item_id=cart_id).all():
             itemid = item.item_id
             quantity = item.item_quantity
-            item_quantity = Item.query.filter_by(id=itemid).first().quantity
-
-            new_quantity = int(item_quantity) - int(quantity)
-            Item.query.filter_by(id=itemid).update(values={"quantity":new_quantity})
+            color_quantity  = ItemColor.query.filter_by(item_id=itemid, name=item.color).first().quantity
+            new_quantity = int(color_quantity) - int(quantity)
+            ItemColor.query.filter_by(item_id=itemid, name=item.color).update(values={"quantity":new_quantity})
             db.session.commit()
 
 

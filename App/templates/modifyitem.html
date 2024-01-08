@@ -14,11 +14,14 @@
         
         <div>
             <form method="POST" action="{{url_for('admin.modify_item_post', id=item.id)}}">
-                <p> <input class="input is-large" type="number" name="quantity" placeholder="Quantité" value={{item.quantity}} required> </p>
-                <p> <input class="input is-large" type="number" name="sort" placeholder="ordre" value={{item.sort}} required> </p>
-                {% for collection in collections%}
-                    <p>{{collection.name}}</p>
+                {% for color in item.colors %}
+                <p>{{color.name}} <input class="input is-large" type="number" name="quantity_{{color.id}}" placeholder="Quantité" value={{color.quantity}} required></p>
                 {% endfor %}
+                <p> <input class="input is-large" type="number" name="sort" placeholder="ordre" value={{item.sort}} required> </p>
+
+                <p> <div id="item_color"></div> </p>
+
+                <p> <button type="button" onclick="ajouterUneCouleur()">Ajouter une couleur</button> </p>
             <input type="submit" value="Valider">
             </form>
         </div>
@@ -27,6 +30,29 @@
     </div>
 
 </body>
+<script>
+    let inputCount = 0;
+    function ajouterUneCouleur() {
+      inputCount++;
+  
+      // Créer un nouvel élément de champ de saisie de texte
+      const inputElement = document.createElement('input');
+      inputElement.type = 'text';
+      inputElement.name = 'colors'; // Nom unique pour chaque champ de saisie de texte
+      inputElement.placeholder = `couleur ${inputCount + 1}`
+
+      const inputQuantity = document.createElement('input');
+      inputQuantity.type = 'number';
+      inputQuantity.name = 'quantity'; // Nom unique pour chaque champ de saisie de texte
+      inputQuantity.placeholder = `quantité de la couleur ${inputCount + 1}`
+
+  
+      // Ajouter le champ de saisie de texte au conteneur
+      const item_color = document.getElementById('item_color');
+      item_color.appendChild(inputElement);
+      item_color.appendChild(inputQuantity);
+    };
+</script>
 {% endblock content%}
 
 

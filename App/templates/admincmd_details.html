@@ -26,6 +26,7 @@
                         <img class="cmd-img" src="data:image/png;base64,{{cart_item.item.image.decode()}}" alt="{{cart_item.title}}">
                         <div class="content">
                             <p>{{cart_item.item.title}}</p>
+                            <p>{{cart_item.color}}</p>
                             <p>{{cart_item.item.price * cart_item.item_quantity}}€</p>
                             <p>Taille: {{cart_item.size}}</p>
                             <p>Quantité: {{cart_item.item_quantity}}</p>

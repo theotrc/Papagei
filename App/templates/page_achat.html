@@ -72,14 +72,16 @@
 						action="{{url_for('basket.basket_post', id = item.id)}}">
 
 						<label for="color" class="large-label">Couleur: </label>
-						<select class='text-select' name="color" id="color">
-							<option value="{{item.color}}">{{item.color}}</option>
+						<select class='text-select' name="color" id="color" required>
 							{% for color in item.colors %}
-							<option value="{{color.name}}">{{color.name}}</option>
+							{% if color.quantity > 0 %}
+							<option value="{{color.name}}">{{color.name}} </option>
+							{% else %}
+							<option value="{{color.name}}" disabled>{{color.name}} <h6>(en rupture)</h6></option>
+							{% endif %}
 							{% endfor %}
+						</select>	
 
-
-						</select>						
 						<label for="size" class="large-label">Taille: </label>
 						<select class='text-select' name="size" id="size">
 							{% for size in item.sizes %}
@@ -108,11 +110,9 @@
 						<br>
 
 						<br>
-						{% if item.quantity > 0 %}
 						<p> <input class='input-btn' type="submit" value="Ajouter au panier" /></p>
-						{% else %}
-						<p>Rupture de stock</p>
-						{% endif %}
+
+
 						
 					</form>
 

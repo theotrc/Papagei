@@ -24,8 +24,10 @@
 
       <p><input class="input is-large" type="text" name="prix" placeholder="prix" required> </p>
 
-      <p><input class="input is-large" type="text" name="couleur" placeholder="couleur" required> </p>
-
+      <p>
+        <input class="input is-large" type="text" name="colors" placeholder="couleur 1" required>
+        <input type="number" name="quantity" placeholder="quantité de la couleur 1"> 
+      </p>
       <p> <div id="item_color"></div> </p>
 
       <p> <button type="button" onclick="ajouterUneCouleur()">Ajouter une couleur</button> </p>
@@ -38,8 +40,6 @@
       <p> <div id="input-container"></div> </p>
       
       <button type="button" onclick="ajouterChampTexte()">Ajouter une taille</button>
-
-      <p> <input class="input is-large" type="number" name="quantity" placeholder="Quantité" required> </p>
 
       <p> <input class="input is-large" type="text" name="about_model" placeholder="Description du model"> </p>
 
@@ -103,12 +103,18 @@
       const inputElement = document.createElement('input');
       inputElement.type = 'text';
       inputElement.name = 'colors'; // Nom unique pour chaque champ de saisie de texte
-      inputElement.placeholder = `${inputCount + 1} ème couleur`
+      inputElement.placeholder = `couleur ${inputCount + 1}`
+
+      const inputQuantity = document.createElement('input');
+      inputQuantity.type = 'number';
+      inputQuantity.name = 'quantity'; // Nom unique pour chaque champ de saisie de texte
+      inputQuantity.placeholder = `quantité de la couleur ${inputCount + 1}`
 
   
       // Ajouter le champ de saisie de texte au conteneur
       const item_color = document.getElementById('item_color');
       item_color.appendChild(inputElement);
+      item_color.appendChild(inputQuantity);
     };
 
   
