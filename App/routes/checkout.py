@@ -7,6 +7,7 @@ from flask_login import current_user
 from flask_login import  login_required
 from App import db
 from App.utils import send_mail
+from datetime import datetime
 
 checkout_blue= Blueprint("checkout", __name__, static_folder="../static", template_folder="../templates")
 
@@ -83,7 +84,7 @@ def success():
 
 
 
-        new_order = Order(status="Paiement validé",stripe_id=session_id,cart_id= cart_id, user_id=current_user.id)
+        new_order = Order(status="Paiement validé",created_date=datetime.utcnow(),stripe_id=session_id,cart_id= cart_id, user_id=current_user.id)
         
         Cart.query.filter_by(user_id=current_user.id, status="N").update(values={"status":"V"})
         
