@@ -13,6 +13,7 @@ basket_blue= Blueprint("basket", __name__, static_folder="../static", template_f
 def basket_post(id):
     size = request.form.get('size')
     quantity = request.form.get('quantity')
+    color=request.form.get("color")
     cart = Cart.query.filter_by(user_id = current_user.id, status = "N").first()
     if not cart:
         new_cart = Cart(user_id = current_user.id)
@@ -30,7 +31,7 @@ def basket_post(id):
     Cart.query.filter_by(user_id=current_user.id, status = "N").update(values={"price":basket_cost, "cart_weight": basket_weight})
 
 
-    new_item = Cart_item(item_quantity=quantity, cart_item_id=cart.id, item_id=int(id), size=size)
+    new_item = Cart_item(item_quantity=quantity, cart_item_id=cart.id, item_id=int(id),color=color, size=size)
     db.session.add(new_item)
     db.session.commit()
 

@@ -52,15 +52,10 @@ class Item(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     composition = db.Column(db.String(1000), nullable=False)
     image = db.Column(db.LargeBinary)
-    color= db.Column(db.String(100))
 
     price = db.Column(db.Float, nullable=False)
 
-    stock = db.Column(db.Integer)
-
     about_model = db.Column(db.String(1000))
-
-    quantity =db.Column(db.Integer)
 
     weight = db.Column(db.Float, nullable=False)
 
@@ -72,7 +67,10 @@ class Item(db.Model):
 
     sizes = db.relationship('Item_size', backref='item', lazy="joined")
     
-    collection = db.relationship('Collection', backref='user', lazy=True)
+    collections = db.relationship('Collection', secondary="item_collection", back_populates='items') 
+    
+    colors = db.relationship('ItemColor', backref='item', lazy="joined")
+    
 
 class ItemImage(db.Model):
 
@@ -82,7 +80,17 @@ class ItemImage(db.Model):
 
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
         nullable=False)
+    
+class ItemColor(db.Model):
 
+    id = db.Column(db.Integer, primary_key=True)
+
+    name = db.Column(db.String(100))
+    
+    quantity =db.Column(db.Integer)
+    
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
+        nullable=False)
 
 class Cart_item(db.Model):
     """item_quantity (Int) | order_status (String) | cart_item_id (Int) | item_id (Int)"""
@@ -95,6 +103,7 @@ class Cart_item(db.Model):
     ##size
     size = db.Column(db.String(100))
 
+    color = db.Column(db.String(100))
 
     cart_item_id = db.Column(db.Integer, db.ForeignKey('cart.id'),
         nullable=False)
@@ -156,5 +165,16 @@ class Collection(db.Model):
     
     name = db.Column(db.String(100))
     
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'),
-        nullable=True)
+    items = db.relationship('Item', secondary="item_collection", back_populates='collections')
+    
+class test(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    
+    name = db.Column(db.String(100))
+    
+   
+item_collection = db.Table(
+    'item_collection',
+    db.Column('item_id', db.Integer, db.ForeignKey('item.id')),
+    db.Column('collection_id', db.Integer, db.ForeignKey('collection.id'))
+)
