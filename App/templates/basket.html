@@ -58,12 +58,14 @@
 												</a>
 												<div class="content">
 													<p>{{cart_item.item.title}}
-														<br>
+													<br>
+													{{cart_item.color}}
+													<br>
 													{{cart_item.size}}
 													<br>
-													{{cart_item.item.price *cart_item.item_quantity}}
+													{{cart_item.item.price *cart_item.item_quantity}} 
 													<br>
-													Quantité:{{cart_item.item_quantity}}
+													Quantité: {{cart_item.item_quantity}}
 													
 														
 														<a href="{{url_for('basket.deleteitem_basket', id= cart_item.id)}}" onclick="return confirm('Retirer du panier?')">

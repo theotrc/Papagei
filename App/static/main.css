@@ -41,7 +41,7 @@ h1{
 }
 .grid-item{
 	width: 70%;
-	justify-items: cover;
+	justify-self: center;
 }
 .new-item{
 	width: 300px;

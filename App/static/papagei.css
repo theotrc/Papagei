@@ -33,7 +33,7 @@ html,body{
 	line-height: 128px; 
 	font-size: clamp(4rem, 10vw, 8rem);
 	z-index: 999;
-	color: #fb0054;
+	color: white;
 
 }
 .grille {
@@ -76,7 +76,7 @@ section{
 	width: 100%;
 	height: 100vh;
 
-	background: url(img/meeting2.png);
+	background: url(img/cap_blanc/04_papagei_large_copie.jpg);
 
 	background-size: cover;
 	background-position: center;
@@ -128,7 +128,7 @@ section{
 	width:450px;
 	padding: 20px 20px;
 	position:absolute;
-	background-color: #FB0054;
+	background-color: #FCFF51;
 	transform: translate(-50%, -50%);
 	left:50%;
 	top:25%;
@@ -149,7 +149,7 @@ section{
 
 .popup button:hover{
 	transform: scale(.9);
-	color: #7aff51;
+	color: #3F9DF3;
 }
 
 @media screen and (max-width:700px){
@@ -157,12 +157,10 @@ section{
 		width:50%;
 		padding: 20px 20px;
 		position:absolute;
-		background-color: #fb0054;
 		transform: translate(-50%, -50%);
 		left:50%;
 		top:25%;
 		border-radius: 10px;
-		font-family: 'Lexend';
 		display: none;
 		text-align: justify;
 		font-size: 11px;

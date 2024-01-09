@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from ..models import Item, ItemImage, Order, Item_size, Cart_item,Collection
+from ..models import Item, ItemImage, Order, Item_size, Cart_item,Collection, ItemColor
 from flask_login import login_required, current_user
 import base64
 
@@ -50,6 +50,10 @@ def remove_item(id):
         del_sizes = Item_size.query.filter_by(item_id=int(id)).all()
         for size in del_sizes:
             db.session.delete(size)
+            
+        del_colors = ItemColor.query.filter_by(item_id=int(id)).all()
+        for color in del_colors:
+            db.session.delete(color)
         
 
         del_images = ItemImage.query.filter_by(item_id=int(id)).all()
@@ -86,10 +90,8 @@ def add_item_post():
             prix = request.form.get('prix')
             composition = request.form.get('composition')
 
-            couleur = request.form.get('couleur')
             about_model = request.form.get("about_model")
             poids = request.form.get('poids')
-            quantity = request.form.get('quantity')
             image1=request.files['image']
             image1 = image1.stream.read()
             image1 = base64.encodebytes(image1)
@@ -98,12 +100,10 @@ def add_item_post():
             new_item = Item(
                 description = description,
                 composition=composition,
-                color=couleur,
                 weight=float(poids),
                   image = image1,
                     price = float(prix),
                     title = titre,
-                    quantity=int(quantity),
                     about_model=about_model)
             db.session.add(new_item)
             db.session.commit()
@@ -111,7 +111,15 @@ def add_item_post():
             images = request.files.getlist('second_images')
             sizes = request.form.getlist('size')
             itemid = Item.query.filter_by(description=description, composition=composition,title=titre,weight=float(poids),price = float(prix), image=image1).first().id
-
+            colors = request.form.getlist('colors')
+            quantities = request.form.getlist("quantity")
+            
+            
+            data = list(zip(colors, quantities))
+            colors_and_quantities = dict(data)
+            
+            print(colors_and_quantities)
+            # ajout des images en bdd
             for image in images:
                 # Vérifier si une image a été sélectionnée
                 if image.filename != '':
@@ -122,10 +130,19 @@ def add_item_post():
                     db.session.add(new_pic)
                     db.session.commit()
 
+            # ajout des tailles en bdd
             for size in sizes:
                 size = size.upper()
                 new_size = Item_size(size=size, item_id=itemid)
                 db.session.add(new_size)
+                db.session.commit()
+                
+            # ajout des couleurs en bdd
+            for color in colors_and_quantities.keys():
+                quantity = int(colors_and_quantities[color])
+                color = color.upper()
+                new_color = ItemColor(name=color,quantity=quantity, item_id=itemid)
+                db.session.add(new_color)
                 db.session.commit()
 
             
@@ -215,9 +232,28 @@ def modify_item(id):
 @login_required
 def modify_item_post(id):
     if current_user.is_admin:
-        quantity = int(request.form.get("quantity"))
+        colors = request.form.getlist('colors')
+        quantities = request.form.getlist("quantity")
+        data = list(zip(colors, quantities))
+        colors_and_quantities = dict(data)
+        
+        item = Item.query.filter_by(id=int(id))
+        
+        for color in item.first().colors:
+            color_id= color.id
+            html_name = f"quantity_{color_id}"
+            quantity = request.form.get(html_name)
+            ItemColor.query.filter_by(id=int(color_id)).update(values={"quantity": int(quantity)})
+            
+        # ajout des couleurs en bdd
+        for color in colors_and_quantities.keys():
+            quantity = int(colors_and_quantities[color])
+            color = color.upper()
+            new_color = ItemColor(name=color,quantity=quantity, item_id=int(id))
+            db.session.add(new_color) 
+            
         sort = int(request.form.get("sort"))
-        Item.query.filter_by(id=int(id)).update(values={"quantity":quantity, "sort":sort})
+        item.update(values={"sort":sort})
         db.session.commit()
         return redirect(url_for("admin.adminitems"))
     else:redirect(url_for("home.home"))
