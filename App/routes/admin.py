@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
 from App import db
-from ..models import Item, ItemImage, Order, Item_size, Cart_item,Collection, ItemColor
+from ..models import Cart, Item, ItemImage, Order, Item_size, Cart_item,Collection, ItemColor
 from flask_login import login_required, current_user
 import base64
 
@@ -42,8 +42,27 @@ def add_item():
 @login_required
 def remove_item(id):
     if current_user.is_admin:
+        
+        ##modifier les prix des pannier
+        del_item = Item.query.filter_by(id=int(id)).first()
         del_cart_item = Cart_item.query.filter_by(item_id=int(id)).all()
         for cart_item in del_cart_item:
+            
+            current_cart=cart_item.cart
+            cart_price = current_cart.price
+            cart_weight = current_cart.cart_weight
+            item_quantity = cart_item.item_quantity
+            item_price = del_item.price
+            item_weight = del_item.weight
+            
+            
+            new_weight = cart_weight - (item_weight * item_quantity)
+            new_price = cart_price - (item_price * item_quantity)
+            Cart.query.filter_by(id=current_cart.id).update(values = {"cart_weight":new_weight,"price":new_price})
+            db.session.commit()
+            
+            
+            
             db.session.delete(cart_item)
         
 
@@ -59,7 +78,8 @@ def remove_item(id):
         del_images = ItemImage.query.filter_by(item_id=int(id)).all()
         for image in del_images:
             db.session.delete(image)
-        del_item = Item.query.filter_by(id=int(id)).first()
+        
+        
         db.session.delete(del_item)
         db.session.commit()
 
@@ -133,6 +153,7 @@ def add_item_post():
             # ajout des tailles en bdd
             for size in sizes:
                 size = size.upper()
+                print(size)
                 new_size = Item_size(size=size, item_id=itemid)
                 db.session.add(new_size)
                 db.session.commit()

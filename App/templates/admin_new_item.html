@@ -80,16 +80,16 @@
     };
     
 
-    let inputCount = 0; // Compteur pour les champs de saisie de texte
-
+    let inputCountcolor = 0; // Compteur pour les champs de saisie de texte
+    let inputCountSize = 0;
     function ajouterChampTexte() {
-      inputCount++;
+      inputCountSize++;
   
       // Créer un nouvel élément de champ de saisie de texte
       const inputElement = document.createElement('input');
       inputElement.type = 'text';
-      inputElement.name = 'couleur'; // Nom unique pour chaque champ de saisie de texte
-      inputElement.placeholder = `${inputCount + 1} ème taille`
+      inputElement.name = 'size'; // Nom unique pour chaque champ de saisie de texte
+      inputElement.placeholder = `${inputCountSize + 1} ème taille`
   
       // Ajouter le champ de saisie de texte au conteneur
       const inputContainer = document.getElementById('input-container');
@@ -97,18 +97,18 @@
     }
 
     function ajouterUneCouleur() {
-      inputCount++;
+      inputCountcolor++;
   
       // Créer un nouvel élément de champ de saisie de texte
       const inputElement = document.createElement('input');
       inputElement.type = 'text';
       inputElement.name = 'colors'; // Nom unique pour chaque champ de saisie de texte
-      inputElement.placeholder = `couleur ${inputCount + 1}`
+      inputElement.placeholder = `couleur ${inputCountcolor + 1}`
 
       const inputQuantity = document.createElement('input');
       inputQuantity.type = 'number';
       inputQuantity.name = 'quantity'; // Nom unique pour chaque champ de saisie de texte
-      inputQuantity.placeholder = `quantité de la couleur ${inputCount + 1}`
+      inputQuantity.placeholder = `quantité de la couleur ${inputCountcolor + 1}`
 
   
       // Ajouter le champ de saisie de texte au conteneur
