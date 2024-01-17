@@ -1,59 +1,139 @@
-
 </html>
+
 <head>
-	<link rel="stylesheet" href="static/main.css">
+    <link rel="stylesheet" href="static/main.css">
 </head>
 
 {% extends "base.html" %}
 
 {% block content %}
+
 <body class="login">
-<body>
-  
-    <div class= header-compte>
-        
-        <div>
-            <form method="POST" action="{{url_for('admin.modify_item_post', id=item.id)}}">
-                {% for color in item.colors %}
-                <p>{{color.name}} <input class="input is-large" type="number" name="quantity_{{color.id}}" placeholder="Quantité" value={{color.quantity}} required></p>
-                {% endfor %}
-                <p> <input class="input is-large" type="number" name="sort" placeholder="ordre" value={{item.sort}} required> </p>
 
-                <p> <div id="item_color"></div> </p>
+    <body>
 
-                <p> <button type="button" onclick="ajouterUneCouleur()">Ajouter une couleur</button> </p>
+        <div class=header-compte>
+
+            <div>
+                <form method="POST" action="{{url_for('admin.modify_item_post', id=item.id)}}">
+                    <button type="button" id="toggleButtonColors">Couleurs</button>
+                    <div class=header-compte id="colors_id">
+                        {% for color in item.colors %}
+                        <p style="display: none;"><input type="text" value="{{color.name}}"
+                                name="currentColorsOldNames"></p>
+                        <p></p>
+                        <p><input type="text" value="{{color.name}}" name="currentColors">
+                            <input type="checkbox" name="delete_color_{{color.name}}">
+                        </p>
+                        <p><input class="input is-large" type="number" name="currentQuantities" placeholder="Quantité"
+                                value="{{color.quantity}}" required></p>
+                        {% endfor %}
+                        <p>
+                        <div id="item_color"></div>
+                        </p>
+                        <p> <button type="button" onclick="addColor()">Ajouter une couleur</button> </p>
+                    </div>
+
+                    <button type="button" id="toggleButtonSizes">Tailles</button>
+                    <div class=header-compte id="sizes">
+                        {% for size in item.sizes %}
+                        <p style="display: none"><input class="input is-large" type="text" name="current_sizes_old_name"
+                                placeholder="size" value="{{size.size}}"></p>
+                        <p><input class="input is-large" type="text" name="current_sizes" placeholder="size"
+                                value="{{size.size}}" required>
+                            <input type="checkbox" name="delete_size_{{size.size}}">
+                        </p>
+                        {% endfor %}
+                        <p>
+                        <div id="item_size"></div>
+                        </p>
+                        <p> <button type="button" onclick="addSize()">Ajouter une taille</button> </p>
+                    </div>
+
+
+
+            </div>
+
+            <p> <input class="input is-large" type="number" name="sort" placeholder="ordre" value="{{item.sort}}"
+                    required> </p>
+
+
+
+
             <input type="submit" value="Valider">
             </form>
         </div>
+
+
+        </div>
+
+    </body>
+    <script>
+        let inputCountColor = 0;
+        function addColor() {
+            inputCountColor++;
+
+            // Créer un nouvel élément de champ de saisie de texte
+            const inputElement = document.createElement('input');
+            inputElement.type = 'text';
+            inputElement.name = 'colors'; // Nom unique pour chaque champ de saisie de texte
+            inputElement.placeholder = `couleur ${inputCountColor + 1}`
+
+            const inputQuantity = document.createElement('input');
+            inputQuantity.type = 'number';
+            inputQuantity.name = 'quantity'; // Nom unique pour chaque champ de saisie de texte
+            inputQuantity.placeholder = `quantité de la couleur ${inputCountColor + 1}`
+
+
+            // Ajouter le champ de saisie de texte au conteneur
+            const item_color = document.getElementById('item_color');
+            item_color.appendChild(inputElement);
+            item_color.appendChild(inputQuantity);
+        };
+
+        let inputCountSize = 0;
+        function addSize() {
+            inputCountSize++;
+
+            // Créer un nouvel élément de champ de saisie de texte
+            const inputElement = document.createElement('input');
+            inputElement.type = 'text';
+            inputElement.name = 'sizes'; // Nom unique pour chaque champ de saisie de texte
+            inputElement.placeholder = `taille ${inputCountSize + 1}`
+
+            // Ajouter le champ de saisie de texte au conteneur
+            const item_size = document.getElementById('item_size');
+            item_size.appendChild(inputElement);
+        };
         
-        
-    </div>
 
-</body>
-<script>
-    let inputCount = 0;
-    function ajouterUneCouleur() {
-      inputCount++;
-  
-      // Créer un nouvel élément de champ de saisie de texte
-      const inputElement = document.createElement('input');
-      inputElement.type = 'text';
-      inputElement.name = 'colors'; // Nom unique pour chaque champ de saisie de texte
-      inputElement.placeholder = `couleur ${inputCount + 1}`
+        function toggleVisibility(elementId) {
+            var element = document.getElementById(elementId);
 
-      const inputQuantity = document.createElement('input');
-      inputQuantity.type = 'number';
-      inputQuantity.name = 'quantity'; // Nom unique pour chaque champ de saisie de texte
-      inputQuantity.placeholder = `quantité de la couleur ${inputCount + 1}`
+            if (element.style.display === "none") {
+                element.style.display = "block";
+            } else {
+                element.style.display = "none";
+            }
+        }
 
-  
-      // Ajouter le champ de saisie de texte au conteneur
-      const item_color = document.getElementById('item_color');
-      item_color.appendChild(inputElement);
-      item_color.appendChild(inputQuantity);
-    };
-</script>
-{% endblock content%}
+        document.addEventListener("DOMContentLoaded", function () {
+            var toggleButtonColors = document.getElementById("toggleButtonColors");
+            var toggleButtonSizes = document.getElementById("toggleButtonSizes");
+            var toggleButtonImages = document.getElementById("toggleButtonImages");
 
 
-</html>
+            toggleButtonColors.addEventListener("click", function () {
+                toggleVisibility("colors_id");
+            });
+
+            toggleButtonSizes.addEventListener("click", function () {
+                toggleVisibility("sizes");
+            });
+        });
+
+    </script>
+    {% endblock content%}
+
+
+    </html>

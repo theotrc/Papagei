@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, Blueprint,flash
+from sqlalchemy import values
 from App import db
-from ..models import Item, ItemImage, Order, Item_size, Cart_item,Collection, ItemColor
+from ..models import Cart, Item, ItemImage, Order, Item_size, Cart_item,Collection, ItemColor
 from flask_login import login_required, current_user
 import base64
 
@@ -42,8 +43,27 @@ def add_item():
 @login_required
 def remove_item(id):
     if current_user.is_admin:
+        
+        ##modifier les prix des pannier
+        del_item = Item.query.filter_by(id=int(id)).first()
         del_cart_item = Cart_item.query.filter_by(item_id=int(id)).all()
         for cart_item in del_cart_item:
+            
+            current_cart=cart_item.cart
+            cart_price = current_cart.price
+            cart_weight = current_cart.cart_weight
+            item_quantity = cart_item.item_quantity
+            item_price = del_item.price
+            item_weight = del_item.weight
+            
+            
+            new_weight = cart_weight - (item_weight * item_quantity)
+            new_price = cart_price - (item_price * item_quantity)
+            Cart.query.filter_by(id=current_cart.id).update(values = {"cart_weight":new_weight,"price":new_price})
+            db.session.commit()
+            
+            
+            
             db.session.delete(cart_item)
         
 
@@ -59,7 +79,8 @@ def remove_item(id):
         del_images = ItemImage.query.filter_by(item_id=int(id)).all()
         for image in del_images:
             db.session.delete(image)
-        del_item = Item.query.filter_by(id=int(id)).first()
+        
+        
         db.session.delete(del_item)
         db.session.commit()
 
@@ -133,6 +154,7 @@ def add_item_post():
             # ajout des tailles en bdd
             for size in sizes:
                 size = size.upper()
+                print(size)
                 new_size = Item_size(size=size, item_id=itemid)
                 db.session.add(new_size)
                 db.session.commit()
@@ -232,18 +254,82 @@ def modify_item(id):
 @login_required
 def modify_item_post(id):
     if current_user.is_admin:
+        
+        
+        
+        sizes = request.form.getlist('sizes')
         colors = request.form.getlist('colors')
+        current_colors= request.form.getlist("currentColors")
+        current_colors_old_name = request.form.getlist("currentColorsOldNames")
+        current_quantities = request.form.getlist("currentQuantities")
+        
+        current_size = request.form.getlist("current_sizes")
+        current_size_old_name = request.form.getlist("current_sizes_old_name")
         quantities = request.form.getlist("quantity")
+        
         data = list(zip(colors, quantities))
         colors_and_quantities = dict(data)
         
-        item = Item.query.filter_by(id=int(id))
+        data = list(zip(current_colors_old_name, current_quantities))
+        current_colors_and_quantities = dict(data)
         
-        for color in item.first().colors:
-            color_id= color.id
-            html_name = f"quantity_{color_id}"
-            quantity = request.form.get(html_name)
-            ItemColor.query.filter_by(id=int(color_id)).update(values={"quantity": int(quantity)})
+        data = list(zip(current_colors_old_name, current_colors))
+        current_colors_names_old_names = dict(data)
+        
+        data = list(zip(current_size_old_name, current_size))
+        current_sizes_names = dict(data)
+        
+        item = Item.query.filter_by(id=int(id))
+        item_color = ItemColor.query.filter_by(item_id=int(id))
+        
+        item_sizes = Item_size.query.filter_by(item_id=int(id))
+        
+        
+        ### AJOUT / MODIFICATION / SUPRESSION
+        
+        # mise à jour des tailles déjà existantes
+        for current_size in current_sizes_names.keys():
+            new_size_name = str(current_sizes_names[current_size]).upper()
+            size_name = str(current_size).upper()
+            delete_item_size = request.form.get(f"delete_size_{current_size}")
+            if delete_item_size:
+                delete_item_size = item_sizes.filter_by(size=size_name).first()
+                db.session.delete(delete_item_size)
+            else:
+            
+                if size_name == new_size_name:
+                    continue
+                else:
+                    item_sizes.filter_by(size=size_name).update(values={"size":new_size_name})
+                
+        db.session.commit()
+        
+        for size in sizes:
+            new_size = str(size).upper()
+            new_size_item = Item_size(size=new_size, item_id=int(id))
+            db.session.add(new_size_item)
+        db.session.commit()
+        
+        # mise à jour des couleurs déjà existantes
+        for current_color in current_colors_and_quantities.keys():
+            delete_item_color = request.form.get(f"delete_color_{current_color}")
+            if delete_item_color:
+                delete_item_color = item_color.filter_by(name=current_color).first()
+                db.session.delete(delete_item_color)
+            else:
+                new_quantity = current_colors_and_quantities[current_color]
+                new_name = str(current_colors_names_old_names[current_color]).upper()
+                item_color.filter_by(name=current_color).update(values={"quantity":int(new_quantity),"name":new_name})
+                
+            
+        
+        db.session.commit()
+            
+        # for color in item.first().colors:
+        #     color_id= color.id
+        #     html_name = f"quantity_{color_id}"
+        #     quantity = request.form.get(html_name)
+        #     ItemColor.query.filter_by(id=int(color_id)).update(values={"quantity": int(quantity)})
             
         # ajout des couleurs en bdd
         for color in colors_and_quantities.keys():
@@ -251,9 +337,14 @@ def modify_item_post(id):
             color = color.upper()
             new_color = ItemColor(name=color,quantity=quantity, item_id=int(id))
             db.session.add(new_color) 
-            
+        
+        
+        
         sort = int(request.form.get("sort"))
         item.update(values={"sort":sort})
         db.session.commit()
+        
+        
         return redirect(url_for("admin.adminitems"))
     else:redirect(url_for("home.home"))
+    
