@@ -18,7 +18,7 @@
                 <form method="POST" action="{{url_for('admin.modify_item_post', id=item.id)}}">
                     <button type="button" id="toggleButtonColors">Couleurs</button>
                     <div class=header-compte id="colors_id">
-                        {% for color in item.colors %}
+                        {% for color in colors %}
                         <p style="display: none;"><input type="text" value="{{color.name}}"
                                 name="currentColorsOldNames"></p>
                         <p></p>
@@ -36,7 +36,7 @@
 
                     <button type="button" id="toggleButtonSizes">Tailles</button>
                     <div class=header-compte id="sizes">
-                        {% for size in item.sizes %}
+                        {% for size in sizes %}
                         <p style="display: none"><input class="input is-large" type="text" name="current_sizes_old_name"
                                 placeholder="size" value="{{size.size}}"></p>
                         <p><input class="input is-large" type="text" name="current_sizes" placeholder="size"

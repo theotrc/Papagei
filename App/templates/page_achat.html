@@ -73,7 +73,7 @@
 
 						<label for="color" class="large-label">Couleur: </label>
 						<select class='text-select' name="color" id="color" required>
-							{% for color in item.colors %}
+							{% for color in colors %}
 							{% if color.quantity > 0 %}
 							<option value="{{color.name}}">{{color.name}} </option>
 							{% else %}
@@ -84,7 +84,7 @@
 
 						<label for="size" class="large-label">Taille: </label>
 						<select class='text-select' name="size" id="size">
-							{% for size in item.sizes %}
+							{% for size in sizes %}
 							<option value="{{size.size}}">{{size.size}}</option>
 							{% endfor %}
 

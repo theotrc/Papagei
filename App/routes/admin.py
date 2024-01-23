@@ -22,8 +22,7 @@ admin = Blueprint("admin", __name__, static_folder="../static", template_folder=
 @login_required
 def adminitems():
     if current_user.is_admin:
-        item = Item.query.all()  
-        print(item)
+        item = Item.query.with_entities(Item.image, Item.sort,Item.id).all()  
         return render_template("admin_items.html",data={"user":current_user}, items=item)
     else: return redirect(url_for("home.home"))
 
@@ -241,9 +240,11 @@ def newstatus(id):
 @login_required
 def modify_item(id):
     if current_user.is_admin:
-        item = Item.query.filter_by(id=int(id)).first()
-        collections = Collection.query.all()
-        return render_template("modifyitem.html", item=item, collections=collections)
+        item = Item.query.with_entities(Item.id, Item.sort).filter_by(id=int(id)).first()
+        colors = ItemColor.query.filter_by(item_id=int(id)).all()
+        sizes = Item_size.query.filter_by(item_id=int(id)).all()
+        
+        return render_template("modifyitem.html", item=item,colors=colors, sizes=sizes)
     else:redirect(url_for("home.home"))
 
 
